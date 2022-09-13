@@ -12,51 +12,58 @@ import simu.framework.Trace;
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class Palvelupiste {
 
-	private LinkedList<Asiakas> jono = new LinkedList<Asiakas>(); // Tietorakennetoteutus
-	
-	private ContinuousGenerator generator;
-	private Tapahtumalista tapahtumalista;
-	private TapahtumanTyyppi skeduloitavanTapahtumanTyyppi; 
-	
-	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-	
+	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
+
+	protected ContinuousGenerator generator;
+	protected Tapahtumalista tapahtumalista;
+	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
+
 	private boolean varattu = false;
 
-
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi){
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi) {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
-				
 	}
 
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {
+		this.tapahtumalista = tapahtumalista;
+		this.generator = generator;
+	}
 
-	public void lisaaJonoon(Asiakas a){   // Jonon 1. asiakas aina palvelussa
+	public void lisaaJonoon(LentoasemaAsiakas a) { // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
-		
+
 	}
 
-	public Asiakas otaJonosta(){  // Poistetaan palvelussa ollut
+	public LentoasemaAsiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
 		return jono.poll();
 	}
 
-	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
-		
+	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
+
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
-		
+
 		varattu = true;
 		double palveluaika = generator.sample();
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
+		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 	}
 
+	public void aloitaPalvelu(TapahtumanTyyppi skeduloitavanTapahtumanTyyppi) {
 
-	public boolean onVarattu(){
+		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
+
+		varattu = true;
+		double palveluaika = generator.sample();
+		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
+	}
+
+	public boolean onVarattu() {
 		return varattu;
 	}
 
-
-	public boolean onJonossa(){
+	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
 
