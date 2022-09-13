@@ -1,5 +1,7 @@
 package simu.framework;
 
+import java.util.ArrayList;
+
 import simu.model.Palvelupiste;
 
 public abstract class Moottori {
@@ -9,11 +11,11 @@ public abstract class Moottori {
 	private Kello kello;
 	
 	protected Tapahtumalista tapahtumalista;
-	protected Palvelupiste[] palvelupisteet;
+	protected ArrayList<Palvelupiste> palvelupisteet;
 	
 
 	public Moottori(){
-
+		palvelupisteet = new ArrayList<>();
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 		
 		tapahtumalista = new Tapahtumalista();
@@ -54,6 +56,7 @@ public abstract class Moottori {
 
 	private void yritaCTapahtumat(){
 		for (Palvelupiste p: palvelupisteet){
+			System.out.println(p);
 			if (!p.onVarattu() && p.onJonossa()){
 				p.aloitaPalvelu();
 			}
