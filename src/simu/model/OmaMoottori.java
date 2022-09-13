@@ -18,7 +18,7 @@ public class OmaMoottori extends Moottori {
 
 	public OmaMoottori() {
 
-		palvelupisteet = new Palvelupiste[5];
+		
 
 		checkIn = new CheckinPalvelupiste(new Normal(10, 10), tapahtumalista);
 		baggageDrop = new Palvelupiste(new Normal(10, 10), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END);
@@ -28,6 +28,12 @@ public class OmaMoottori extends Moottori {
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
 
+		palvelupisteet.add(checkIn);
+		palvelupisteet.add(baggageDrop);
+		palvelupisteet.add(passportControl);
+		palvelupisteet.add(ticketInspection);
+		palvelupisteet.add(securityCheck);
+		
 	}
 
 	@Override
@@ -73,7 +79,9 @@ public class OmaMoottori extends Moottori {
 			a = ticketInspection.otaJonosta();
 			a.setPoistumisaika(Kello.getInstance().getAika());
 			a.raportti();
+			break;
 		default:
+			System.out.println(t.getTyyppi());
 			throw new UnsupportedOperationException();
 		}
 	}
