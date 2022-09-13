@@ -10,17 +10,24 @@ import simu.framework.Tapahtuma;
 public class OmaMoottori extends Moottori {
 
 	private Saapumisprosessi saapumisprosessi;
+	Palvelupiste Checkinpiste;
+	Palvelupiste Luggagepiste;
+	Palvelupiste Pasport;
+	Palvelupiste portti;
+	Palvelupiste turvatarkastus;
 
 	public OmaMoottori() {
 
-		palvelupisteet = new Palvelupiste[3];
+		palvelupisteet = new Palvelupiste[5];
 
-		palvelupisteet[0] = new Palvelupiste(new Normal(10, 6), tapahtumalista, TapahtumanTyyppi.DEP1);
-		palvelupisteet[1] = new Palvelupiste(new Normal(10, 10), tapahtumalista, TapahtumanTyyppi.DEP2);
-		palvelupisteet[2] = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.DEP3);
+		 Checkinpiste = new CheckinPalvelupiste(new Normal(10,10), tapahtumalista);
+		 Luggagepiste = new Palvelupiste(new Normal(10, 10), tapahtumalista, TapahtumanTyyppi.LUGGAGE_END);
+		 Pasport = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.PASSPORTCONTROL_END);
+		 portti = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.TICKETINSPECTION_END);
+		 turvatarkastus = new SecurityPalvelupiste(new Normal(5, 3), tapahtumalista);
 
-		saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.ARR1);
-
+		saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
+		
 	}
 
 	@Override
@@ -34,20 +41,36 @@ public class OmaMoottori extends Moottori {
 		LentoasemaAsiakas a;
 		switch (t.getTyyppi()) {
 
-		case ARR1:
-			palvelupisteet[0].lisaaJonoon(new LentoasemaAsiakas());
+		case CHECKIN_ENTER :
+			Checkinpiste.lisaaJonoon(new LentoasemaAsiakas());
 			saapumisprosessi.generoiSeuraava();
 			break;
-		case DEP1:
-			a = palvelupisteet[0].otaJonosta();
-			palvelupisteet[1].lisaaJonoon(a);
+		case CHECKIN_END_SELF :
+			a = Checkinpiste.otaJonosta();
+			 turvatarkastus.lisaaJonoon(a);
 			break;
-		case DEP2:
-			a = palvelupisteet[1].otaJonosta();
-			palvelupisteet[2].lisaaJonoon(a);
+		case CHECKIN_END_LUGGAGE :
+			a = Checkinpiste.otaJonosta();
+			 turvatarkastus.lisaaJonoon(a);
 			break;
-		case DEP3:
-			a = palvelupisteet[2].otaJonosta();
+		case SECURITYCHECK_END_SCHENGE :
+			a = turvatarkastus.otaJonosta();
+			 portti.lisaaJonoon(a);
+			break;
+		case SECURITYCHECK_END_INTERNATIONAL :
+			a = turvatarkastus.otaJonosta();
+			 Pasport.lisaaJonoon(a);
+			break;
+		case LUGGAGE_END:
+			a = Luggagepiste.otaJonosta();
+			 turvatarkastus.lisaaJonoon(a);
+			break;
+		case PASSPORTCONTROL_END :
+			a =  Pasport.otaJonosta();
+			portti.lisaaJonoon(a);
+			break;
+		case TICKETINSPECTION_END:
+			a = portti.otaJonosta();
 			a.setPoistumisaika(Kello.getInstance().getAika());
 			a.raportti();
 		}
