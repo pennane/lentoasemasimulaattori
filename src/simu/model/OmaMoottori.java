@@ -31,11 +31,11 @@ public class OmaMoottori extends Moottori {
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t) { // B-vaiheen tapahtumat
 
-		Asiakas a;
+		LentoasemaAsiakas a;
 		switch (t.getTyyppi()) {
 
 		case ARR1:
-			palvelupisteet[0].lisaaJonoon(new Asiakas());
+			palvelupisteet[0].lisaaJonoon(new LentoasemaAsiakas());
 			saapumisprosessi.generoiSeuraava();
 			break;
 		case DEP1:
