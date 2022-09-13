@@ -3,10 +3,8 @@ package simu.model;
 // TODO:
 // Tapahtumien tyypit määritellään simulointimallin vaatimusten perusteella
 public enum TapahtumanTyyppi {
-	CHECKIN_ENTER_SELF,
-	CHECKIN_ENTER_LUGGAGE,
-	CHECKIN_START_SELF,
-	CHECKIN_START_LUGGAGE,
+	CHECKIN_ENTER,
+	CHECKIN_START,
 	CHECKIN_END_SELF,
 	CHECKIN_END_LUGGAGE,
 	
