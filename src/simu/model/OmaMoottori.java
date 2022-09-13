@@ -6,6 +6,7 @@ import simu.framework.Kello;
 import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
+import static simu.model.Constants.*;
 
 public class OmaMoottori extends Moottori {
 
@@ -18,27 +19,29 @@ public class OmaMoottori extends Moottori {
 
 	public OmaMoottori() {
 
-		
+		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista);
+		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END);
+		securityCheck = new SecurityPalvelupiste(new Negexp(minutes(2)), tapahtumalista);
+		passportControl = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
+				TapahtumanTyyppi.PASSPORTCONTROL_END);
+		ticketInspection = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
+				TapahtumanTyyppi.TICKETINSPECTION_END);
 
-		checkIn = new CheckinPalvelupiste(new Normal(10, 10), tapahtumalista);
-		baggageDrop = new Palvelupiste(new Normal(10, 10), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END);
-		passportControl = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.PASSPORTCONTROL_END);
-		ticketInspection = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.TICKETINSPECTION_END);
-		securityCheck = new SecurityPalvelupiste(new Normal(5, 3), tapahtumalista);
-
-		saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
+		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(3)), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
 
 		palvelupisteet.add(checkIn);
 		palvelupisteet.add(baggageDrop);
+		palvelupisteet.add(securityCheck);
 		palvelupisteet.add(passportControl);
 		palvelupisteet.add(ticketInspection);
-		palvelupisteet.add(securityCheck);
-		
+
 	}
 
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
+
+		// TODO: luo lentokoneet
 	}
 
 	@Override
