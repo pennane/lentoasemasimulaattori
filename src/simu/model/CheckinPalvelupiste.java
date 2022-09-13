@@ -14,7 +14,7 @@ public class CheckinPalvelupiste extends Palvelupiste {
 		boolean hasMatkatavara = jono.peek().getMatkatavara();
 
 		if (hasMatkatavara) {
-			super.aloitaPalvelu(TapahtumanTyyppi.CHECKIN_END_LUGGAGE);
+			super.aloitaPalvelu(TapahtumanTyyppi.CHECKIN_END_BAGGAGE);
 			return;
 		}
 

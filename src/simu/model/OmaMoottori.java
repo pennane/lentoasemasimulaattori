@@ -10,24 +10,24 @@ import simu.framework.Tapahtuma;
 public class OmaMoottori extends Moottori {
 
 	private Saapumisprosessi saapumisprosessi;
-	Palvelupiste Checkinpiste;
-	Palvelupiste Luggagepiste;
-	Palvelupiste Pasport;
-	Palvelupiste portti;
-	Palvelupiste turvatarkastus;
+	Palvelupiste checkIn;
+	Palvelupiste baggageDrop;
+	Palvelupiste passportControl;
+	Palvelupiste ticketInspection;
+	Palvelupiste securityCheck;
 
 	public OmaMoottori() {
 
 		palvelupisteet = new Palvelupiste[5];
 
-		 Checkinpiste = new CheckinPalvelupiste(new Normal(10,10), tapahtumalista);
-		 Luggagepiste = new Palvelupiste(new Normal(10, 10), tapahtumalista, TapahtumanTyyppi.LUGGAGE_END);
-		 Pasport = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.PASSPORTCONTROL_END);
-		 portti = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.TICKETINSPECTION_END);
-		 turvatarkastus = new SecurityPalvelupiste(new Normal(5, 3), tapahtumalista);
+		checkIn = new CheckinPalvelupiste(new Normal(10, 10), tapahtumalista);
+		baggageDrop = new Palvelupiste(new Normal(10, 10), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END);
+		passportControl = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.PASSPORTCONTROL_END);
+		ticketInspection = new Palvelupiste(new Normal(5, 3), tapahtumalista, TapahtumanTyyppi.TICKETINSPECTION_END);
+		securityCheck = new SecurityPalvelupiste(new Normal(5, 3), tapahtumalista);
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(15, 5), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
-		
+
 	}
 
 	@Override
@@ -41,38 +41,40 @@ public class OmaMoottori extends Moottori {
 		LentoasemaAsiakas a;
 		switch (t.getTyyppi()) {
 
-		case CHECKIN_ENTER :
-			Checkinpiste.lisaaJonoon(new LentoasemaAsiakas());
+		case CHECKIN_ENTER:
+			checkIn.lisaaJonoon(new LentoasemaAsiakas());
 			saapumisprosessi.generoiSeuraava();
 			break;
-		case CHECKIN_END_SELF :
-			a = Checkinpiste.otaJonosta();
-			 turvatarkastus.lisaaJonoon(a);
+		case CHECKIN_END_SELF:
+			a = checkIn.otaJonosta();
+			securityCheck.lisaaJonoon(a);
 			break;
-		case CHECKIN_END_LUGGAGE :
-			a = Checkinpiste.otaJonosta();
-			 turvatarkastus.lisaaJonoon(a);
+		case CHECKIN_END_BAGGAGE:
+			a = checkIn.otaJonosta();
+			securityCheck.lisaaJonoon(a);
 			break;
-		case SECURITYCHECK_END_SCHENGE :
-			a = turvatarkastus.otaJonosta();
-			 portti.lisaaJonoon(a);
+		case SECURITYCHECK_END_SCHENGE:
+			a = securityCheck.otaJonosta();
+			ticketInspection.lisaaJonoon(a);
 			break;
-		case SECURITYCHECK_END_INTERNATIONAL :
-			a = turvatarkastus.otaJonosta();
-			 Pasport.lisaaJonoon(a);
+		case SECURITYCHECK_END_INTERNATIONAL:
+			a = securityCheck.otaJonosta();
+			passportControl.lisaaJonoon(a);
 			break;
-		case LUGGAGE_END:
-			a = Luggagepiste.otaJonosta();
-			 turvatarkastus.lisaaJonoon(a);
+		case BAGGAGE_END:
+			a = baggageDrop.otaJonosta();
+			securityCheck.lisaaJonoon(a);
 			break;
-		case PASSPORTCONTROL_END :
-			a =  Pasport.otaJonosta();
-			portti.lisaaJonoon(a);
+		case PASSPORTCONTROL_END:
+			a = passportControl.otaJonosta();
+			ticketInspection.lisaaJonoon(a);
 			break;
 		case TICKETINSPECTION_END:
-			a = portti.otaJonosta();
+			a = ticketInspection.otaJonosta();
 			a.setPoistumisaika(Kello.getInstance().getAika());
 			a.raportti();
+		default:
+			throw new UnsupportedOperationException();
 		}
 	}
 
