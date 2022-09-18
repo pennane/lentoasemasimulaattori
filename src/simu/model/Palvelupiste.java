@@ -90,7 +90,8 @@ public class Palvelupiste {
 	}
 
 	public double findMedian() {
-		Collections.sort(palveluajat);
+ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
+Collections.sort(palveluajat);
 
 		if (palveluajat.size() % 2 == 1)
 			return palveluajat.get((palveluajat.size() + 1) / 2 - 1);
