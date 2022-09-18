@@ -17,6 +17,7 @@ public class Palvelupiste {
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
 	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
+	private int palveltu = 0;
 
 	private boolean varattu = false;
 
@@ -48,6 +49,7 @@ public class Palvelupiste {
 		varattu = true;
 		double palveluaika = generator.sample();
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
+		palveltu++;
 	}
 
 	public void aloitaPalvelu(TapahtumanTyyppi skeduloitavanTapahtumanTyyppi) {
@@ -57,6 +59,7 @@ public class Palvelupiste {
 		varattu = true;
 		double palveluaika = generator.sample();
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
+		palveltu++;
 	}
 
 	public boolean onVarattu() {
@@ -65,6 +68,9 @@ public class Palvelupiste {
 
 	public boolean onJonossa() {
 		return jono.size() != 0;
+	}
+	public int getPalvellutAsiakkaat() {
+		return palveltu;
 	}
 
 }
