@@ -39,7 +39,9 @@ public class Palvelupiste {
 
 	public LentoasemaAsiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
+		palveltu++;
 		return jono.poll();
+		
 	}
 
 	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
@@ -49,7 +51,7 @@ public class Palvelupiste {
 		varattu = true;
 		double palveluaika = generator.sample();
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
-		palveltu++;
+		
 	}
 
 	public void aloitaPalvelu(TapahtumanTyyppi skeduloitavanTapahtumanTyyppi) {
@@ -59,7 +61,7 @@ public class Palvelupiste {
 		varattu = true;
 		double palveluaika = generator.sample();
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
-		palveltu++;
+		
 	}
 
 	public boolean onVarattu() {
