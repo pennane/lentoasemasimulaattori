@@ -17,7 +17,8 @@ public class Asiakas {
 	}
 
 	public Asiakas() {
-		id = totalAsiakkaat++;
+		totalAsiakkaat++;
+		id = totalAsiakkaat;
 
 		saapumisaika = Kello.getInstance().getAika();
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo " + saapumisaika);
