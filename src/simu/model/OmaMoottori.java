@@ -1,12 +1,14 @@
 package simu.model;
 
+import static simu.model.Constants.minutes;
+import static simu.model.Constants.seconds;
+
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.framework.Kello;
 import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
-import static simu.model.Constants.*;
 
 public class OmaMoottori extends Moottori {
 
@@ -48,7 +50,8 @@ public class OmaMoottori extends Moottori {
 	protected void suoritaTapahtuma(Tapahtuma t) { // B-vaiheen tapahtumat
 
 		LentoasemaAsiakas a;
-		switch (t.getTyyppi()) {
+		switch (t.getTyyppi()) { // TODO: Joku abstractio tälle tai jotain et ei oo nii paljon kohtia jossa voi
+									// mennä rikki
 
 		case CHECKIN_ENTER:
 			checkIn.lisaaJonoon(new LentoasemaAsiakas());

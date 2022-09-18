@@ -20,7 +20,8 @@ public class Palvelupiste {
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
 	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
-	private int palveltu = 0;
+
+	private int palvellutAsiakkaat = 0;
 
 	private boolean varattu = false;
 
@@ -42,7 +43,7 @@ public class Palvelupiste {
 
 	public LentoasemaAsiakas otaJonosta() { // Poistetaan palvelussa ollut
 		varattu = false;
-		palveltu++;
+		palvellutAsiakkaat++;
 		return jono.poll();
 
 	}
@@ -74,11 +75,11 @@ public class Palvelupiste {
 	}
 
 	public boolean onJonossa() {
-		return jono.size() != 0;
+		return !jono.isEmpty();
 	}
 
 	public int getPalvellutAsiakkaat() {
-		return palveltu;
+		return palvellutAsiakkaat;
 	}
 
 	public double findPalveluajanKeskiarvo() {
@@ -90,8 +91,8 @@ public class Palvelupiste {
 	}
 
 	public double findMedian() {
-ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
-Collections.sort(palveluajat);
+		ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
+		Collections.sort(palveluajat);
 
 		if (palveluajat.size() % 2 == 1)
 			return palveluajat.get((palveluajat.size() + 1) / 2 - 1);
