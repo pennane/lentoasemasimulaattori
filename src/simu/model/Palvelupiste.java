@@ -75,7 +75,7 @@ public class Palvelupiste {
 	}
 
 	public boolean onJonossa() {
-		return jono.isEmpty();
+		return !jono.isEmpty();
 	}
 
 	public int getPalvellutAsiakkaat() {
@@ -91,8 +91,8 @@ public class Palvelupiste {
 	}
 
 	public double findMedian() {
-ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
-Collections.sort(palveluajat);
+		ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
+		Collections.sort(palveluajat);
 
 		if (palveluajat.size() % 2 == 1)
 			return palveluajat.get((palveluajat.size() + 1) / 2 - 1);
