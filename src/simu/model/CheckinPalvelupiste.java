@@ -11,9 +11,9 @@ public class CheckinPalvelupiste extends Palvelupiste {
 
 	@Override
 	public void aloitaPalvelu() {
-		boolean hasMatkatavara = jono.peek().getMatkatavara();
+		boolean hasMatkatavarat = jono.peek().getHasMatkatavarat();
 
-		if (hasMatkatavara) {
+		if (hasMatkatavarat) {
 			super.aloitaPalvelu(TapahtumanTyyppi.CHECKIN_END_BAGGAGE);
 			return;
 		}

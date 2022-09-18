@@ -9,11 +9,15 @@ public class Asiakas {
 	private double saapumisaika;
 	private double poistumisaika;
 	private int id;
-	private static int i = 1;
-	private static long sum = 0;
+	private static int totalAsiakkaat = 0;
+	private static long sumLeadtime = 0; // lead time = läpimenoaika
+
+	public static int getTotalAsiakkaat() {
+		return Asiakas.totalAsiakkaat;
+	}
 
 	public Asiakas() {
-		id = i++;
+		id = totalAsiakkaat++;
 
 		saapumisaika = Kello.getInstance().getAika();
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo " + saapumisaika);
@@ -39,14 +43,18 @@ public class Asiakas {
 		return id;
 	}
 
+	public double getAverageLeadtime() {
+		return sumLeadtime / getTotalAsiakkaat();
+	}
+
 	public void raportti() {
 		Trace.out(Trace.Level.INFO, "\nAsiakas " + id + " valmis! ");
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " saapui: " + saapumisaika);
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " poistui: " + poistumisaika);
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " viipyi: " + (poistumisaika - saapumisaika));
-		sum += (poistumisaika - saapumisaika);
-		double keskiarvo = sum / id;
-		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + keskiarvo);
+		double leadtime = poistumisaika - saapumisaika;
+		sumLeadtime += leadtime;
+		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + getAverageLeadtime());
 	}
 
 }
