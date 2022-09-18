@@ -1,5 +1,6 @@
 package simu.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import eduni.distributions.ContinuousGenerator;
@@ -13,6 +14,7 @@ import simu.framework.Trace;
 public class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
+	private ArrayList<Double> palveluajat = new ArrayList<Double>();
 
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
@@ -50,6 +52,7 @@ public class Palvelupiste {
 
 		varattu = true;
 		double palveluaika = generator.sample();
+		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 		
 	}
@@ -60,6 +63,7 @@ public class Palvelupiste {
 
 		varattu = true;
 		double palveluaika = generator.sample();
+		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 		
 	}
@@ -73,6 +77,13 @@ public class Palvelupiste {
 	}
 	public int getPalvellutAsiakkaat() {
 		return palveltu;
+	}
+	public double getPalveluajanKeskiarvo() {
+		 double keskiarvo=0;
+		 for(int i = 0;i<palveluajat.size();i++) {
+			 keskiarvo = keskiarvo+palveluajat.get(i);
+		 }
+		 return keskiarvo/palveluajat.size();
 	}
 
 }
