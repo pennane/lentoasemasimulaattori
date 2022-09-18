@@ -1,6 +1,7 @@
 package simu.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import eduni.distributions.ContinuousGenerator;
@@ -86,6 +87,20 @@ public class Palvelupiste {
 			keskiarvo = keskiarvo + palveluajat.get(i);
 		}
 		return keskiarvo / palveluajat.size();
+	}
+
+	public double findMedian() {
+ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
+Collections.sort(palveluajat);
+
+		if (palveluajat.size() % 2 == 1)
+			return palveluajat.get((palveluajat.size() + 1) / 2 - 1);
+		else {
+			double lower = palveluajat.get(palveluajat.size() / 2 - 1);
+			double upper = palveluajat.get(palveluajat.size() / 2);
+
+			return (lower + upper) / 2.0;
+		}
 	}
 
 }
