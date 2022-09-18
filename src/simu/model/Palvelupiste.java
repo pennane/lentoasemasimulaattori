@@ -43,7 +43,7 @@ public class Palvelupiste {
 		varattu = false;
 		palveltu++;
 		return jono.poll();
-		
+
 	}
 
 	public void aloitaPalvelu() { // Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
@@ -54,7 +54,7 @@ public class Palvelupiste {
 		double palveluaika = generator.sample();
 		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
-		
+
 	}
 
 	public void aloitaPalvelu(TapahtumanTyyppi skeduloitavanTapahtumanTyyppi) {
@@ -65,7 +65,7 @@ public class Palvelupiste {
 		double palveluaika = generator.sample();
 		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
-		
+
 	}
 
 	public boolean onVarattu() {
@@ -75,15 +75,17 @@ public class Palvelupiste {
 	public boolean onJonossa() {
 		return jono.size() != 0;
 	}
+
 	public int getPalvellutAsiakkaat() {
 		return palveltu;
 	}
-	public double getPalveluajanKeskiarvo() {
-		 double keskiarvo=0;
-		 for(int i = 0;i<palveluajat.size();i++) {
-			 keskiarvo = keskiarvo+palveluajat.get(i);
-		 }
-		 return keskiarvo/palveluajat.size();
+
+	public double findPalveluajanKeskiarvo() {
+		double keskiarvo = 0;
+		for (int i = 0; i < palveluajat.size(); i++) {
+			keskiarvo = keskiarvo + palveluajat.get(i);
+		}
+		return keskiarvo / palveluajat.size();
 	}
 
 }
