@@ -1,7 +1,5 @@
 package simu.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 
 import eduni.distributions.ContinuousGenerator;
@@ -15,7 +13,7 @@ import simu.framework.Trace;
 public class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
-	private ArrayList<Double> palveluajat = new ArrayList<Double>();
+	private ArithmeticArrayList<Double> palveluajat = new ArithmeticArrayList<Double>();
 
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
@@ -81,27 +79,4 @@ public class Palvelupiste {
 	public int getPalvellutAsiakkaat() {
 		return palvellutAsiakkaat;
 	}
-
-	public double findPalveluajanKeskiarvo() {
-		double keskiarvo = 0;
-		for (int i = 0; i < palveluajat.size(); i++) {
-			keskiarvo = keskiarvo + palveluajat.get(i);
-		}
-		return keskiarvo / palveluajat.size();
-	}
-
-	public double findMedian() {
-		ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
-		Collections.sort(palveluajat);
-
-		if (palveluajat.size() % 2 == 1)
-			return palveluajat.get((palveluajat.size() + 1) / 2 - 1);
-		else {
-			double lower = palveluajat.get(palveluajat.size() / 2 - 1);
-			double upper = palveluajat.get(palveluajat.size() / 2);
-
-			return (lower + upper) / 2.0;
-		}
-	}
-
 }
