@@ -18,9 +18,9 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 	protected IKontrolleriMtoV kontrolleri;
 
 	public Moottori(IKontrolleriMtoV kontrolleri) {
-
 		this.kontrolleri = kontrolleri;
 
+		palvelupisteet = new ArrayList<>();
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
 		tapahtumalista = new Tapahtumalista();

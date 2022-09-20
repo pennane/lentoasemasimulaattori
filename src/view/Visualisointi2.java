@@ -1,10 +1,9 @@
 package view;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
-
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class Visualisointi2 extends Canvas implements IVisualisointi {
 

@@ -1,9 +1,8 @@
 package view;
 
-import java.awt.Canvas;
-import java.awt.Color;
-
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Visualisointi extends Canvas implements IVisualisointi {
 
@@ -13,7 +12,7 @@ public class Visualisointi extends Canvas implements IVisualisointi {
 	double j = 10;
 
 	public Visualisointi(int w, int h) {
-		super(w, h);
+		super(200, 200);
 		gc = this.getGraphicsContext2D();
 		tyhjennaNaytto();
 	}

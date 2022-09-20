@@ -1,26 +1,26 @@
 package view;
 
-import java.awt.Button;
-import java.awt.Canvas;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Label;
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.beans.EventHandler;
 import java.text.DecimalFormat;
 
 import controller.IKontrolleriVtoM;
 import controller.Kontrolleri;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
 
