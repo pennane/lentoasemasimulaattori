@@ -3,6 +3,7 @@ package simu.model;
 import static simu.model.Constants.minutes;
 import static simu.model.Constants.seconds;
 
+import controller.IKontrolleriMtoV;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.framework.Kello;
@@ -19,7 +20,8 @@ public class OmaMoottori extends Moottori {
 	Palvelupiste ticketInspection;
 	Palvelupiste securityCheck;
 
-	public OmaMoottori() {
+	public OmaMoottori(IKontrolleriMtoV kontrolleri) {
+		super(kontrolleri);
 
 		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista);
 		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END);
@@ -56,6 +58,7 @@ public class OmaMoottori extends Moottori {
 		case CHECKIN_ENTER:
 			checkIn.lisaaJonoon(new LentoasemaAsiakas());
 			saapumisprosessi.generoiSeuraava();
+			kontrolleri.visualisoiAsiakas();
 			break;
 		case CHECKIN_END_SELF:
 			a = checkIn.otaJonosta();
@@ -96,6 +99,7 @@ public class OmaMoottori extends Moottori {
 	protected void tulokset() {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		System.out.println("Tulokset ... puuttuvat vielä");
+		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
 	}
 
 }
