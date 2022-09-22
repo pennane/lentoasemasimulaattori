@@ -1,5 +1,6 @@
 package controller;
 
+import constants.Constants;
 import javafx.application.Platform;
 import simu.framework.IMoottori;
 import simu.model.OmaMoottori;
@@ -19,8 +20,11 @@ public class Kontrolleri implements IKontrolleriVtoM, IKontrolleriMtoV {
 	@Override
 	public void kaynnistaSimulointi() {
 		moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
-		moottori.setSimulointiaika(ui.getAika());
-		moottori.setViive(ui.getViive());
+		moottori.setSimulointiaika(Constants.SIMULATION_DURATION);
+		
+		moottori.setViive(Constants.SIMULATION_DELAY);
+		
+		
 		ui.getVisualisointi().tyhjennaNaytto();
 
 		((Thread) moottori).start();

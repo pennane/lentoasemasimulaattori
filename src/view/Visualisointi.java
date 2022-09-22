@@ -4,32 +4,29 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Visualisointi extends Canvas implements IVisualisointi {
+public class Visualisointi implements IVisualisointi {
 
-	private GraphicsContext gc;
+	private GraphicsContext ctx;
+	private Canvas canvas;
 
-	double i = 0;
-	double j = 10;
 
-	public Visualisointi(int w, int h) {
-		super(200, 200);
-		gc = this.getGraphicsContext2D();
+	public Visualisointi(Canvas canvas) {
+		this.canvas = canvas;
+		ctx = canvas.getGraphicsContext2D();
 		tyhjennaNaytto();
 	}
 
 	public void tyhjennaNaytto() {
-		gc.setFill(Color.YELLOW);
-		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
+		ctx.setFill(Color.BLACK);
+		ctx.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
 	public void uusiAsiakas() {
-		gc.setFill(Color.RED);
-		gc.fillOval(i, j, 10, 10);
-
-		i = (i + 10 % this.getWidth());
-		// j = (j + 12) % this.getHeight();
-		if (i == 0)
-			j += 10;
+		System.out.println("uusi asiakas");
+	}
+	
+	public void lentoPoistuu() {
+		System.out.println("lento poistuu");
 	}
 
 }

@@ -1,7 +1,7 @@
 package simu.model;
 
-import static simu.model.Constants.minutes;
-import static simu.model.Constants.seconds;
+import static constants.Constants.minutes;
+import static constants.Constants.seconds;
 
 import controller.IKontrolleriMtoV;
 import eduni.distributions.Negexp;

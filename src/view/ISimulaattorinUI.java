@@ -2,7 +2,7 @@ package view;
 
 public interface ISimulaattorinUI {
 
-	// Kontrolleri tarvitsee syötteitä, jotka se välittää Moottorille
+//	 Kontrolleri tarvitsee syötteitä, jotka se välittää Moottorille
 	public double getAika();
 
 	public long getViive();
