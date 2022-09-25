@@ -1,4 +1,4 @@
-package simu.model;
+package simu.data;
 
 public class Sqlmain {
 	public static void main(String[] args) throws Exception {

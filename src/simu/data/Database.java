@@ -1,4 +1,4 @@
-package simu.model;
+package simu.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
