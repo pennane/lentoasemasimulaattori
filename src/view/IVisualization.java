@@ -1,10 +1,7 @@
 package view;
 
-public interface IVisualization {
-
-	public void drawBase();
-	
-	public void setSimulationTime(long timeStampSeconds);
+public interface IVisualization {	
+	public void setSimulationTimeSeconds(long timeStampSeconds);
 
 	public void newCustomer();
 	public void shengeDepart();

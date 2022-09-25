@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import view.entitys.GUIClock;
 import view.entitys.VisualizableAirplane;
 import view.entitys.VisualizableCustomer;
 
@@ -20,30 +21,30 @@ public class Visualization implements IVisualization {
 	private double planeImageBaseY;
 	private double customerBaseY;
 
-	private long simulationTime;
-	private ArrayList<VisualizableAirplane> airplanes = new ArrayList<>();
-	private ArrayList<VisualizableCustomer> customers = new ArrayList<>();
+	private GUIClock clock;
+	private ArrayList<VisualizableAirplane> airplanes;
+	private ArrayList<VisualizableCustomer> customers;
 
 	private GraphicsContext ctx;
 	private Canvas canvas;
 
 	public Visualization(Canvas canvas) {
-
-		simulationTime = 0;
-
 		this.canvas = canvas;
 		ctx = canvas.getGraphicsContext2D();
 
 		airportImage = new Image(getClass().getResourceAsStream("images/airport.png"));
 		planeImage = new Image(getClass().getResourceAsStream("images/plane.png"));
 
+		airplanes = new ArrayList<>();
+		customers = new ArrayList<>();
+
 		airportImageX = canvas.getWidth() / 2 - airportImage.getWidth();
 		airportImageY = canvas.getHeight() / 2 - airportImage.getHeight();
 		planeImageBaseX = airportImageX + airportImage.getWidth() - planeImage.getWidth();
 		planeImageBaseY = airportImageY + airportImage.getHeight() - planeImage.getHeight();
-		customerBaseY =canvas.getHeight() / 2 - 5;
+		customerBaseY = canvas.getHeight() / 2 - 5;
 
-		drawBase();
+		clock = new GUIClock(0, 10, 10);
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
@@ -62,6 +63,10 @@ public class Visualization implements IVisualization {
 		timer.start();
 	}
 
+	private void drawClock() {
+		clock.draw(ctx);
+	}
+
 	private void drawBackground() {
 		ctx.setFill(Color.GREEN);
 		ctx.fillRect(0, canvas.getHeight() / 2, canvas.getWidth(), canvas.getHeight());
@@ -71,17 +76,12 @@ public class Visualization implements IVisualization {
 
 	private void drawOverlay() {
 		ctx.drawImage(airportImage, airportImageX, airportImageY);
+		drawClock();
 	}
 
 	@Override
-	public void drawBase() {
-		drawBackground();
-		drawOverlay();
-	}
-
-	@Override
-	public void setSimulationTime(long timeStampSeconds) {
-		simulationTime = timeStampSeconds;
+	public void setSimulationTimeSeconds(long timeStampSeconds) {
+		clock.setSimulationTimeSeconds(timeStampSeconds);
 	}
 
 	@Override

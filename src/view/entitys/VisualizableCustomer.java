@@ -1,6 +1,6 @@
 package view.entitys;
 
-public class VisualizableCustomer extends VisualizableEntity {
+public class VisualizableCustomer extends VisualizablePoint {
 	private static double ANIMATION_DURATION = 4000;
 
 	public VisualizableCustomer(double baseX, double toX, double y) {

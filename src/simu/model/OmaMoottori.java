@@ -59,6 +59,7 @@ public class OmaMoottori extends Moottori {
 			checkIn.lisaaJonoon(new LentoasemaAsiakas());
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
+			controller.visualizeCurrentTime(Kello.getInstance().getAika());
 			break;
 		case CHECKIN_END_SELF:
 			a = checkIn.otaJonosta();

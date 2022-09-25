@@ -7,7 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.util.Duration;
 
-public abstract class VisualizableEntity {
+public abstract class VisualizablePoint {
 	public Timeline getTimeline() {
 		return timeline;
 	}
@@ -24,7 +24,7 @@ public abstract class VisualizableEntity {
 	private DoubleProperty x;
 	private DoubleProperty y;
 
-	public VisualizableEntity(double duration, double fromX, double fromY, double toX, double toY) {
+	public VisualizablePoint(double duration, double fromX, double fromY, double toX, double toY) {
 		x = new SimpleDoubleProperty();
 		y = new SimpleDoubleProperty();
 		timeline = new Timeline(new KeyFrame(Duration.seconds(0), new KeyValue(x, fromX), new KeyValue(y, fromY)),

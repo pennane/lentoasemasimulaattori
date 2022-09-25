@@ -5,8 +5,6 @@ import controller.IControllerVtoM;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import simu.framework.Trace;
-import simu.framework.Trace.Level;
 
 public class SimulatorGUI implements ISimulatorGUI {
 
@@ -29,11 +27,9 @@ public class SimulatorGUI implements ISimulatorGUI {
 	private Button decelerateButton;
 
 	public void handleStart() {
-		Trace.setTraceLevel(Level.INFO);
 		System.out.println("Start");
 		if (visualization == null) {
 			visualization = new Visualization(simulationRoot);
-			visualization.drawBase();
 		}
 		if (controller == null) {
 			controller = new Controller(this);
