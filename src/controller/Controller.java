@@ -31,7 +31,7 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 
 	@Override
 	public void visualizeTime(long timeStampSeconds) {
-		Platform.runLater(() -> ui.getVisualization().displayTime(timeStampSeconds));
+		Platform.runLater(() -> ui.getVisualization().setSimulationTime(timeStampSeconds));
 	}
 
 	@Override

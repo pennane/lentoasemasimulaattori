@@ -7,6 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import view.entitys.VisualizableAirplane;
+import view.entitys.VisualizableCustomer;
 
 public class Visualization implements IVisualization {
 
@@ -16,13 +18,19 @@ public class Visualization implements IVisualization {
 	private double airportImageY;
 	private double planeImageBaseX;
 	private double planeImageBaseY;
+	private double customerBaseY;
 
-	private ArrayList<VisualizationPlane> planes = new ArrayList<>();
+	private long simulationTime;
+	private ArrayList<VisualizableAirplane> airplanes = new ArrayList<>();
+	private ArrayList<VisualizableCustomer> customers = new ArrayList<>();
 
 	private GraphicsContext ctx;
 	private Canvas canvas;
 
 	public Visualization(Canvas canvas) {
+
+		simulationTime = 0;
+
 		this.canvas = canvas;
 		ctx = canvas.getGraphicsContext2D();
 
@@ -33,6 +41,7 @@ public class Visualization implements IVisualization {
 		airportImageY = canvas.getHeight() / 2 - airportImage.getHeight();
 		planeImageBaseX = airportImageX + airportImage.getWidth() - planeImage.getWidth();
 		planeImageBaseY = airportImageY + airportImage.getHeight() - planeImage.getHeight();
+		customerBaseY =canvas.getHeight() / 2 - 5;
 
 		drawBase();
 
@@ -40,8 +49,12 @@ public class Visualization implements IVisualization {
 			@Override
 			public void handle(long now) {
 				drawBackground();
-				for (VisualizationPlane plane : planes) {
-					ctx.drawImage(planeImage, plane.getX().doubleValue(), plane.getY().doubleValue());
+				for (VisualizableAirplane airplane : airplanes) {
+					ctx.drawImage(planeImage, airplane.getX().doubleValue(), airplane.getY().doubleValue());
+				}
+				ctx.setFill(Color.BLACK);
+				for (VisualizableCustomer customer : customers) {
+					ctx.fillRect(customer.getX().doubleValue(), customer.getY().doubleValue(), 1, 5);
 				}
 				drawOverlay();
 			}
@@ -67,19 +80,22 @@ public class Visualization implements IVisualization {
 	}
 
 	@Override
-	public void displayTime(long timeStampSeconds) {
-		// TODO Auto-generated method stub
+	public void setSimulationTime(long timeStampSeconds) {
+		simulationTime = timeStampSeconds;
 	}
 
 	@Override
 	public void newCustomer() {
-		// TODO Auto-generated method stub
+		VisualizableCustomer customer = new VisualizableCustomer(0, airportImageX, customerBaseY);
+		customers.add(customer);
+		customer.getTimeline().setOnFinished(event -> customers.remove(customer));
+		customer.getTimeline().play();
 	}
 
 	public void summonPlane() {
-		VisualizationPlane plane = new VisualizationPlane(canvas, planeImageBaseX, planeImageBaseY);
-		planes.add(plane);
-		plane.getTimeline().setOnFinished(event -> planes.remove(plane));
+		VisualizableAirplane plane = new VisualizableAirplane(canvas, planeImageBaseX, planeImageBaseY);
+		airplanes.add(plane);
+		plane.getTimeline().setOnFinished(event -> airplanes.remove(plane));
 		plane.getTimeline().play();
 	}
 
