@@ -15,7 +15,7 @@ import simu.framework.Trace;
 public class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
-	private ArrayList<Double> palveluajat = new ArrayList<Double>();
+	private ArrayList<Long> palveluajat = new ArrayList<Long>();
 
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
@@ -53,7 +53,7 @@ public class Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
 		varattu = true;
-		double palveluaika = generator.sample();
+		Long palveluaika = (long) generator.sample();
 		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 
@@ -64,7 +64,7 @@ public class Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
 		varattu = true;
-		double palveluaika = generator.sample();
+		long palveluaika = (long) generator.sample();
 		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 
@@ -91,7 +91,7 @@ public class Palvelupiste {
 	}
 
 	public double findMedian() {
-		ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
+		ArrayList<Long> palveluajat = new ArrayList<Long>(this.palveluajat);
 		Collections.sort(palveluajat);
 
 		if (palveluajat.size() % 2 == 1)

@@ -7,7 +7,7 @@ import simu.model.Palvelupiste;
 
 public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ„Ã„RITYKSET
 
-	private double simulointiaika = 0;
+	private long simulointiaika = 0;
 	private long viive = 0;
 
 	private Kello kello;
@@ -30,7 +30,7 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 	}
 
 	@Override
-	public void setSimulointiaika(double aika) {
+	public void setSimulointiaika(long aika) {
 		simulointiaika = aika;
 	}
 
@@ -77,7 +77,7 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 		}
 	}
 
-	private double nykyaika() {
+	private long nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
 	}
 
