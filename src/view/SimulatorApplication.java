@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class SimulaattoriApplication extends Application {
+public class SimulatorApplication extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 
@@ -30,7 +30,7 @@ public class SimulaattoriApplication extends Application {
 	public void initLayout() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(SimulaattoriApplication.class.getResource("Root.fxml"));
+			loader.setLocation(SimulatorApplication.class.getResource("Root.fxml"));
 			rootLayout = (BorderPane) loader.load();
 
 			// Show the scene containing the root layout.
@@ -39,7 +39,7 @@ public class SimulaattoriApplication extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.show();
 			
-			SimulaattorinGUI controller = loader.getController();
+			SimulatorGUI controller = loader.getController();
 			controller.setApplication(this);
 			controller.handleStart();
 		} catch (IOException e) {

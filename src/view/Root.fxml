@@ -9,16 +9,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane style="-fx-background-color: #202022;" maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SimulaattorinGUI">
+<BorderPane maxHeight="600.0" maxWidth="900.0" minHeight="600.0" minWidth="900.0" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #202022;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SimulatorGUI">
    <center>
       <AnchorPane>
          <children>
-            <AnchorPane layoutX="200.0" maxWidth="400.0" minHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Canvas fx:id="simulationRoot" height="400.0" width="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
+            <Canvas fx:id="simulationRoot" height="600.0" layoutX="100.0" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
    </center>
@@ -37,7 +32,7 @@
             <VBox prefHeight="200.0" prefWidth="100.0" />
             <HBox alignment="CENTER" prefHeight="95.0" prefWidth="183.0">
                <children>
-                  <Button id="startButton" fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleSimuloi" style="-fx-background-color: transparent; -fx-border-color: green; -fx-border-width: 2px; fx-border-radius: 1em;" text="Start" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" />
+                  <Button id="startButton" fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLaunchSimulation" style="-fx-background-color: transparent; -fx-border-color: green; -fx-border-width: 2px; fx-border-radius: 1em;" text="Start" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" />
                </children>
             </HBox>
          </children>

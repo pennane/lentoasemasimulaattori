@@ -2,7 +2,7 @@ package simu.framework;
 
 import java.util.ArrayList;
 
-import controller.IKontrolleriMtoV;
+import controller.IControllerMtoV;
 import simu.model.Palvelupiste;
 
 public abstract class Moottori extends Thread implements IMoottori { // UUDET MÄÄRITYKSET
@@ -15,10 +15,10 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET M�
 	protected Tapahtumalista tapahtumalista;
 	protected ArrayList<Palvelupiste> palvelupisteet;
 
-	protected IKontrolleriMtoV kontrolleri;
+	protected IControllerMtoV controller;
 
-	public Moottori(IKontrolleriMtoV kontrolleri) {
-		this.kontrolleri = kontrolleri;
+	public Moottori(IControllerMtoV controller) {
+		this.controller = controller;
 
 		palvelupisteet = new ArrayList<>();
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
