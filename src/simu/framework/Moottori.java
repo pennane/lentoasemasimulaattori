@@ -2,12 +2,12 @@ package simu.framework;
 
 import java.util.ArrayList;
 
-import controller.IKontrolleriMtoV;
+import controller.IControllerMtoV;
 import simu.model.Palvelupiste;
 
 public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ„Ã„RITYKSET
 
-	private double simulointiaika = 0;
+	private long simulointiaika = 0;
 	private long viive = 0;
 
 	private Kello kello;
@@ -15,10 +15,10 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 	protected Tapahtumalista tapahtumalista;
 	protected ArrayList<Palvelupiste> palvelupisteet;
 
-	protected IKontrolleriMtoV kontrolleri;
+	protected IControllerMtoV controller;
 
-	public Moottori(IKontrolleriMtoV kontrolleri) {
-		this.kontrolleri = kontrolleri;
+	public Moottori(IControllerMtoV controller) {
+		this.controller = controller;
 
 		palvelupisteet = new ArrayList<>();
 		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
@@ -30,7 +30,7 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 	}
 
 	@Override
-	public void setSimulointiaika(double aika) {
+	public void setSimulointiaika(long aika) {
 		simulointiaika = aika;
 	}
 
@@ -77,7 +77,7 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 		}
 	}
 
-	private double nykyaika() {
+	private long nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
 	}
 

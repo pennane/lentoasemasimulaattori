@@ -5,9 +5,9 @@ import simu.model.TapahtumanTyyppi;
 public class Tapahtuma implements Comparable<Tapahtuma> {
 
 	private TapahtumanTyyppi tyyppi;
-	private double aika;
+	private long aika;
 
-	public Tapahtuma(TapahtumanTyyppi tyyppi, double aika) {
+	public Tapahtuma(TapahtumanTyyppi tyyppi, long aika) {
 		this.tyyppi = tyyppi;
 		this.aika = aika;
 	}
@@ -20,11 +20,11 @@ public class Tapahtuma implements Comparable<Tapahtuma> {
 		return tyyppi;
 	}
 
-	public void setAika(double aika) {
+	public void setAika(long aika) {
 		this.aika = aika;
 	}
 
-	public double getAika() {
+	public long getAika() {
 		return aika;
 	}
 

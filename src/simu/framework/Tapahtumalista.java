@@ -20,7 +20,7 @@ public class Tapahtumalista {
 		lista.add(t);
 	}
 
-	public double getSeuraavanAika() {
+	public long getSeuraavanAika() {
 		return lista.peek().getAika();
 	}
 
