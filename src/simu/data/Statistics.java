@@ -1,4 +1,4 @@
-package simu.model;
+package simu.data;
 
 public class Statistics {
 
