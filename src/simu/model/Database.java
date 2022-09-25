@@ -23,8 +23,7 @@ public class Database {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
 			// Setup the connection with the DB
-			connect = DriverManager
-					.getConnection("jdbc:mysql://localhost/feedback?" + "user=sqluser&password=sqluserpw");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
 
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
@@ -33,18 +32,18 @@ public class Database {
 			writeResultSet(resultSet);
 
 			// PreparedStatements can use variables and are more efficient
-			preparedStatement = connect.prepareStatement("insert into  test values (default, ?, ?, ?, ? , ?, ?)");
+			preparedStatement = connect.prepareStatement("insert into  test values (default, ?)");
 			// "insert test data to test database");
 			// Parameters start with 1
-			preparedStatement.setString(1, "Test");
+			preparedStatement.setString(1, "yeet");
 			preparedStatement.executeUpdate();
 
-			preparedStatement = connect.prepareStatement("SELECT data from test");
+			preparedStatement = connect.prepareStatement("SELECT yeet from test");
 			resultSet = preparedStatement.executeQuery();
 			writeResultSet(resultSet);
 
-			resultSet = statement.executeQuery("select * test");
-			writeMetaData(resultSet);
+			// resultSet = statement.executeQuery("select * test");
+			// writeMetaData(resultSet);
 
 		} catch (Exception e) {
 			throw e;
@@ -73,8 +72,8 @@ public class Database {
 			// also possible to get the columns via the column number
 			// which starts at 1
 			// e.g. resultSet.getSTring(2);
-			String data = resultSet.getString("data");
-			System.out.println("User: " + data);
+			String data = resultSet.getString("yeet");
+			System.out.println("tiedot: " + data);
 
 		}
 	}
