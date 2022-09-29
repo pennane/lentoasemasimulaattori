@@ -23,13 +23,13 @@ public class OmaMoottori extends Moottori {
 	public OmaMoottori(IControllerMtoV controller) {
 		super(controller);
 
-		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista);
-		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END);
-		securityCheck = new SecurityPalvelupiste(new Negexp(minutes(2)), tapahtumalista);
+		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista,"checkIn");
+		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,"baggageDrop");
+		securityCheck = new SecurityPalvelupiste(new Negexp(minutes(2)), tapahtumalista,"securityCheck");
 		passportControl = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.PASSPORTCONTROL_END);
+				TapahtumanTyyppi.PASSPORTCONTROL_END,"passportControl");
 		ticketInspection = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.TICKETINSPECTION_END);
+				TapahtumanTyyppi.TICKETINSPECTION_END,"ticketInspection");
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(3)), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
 
