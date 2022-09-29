@@ -15,25 +15,24 @@ import simu.framework.Trace;
 public class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
-	protected ArrayList<Long> palveluajat = new ArrayList<Long>();
+	private ArrayList<Double> palveluajat = new ArrayList<Double>();
 	public String palvelupisteDescription;
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
 	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
-	protected int palvellutAsiakkaat = 0;
+	private int palvellutAsiakkaat = 0;
 
 	private boolean varattu = false;
 
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi,
-			String tiedot) {
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi, String tiedot) {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
 		this.palvelupisteDescription = tiedot;
 	}
 
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, String tiedot) {
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista,String tiedot) {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.palvelupisteDescription = tiedot;
@@ -41,6 +40,7 @@ public class Palvelupiste {
 
 	public void lisaaJonoon(LentoasemaAsiakas a) { // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
+
 	}
 
 	public LentoasemaAsiakas otaJonosta() { // Poistetaan palvelussa ollut
@@ -55,7 +55,7 @@ public class Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
 		varattu = true;
-		Long palveluaika = (long) generator.sample();
+		double palveluaika = generator.sample();
 		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 
@@ -66,7 +66,7 @@ public class Palvelupiste {
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
 		varattu = true;
-		long palveluaika = (long) generator.sample();
+		double palveluaika = generator.sample();
 		palveluajat.add(palveluaika);
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika));
 
@@ -93,7 +93,7 @@ public class Palvelupiste {
 	}
 
 	public double findMedian() {
-		ArrayList<Long> palveluajat = new ArrayList<Long>(this.palveluajat);
+		ArrayList<Double> palveluajat = new ArrayList<>(this.palveluajat);
 		Collections.sort(palveluajat);
 
 		if (palveluajat.size() % 2 == 1)
