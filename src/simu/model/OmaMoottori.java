@@ -6,6 +6,7 @@ import static simu.model.Constants.seconds;
 import controller.IKontrolleriMtoV;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
+import simu.data.Statistics;
 import simu.framework.Kello;
 import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
@@ -23,13 +24,14 @@ public class OmaMoottori extends Moottori {
 	public OmaMoottori(IKontrolleriMtoV kontrolleri) {
 		super(kontrolleri);
 
-		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista,"checkIn");
-		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,"baggageDrop");
-		securityCheck = new SecurityPalvelupiste(new Negexp(minutes(2)), tapahtumalista,"securityCheck");
+		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista, "checkIn");
+		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,
+				"baggageDrop");
+		securityCheck = new SecurityPalvelupiste(new Negexp(minutes(2)), tapahtumalista, "securityCheck");
 		passportControl = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.PASSPORTCONTROL_END,"passportControl");
+				TapahtumanTyyppi.PASSPORTCONTROL_END, "passportControl");
 		ticketInspection = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.TICKETINSPECTION_END,"ticketInspection");
+				TapahtumanTyyppi.TICKETINSPECTION_END, "ticketInspection");
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(3)), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
 
@@ -88,6 +90,7 @@ public class OmaMoottori extends Moottori {
 			a = ticketInspection.otaJonosta();
 			a.setPoistumisaika(Kello.getInstance().getAika());
 			a.raportti();
+			Statistics.getInstance().getAsiakasValues(a);
 			break;
 		default:
 			System.out.println(t.getTyyppi());
@@ -100,6 +103,9 @@ public class OmaMoottori extends Moottori {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		System.out.println("Tulokset ... puuttuvat vielä");
 		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
+		for (Palvelupiste p : palvelupisteet) {
+			Statistics.getInstance().getPalvelupisteValues(p);
+		}
 	}
 
 }
