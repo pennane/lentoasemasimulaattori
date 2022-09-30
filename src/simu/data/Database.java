@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 public class Database {
 
@@ -17,7 +18,7 @@ public class Database {
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-
+	private HashMap<String, Long> tiedot = Statistics.getInstance().getTulokset();
 	public void readDataBase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
