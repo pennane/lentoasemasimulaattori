@@ -19,6 +19,7 @@ public class Database {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	private HashMap<String, Long> tiedot = Statistics.getInstance().getTulokset();
+
 	public void readDataBase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
@@ -53,6 +54,7 @@ public class Database {
 		}
 
 	}
+
 	public void writeToDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
@@ -60,11 +62,16 @@ public class Database {
 			// Setup the connection with the DB
 			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
 
-			preparedStatement = connect.prepareStatement("insert into  test values (default, ?)");
+			preparedStatement = connect.prepareStatement("insert into  test values (default, ?,?,?,?,?,?,?,?,?,?,?)");
 			// "insert test data to test database");
-			
+
 			// Parameters start with 1
-			preparedStatement.setString(1, "yeet");
+			int yeet = 1;
+			for (String i : tiedot.keySet()) {
+				// System.out.println("key: " + i + " value: " + tiedot.get(i));
+				preparedStatement.setDouble(yeet, tiedot.get(i));
+				yeet++;
+			}
 			preparedStatement.executeUpdate();
 
 		} catch (Exception e) {
@@ -74,6 +81,7 @@ public class Database {
 		}
 
 	}
+
 	public void getAllFromDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
@@ -94,7 +102,6 @@ public class Database {
 		}
 
 	}
-
 
 	private void writeResultSet(ResultSet resultSet) throws SQLException {
 		// ResultSet is initially before the first data set
