@@ -3,9 +3,11 @@ package simu.model;
 import constants.Constants;
 import eduni.distributions.RandomGenerator;
 import eduni.distributions.Uniform;
+import simu.framework.Trace;
+import simu.framework.Trace.Level;
 
 public class LentokoneGeneraattori {
-	
+
 	private static int QUARTERS_BEFORE_FIRST_PLANE = 6;
 
 	private double shengen_weight = 0.5; // Mikä osuus lentokoneista keskimäärin lentää shengen alueella 0.0 ... 1.0
@@ -29,7 +31,7 @@ public class LentokoneGeneraattori {
 			type = (rnd.sample() <= shengen_weight) ? FlightType.Shengen : FlightType.International;
 			int seatCount = (int) urnd.sample();
 			long departingTime = (long) (departingQuarterGenerator.sample() * Constants.minutes(15));
-			System.out.println(
+			Trace.out(Level.INFO,
 					"Luodaan uusi " + type + " lento matkustajamäärällä: " + seatCount + " ja ajalle " + departingTime);
 			lista.lisaaListaan(new Lentokone(type, seatCount, departingTime));
 		}

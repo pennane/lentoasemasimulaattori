@@ -7,10 +7,21 @@ import simu.framework.Kello;
 import simu.framework.Tapahtuma;
 import simu.framework.Tapahtumalista;
 
+/**
+ * Allows to have multiple service points for a single service point type. i.e.
+ * airport has one area for passport checking but the area might have multiple
+ * service points
+ * 
+ * @author arttupennanen
+ *
+ */
 public class PalvelupisteRouter extends Palvelupiste {
 	private int nextId;
 	protected ArrayList<PalvelupisteEntiteetti> palveluPisteet;
 
+	/**
+	 * Fill the servicepoint array with unoccupied servicepoints *
+	 */
 	private void instantiatePalveluPisteet(int palvelupisteidenMaara, String kuvaus) {
 		nextId = 0;
 		palveluPisteet = new ArrayList<>();
@@ -32,13 +43,21 @@ public class PalvelupisteRouter extends Palvelupiste {
 		instantiatePalveluPisteet(palvelupisteidenMaara, kuvaus);
 	}
 
+	/**
+	 * Returns true if any of the inner service points are unoccupied
+	 * 
+	 * @return
+	 */
 	public Boolean pisteVapaana() {
 		return palveluPisteet.stream().anyMatch(p -> p.getVarattu() == false);
 	}
 
 	@Override
 	public void aloitaPalvelu() {
-		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
+
+		// This method should never be called if there is no unoccupied service points.
+		// The orElseThrow is to catch possible developer errors
+		 PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
 				.orElseThrow();
 
 		Long palveluaika = (long) generator.sample();
