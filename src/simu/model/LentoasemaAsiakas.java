@@ -1,19 +1,26 @@
 package simu.model;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class LentoasemaAsiakas extends Asiakas {
 	private boolean hasMatakatavat; // muuttuja jolla ilmaistaan onko asiakkaalla matkatavaroita
-	private int lentoid; // TODO lento johon asiakas on menossa
+	private Lentokone lentokone;
 
-	Random temprand = new Random(); // TODO: This is for replicating lentokone, remove later
-
-	public LentoasemaAsiakas() {
-		this.hasMatakatavat = temprand.nextBoolean();
+	public LentoasemaAsiakas(Lentokone lentokone) {
+		this.hasMatakatavat = ThreadLocalRandom.current().nextBoolean();
+		this.lentokone = lentokone;
 	}
 
 	public FlightType getFlightType() {
-		return temprand.nextBoolean() ? FlightType.International : FlightType.Shengen;
+		return lentokone.getFlightType();
+	}
+	
+	public int getFlightId() {
+		return lentokone.getId();
+	}
+	
+	public Lentokone getLentokone() {
+		return lentokone;
 	}
 
 	public boolean getHasMatkatavarat() {
