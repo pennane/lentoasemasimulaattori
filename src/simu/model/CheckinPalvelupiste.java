@@ -4,8 +4,8 @@ import eduni.distributions.ContinuousGenerator;
 import simu.framework.Tapahtumalista;
 
 public class CheckinPalvelupiste extends Palvelupiste {
-	public CheckinPalvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {
-		super(generator, tapahtumalista);
+	public CheckinPalvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista,String tiedot) {
+		super(generator, tapahtumalista,tiedot);
 
 	}
 

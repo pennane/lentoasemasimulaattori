@@ -5,8 +5,8 @@ import simu.framework.Tapahtumalista;
 
 public class SecurityPalvelupiste extends Palvelupiste {
 
-	public SecurityPalvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista) {
-		super(generator, tapahtumalista);
+	public SecurityPalvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista,String tiedot) {
+		super(generator, tapahtumalista,tiedot);
 	}
 
 	@Override
