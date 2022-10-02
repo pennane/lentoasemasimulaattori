@@ -32,13 +32,13 @@ public class OmaMoottori extends Moottori {
 		lentoLista = new LentoLista();
 
 		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, 10, "checkin");
-		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END, 8,
-				"baggagedrop");
-		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, "securitycheck");
+		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,
+				10, "baggagedrop");
+		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 10, "securitycheck");
 		passportControl = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.PASSPORTCONTROL_END, 4, "passportcontrol");
+				TapahtumanTyyppi.PASSPORTCONTROL_END, 10, "passportcontrol");
 		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.TICKETINSPECTION_END, 20, "ticketinspection");
+				TapahtumanTyyppi.TICKETINSPECTION_END, 10, "ticketinspection");
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(10)), tapahtumalista,
 				TapahtumanTyyppi.CHECKIN_ENTER);

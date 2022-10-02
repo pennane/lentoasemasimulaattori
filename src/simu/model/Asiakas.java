@@ -6,8 +6,8 @@ import simu.framework.Trace;
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)
 public class Asiakas {
-	private double saapumisaika;
-	private double poistumisaika;
+	private long saapumisaika;
+	private long poistumisaika;
 	private int id;
 	private static int totalAsiakkaat = 0;
 	private static long sumLeadtime = 0; // lead time = läpimenoaika
@@ -28,7 +28,7 @@ public class Asiakas {
 		return poistumisaika;
 	}
 
-	public void setPoistumisaika(double poistumisaika) {
+	public void setPoistumisaika(long poistumisaika) {
 		this.poistumisaika = poistumisaika;
 	}
 
@@ -36,7 +36,7 @@ public class Asiakas {
 		return saapumisaika;
 	}
 
-	public void setSaapumisaika(double saapumisaika) {
+	public void setSaapumisaika(long saapumisaika) {
 		this.saapumisaika = saapumisaika;
 	}
 
@@ -53,7 +53,7 @@ public class Asiakas {
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " saapui: " + saapumisaika);
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " poistui: " + poistumisaika);
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " viipyi: " + (poistumisaika - saapumisaika));
-		double leadtime = poistumisaika - saapumisaika;
+		long leadtime = poistumisaika - saapumisaika;
 		sumLeadtime += leadtime;
 		Trace.out(Trace.Level.INFO, "Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + getAverageLeadtime());
 	}

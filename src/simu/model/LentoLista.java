@@ -18,8 +18,9 @@ public class LentoLista {
 	public PriorityQueue<Lentokone> getLennot() {
 		return lennot;
 	}
+
 	
 	public Optional<Lentokone> findNextAvailable() {
-		return lennot.stream().sorted().filter(l -> l.hasAvailableSeats()).findFirst();
+		return lennot.stream().sorted().filter(l -> l.hasAvailableSeats() && !l.getHasDeparted()).findFirst();
 	}
 }
