@@ -24,6 +24,7 @@ public class PalvelupisteEntiteetti {
 	}
 
 	public LentoasemaAsiakas lopetaPalvelu() {
+		
 		this.varattu = false;
 		LentoasemaAsiakas asiakas = this.asiakas;
 		this.asiakas = null;

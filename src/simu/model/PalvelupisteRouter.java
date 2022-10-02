@@ -43,7 +43,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 
 		Long palveluaika = (long) generator.sample();
 
-		palvelupiste.palvele(jono.peek());
+		palvelupiste.palvele(jono.poll());
 		palveluajat.add(palveluaika);
 
 		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi, Kello.getInstance().getAika() + palveluaika,
@@ -57,7 +57,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 
 		Long palveluaika = (long) generator.sample();
 
-		palvelupiste.palvele(jono.peek());
+		palvelupiste.palvele(jono.poll());
 		palveluajat.add(palveluaika);
 
 		tapahtumalista.lisaa(

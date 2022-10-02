@@ -28,7 +28,7 @@ public class OmaMoottori extends Moottori {
 		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, 10, "checkin");
 		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END, 8,
 				"baggagedrop");
-		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, );
+		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, "securitycheck");
 		passportControl = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
 				TapahtumanTyyppi.PASSPORTCONTROL_END, 4, "passportcontrol");
 		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
@@ -57,7 +57,8 @@ public class OmaMoottori extends Moottori {
 		switch (t.getTyyppi()) {
 
 		case CHECKIN_ENTER:
-			checkIn.lisaaJonoon(new LentoasemaAsiakas());
+			a = new LentoasemaAsiakas();
+			checkIn.lisaaJonoon(a);
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
 			controller.visualizeCurrentTime(Kello.getInstance().getAika());
@@ -107,10 +108,10 @@ public class OmaMoottori extends Moottori {
 			}
 		}
 	}
-	
+
 	@Override
-	public void run() { // Entinen aja()
-		alustukset(); // luodaan mm. ensimmäinen tapahtuma
+	public void run() {
+		alustukset();
 		while (simuloidaan()) {
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
 			viive();
@@ -121,7 +122,6 @@ public class OmaMoottori extends Moottori {
 
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
 			yritaCTapahtumat();
-
 		}
 		tulokset();
 

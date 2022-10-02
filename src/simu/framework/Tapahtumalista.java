@@ -10,8 +10,6 @@ public class Tapahtumalista {
 	}
 
 	public Tapahtuma poista() {
-		Trace.out(Trace.Level.INFO,
-				"Tapahtumalistasta poisto " + lista.peek().getTyyppi() + " " + lista.peek().getAika());
 		return lista.remove();
 	}
 

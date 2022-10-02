@@ -25,7 +25,7 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
 		moottori.setSimulointiaika(Constants.SIMULATION_DURATION);
 		moottori.setViive(Constants.SIMULATION_DELAY);
-		Trace.setTraceLevel(Level.ERR);
+		Trace.setTraceLevel(Level.WAR);
 		((Thread) moottori).start();
 	}
 
@@ -51,7 +51,7 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 			break;
 		}
 		default: {
-			System.out.println(flightType);
+			Trace.out(Trace.Level.ERR, "Got unhandled FlightType " + flightType.toString());
 			throw new UnsupportedOperationException();
 		}
 		}

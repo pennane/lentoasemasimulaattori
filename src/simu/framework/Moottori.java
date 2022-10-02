@@ -88,7 +88,6 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 	}
 
 	protected void viive() {
-		Trace.out(Trace.Level.INFO, "Viive " + viive);
 		try {
 			sleep(viive);
 		} catch (InterruptedException e) {
