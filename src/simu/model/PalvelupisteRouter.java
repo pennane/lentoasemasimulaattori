@@ -40,7 +40,6 @@ public class PalvelupisteRouter extends Palvelupiste {
 	public void aloitaPalvelu() {
 		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
 				.orElseThrow();
-		System.out.println(palveluPisteet);
 
 		Long palveluaika = (long) generator.sample();
 
@@ -55,7 +54,6 @@ public class PalvelupisteRouter extends Palvelupiste {
 	public void aloitaPalvelu(TapahtumanTyyppi tapahtumanTyyppi) {
 		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
 				.orElseThrow();
-		System.out.println(palveluPisteet);
 
 		Long palveluaika = (long) generator.sample();
 
