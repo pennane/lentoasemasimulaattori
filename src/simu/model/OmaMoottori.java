@@ -28,7 +28,7 @@ public class OmaMoottori extends Moottori {
 		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, 10, "checkin");
 		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END, 8,
 				"baggagedrop");
-		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, "securitycheck");
+		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, );
 		passportControl = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
 				TapahtumanTyyppi.PASSPORTCONTROL_END, 4, "passportcontrol");
 		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
@@ -101,7 +101,6 @@ public class OmaMoottori extends Moottori {
 
 	@Override
 	protected void yritaCTapahtumat() { // määrittele protectediksi, josa haluat ylikirjoittaa
-		System.out.println("CTAPAHTUMSSS");
 		for (PalvelupisteRouter p : palvelupisteet) {
 			if (p.pisteVapaana() && p.onJonossa()) {
 				p.aloitaPalvelu();
