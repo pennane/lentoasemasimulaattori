@@ -11,29 +11,31 @@ import simu.framework.Kello;
 import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
+import simu.framework.Trace;
 
 public class OmaMoottori extends Moottori {
 
 	private Saapumisprosessi saapumisprosessi;
-	Palvelupiste checkIn;
-	Palvelupiste baggageDrop;
-	Palvelupiste passportControl;
-	Palvelupiste ticketInspection;
-	Palvelupiste securityCheck;
+	PalvelupisteRouter checkIn;
+	PalvelupisteRouter baggageDrop;
+	PalvelupisteRouter passportControl;
+	PalvelupisteRouter ticketInspection;
+	PalvelupisteRouter securityCheck;
 
 	public OmaMoottori(IControllerMtoV controller) {
 		super(controller);
 
-		checkIn = new CheckinPalvelupiste(new Normal(minutes(3), 2), tapahtumalista, "checkIn");
-		baggageDrop = new Palvelupiste(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,
-				"baggageDrop");
-		securityCheck = new SecurityPalvelupiste(new Negexp(minutes(2)), tapahtumalista, "securityCheck");
-		passportControl = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.PASSPORTCONTROL_END, "passportControl");
-		ticketInspection = new Palvelupiste(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.TICKETINSPECTION_END, "ticketInspection");
+		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, 10, "checkin");
+		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END, 8,
+				"baggagedrop");
+		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, "securitycheck");
+		passportControl = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
+				TapahtumanTyyppi.PASSPORTCONTROL_END, 4, "passportcontrol");
+		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
+				TapahtumanTyyppi.TICKETINSPECTION_END, 20, "ticketinspection");
 
-		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(3)), tapahtumalista, TapahtumanTyyppi.CHECKIN_ENTER);
+		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(10)), tapahtumalista,
+				TapahtumanTyyppi.CHECKIN_ENTER);
 
 		palvelupisteet.add(checkIn);
 		palvelupisteet.add(baggageDrop);
@@ -46,16 +48,13 @@ public class OmaMoottori extends Moottori {
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
-
-		// TODO: luo lentokoneet
 	}
 
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t) { // B-vaiheen tapahtumat
 
 		LentoasemaAsiakas a;
-		switch (t.getTyyppi()) { // TODO: Joku abstractio tälle tai jotain et ei oo nii paljon kohtia jossa voi
-									// mennä rikki
+		switch (t.getTyyppi()) {
 
 		case CHECKIN_ENTER:
 			checkIn.lisaaJonoon(new LentoasemaAsiakas());
@@ -64,31 +63,31 @@ public class OmaMoottori extends Moottori {
 			controller.visualizeCurrentTime(Kello.getInstance().getAika());
 			break;
 		case CHECKIN_END_SELF:
-			a = checkIn.otaJonosta();
+			a = checkIn.lopetaPalvelu(t.getPalvelupisteId());
 			securityCheck.lisaaJonoon(a);
 			break;
 		case CHECKIN_END_BAGGAGE:
-			a = checkIn.otaJonosta();
+			a = checkIn.lopetaPalvelu(t.getPalvelupisteId());
 			securityCheck.lisaaJonoon(a);
 			break;
 		case SECURITYCHECK_END_SCHENGE:
-			a = securityCheck.otaJonosta();
+			a = securityCheck.lopetaPalvelu(t.getPalvelupisteId());
 			ticketInspection.lisaaJonoon(a);
 			break;
 		case SECURITYCHECK_END_INTERNATIONAL:
-			a = securityCheck.otaJonosta();
+			a = securityCheck.lopetaPalvelu(t.getPalvelupisteId());
 			passportControl.lisaaJonoon(a);
 			break;
 		case BAGGAGE_END:
-			a = baggageDrop.otaJonosta();
+			a = baggageDrop.lopetaPalvelu(t.getPalvelupisteId());
 			securityCheck.lisaaJonoon(a);
 			break;
 		case PASSPORTCONTROL_END:
-			a = passportControl.otaJonosta();
+			a = passportControl.lopetaPalvelu(t.getPalvelupisteId());
 			ticketInspection.lisaaJonoon(a);
 			break;
 		case TICKETINSPECTION_END:
-			a = ticketInspection.otaJonosta();
+			a = ticketInspection.lopetaPalvelu(t.getPalvelupisteId());
 			a.setPoistumisaika(Kello.getInstance().getAika());
 			controller.visualizeAirplane(a.getFlightType());
 			a.raportti();
@@ -98,6 +97,35 @@ public class OmaMoottori extends Moottori {
 			System.out.println(t.getTyyppi());
 			throw new UnsupportedOperationException();
 		}
+	}
+
+	@Override
+	protected void yritaCTapahtumat() { // määrittele protectediksi, josa haluat ylikirjoittaa
+		System.out.println("CTAPAHTUMSSS");
+		for (PalvelupisteRouter p : palvelupisteet) {
+			if (p.pisteVapaana() && p.onJonossa()) {
+				p.aloitaPalvelu();
+			}
+		}
+	}
+	
+	@Override
+	public void run() { // Entinen aja()
+		alustukset(); // luodaan mm. ensimmäinen tapahtuma
+		while (simuloidaan()) {
+			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
+			viive();
+			kello.setAika(nykyaika());
+
+			Trace.out(Trace.Level.INFO, "\nB-vaihe:");
+			suoritaBTapahtumat();
+
+			Trace.out(Trace.Level.INFO, "\nC-vaihe:");
+			yritaCTapahtumat();
+
+		}
+		tulokset();
+
 	}
 
 	@Override

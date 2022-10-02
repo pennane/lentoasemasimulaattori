@@ -15,13 +15,13 @@ import simu.framework.Trace;
 public class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
-	private ArrayList<Long> palveluajat = new ArrayList<Long>();
+	protected ArrayList<Long> palveluajat = new ArrayList<Long>();
 	public String palvelupisteDescription;
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
 	protected TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
 
-	private int palvellutAsiakkaat = 0;
+	protected int palvellutAsiakkaat = 0;
 
 	private boolean varattu = false;
 
@@ -41,7 +41,6 @@ public class Palvelupiste {
 
 	public void lisaaJonoon(LentoasemaAsiakas a) { // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
-
 	}
 
 	public LentoasemaAsiakas otaJonosta() { // Poistetaan palvelussa ollut

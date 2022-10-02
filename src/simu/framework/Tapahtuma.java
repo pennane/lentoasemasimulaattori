@@ -6,10 +6,18 @@ public class Tapahtuma implements Comparable<Tapahtuma> {
 
 	private TapahtumanTyyppi tyyppi;
 	private long aika;
-
+	private String palvelupisteId;
+	
 	public Tapahtuma(TapahtumanTyyppi tyyppi, long aika) {
 		this.tyyppi = tyyppi;
 		this.aika = aika;
+		this.palvelupisteId = null;
+	}
+	
+	public Tapahtuma(TapahtumanTyyppi tyyppi, long aika, String palvelupisteId) {
+		this.tyyppi = tyyppi;
+		this.aika = aika;
+		this.palvelupisteId = palvelupisteId;
 	}
 
 	public void setTyyppi(TapahtumanTyyppi tyyppi) {
@@ -26,6 +34,10 @@ public class Tapahtuma implements Comparable<Tapahtuma> {
 
 	public long getAika() {
 		return aika;
+	}
+
+	public String getPalvelupisteId() {
+		return palvelupisteId;
 	}
 
 	@Override
