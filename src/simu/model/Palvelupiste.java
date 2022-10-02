@@ -10,11 +10,9 @@ import simu.framework.Tapahtuma;
 import simu.framework.Tapahtumalista;
 import simu.framework.Trace;
 
-// TODO:
-// Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
-public class Palvelupiste {
+public abstract class Palvelupiste {
 
-	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
+	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>();
 	protected ArrayList<Long> palveluajat = new ArrayList<Long>();
 	public String palvelupisteDescription;
 	protected ContinuousGenerator generator;

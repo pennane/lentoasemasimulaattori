@@ -18,11 +18,9 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		this.ui = ui;
 	}
 
-	// Moottorin ohjausta:
-
 	@Override
 	public void launchSimulation() {
-		moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
+		moottori = new OmaMoottori(this);
 		moottori.setSimulointiaika(Constants.SIMULATION_DURATION);
 		moottori.setViive(Constants.SIMULATION_DELAY);
 		Trace.setTraceLevel(Level.WAR);
