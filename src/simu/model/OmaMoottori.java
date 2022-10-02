@@ -105,7 +105,6 @@ public class OmaMoottori extends Moottori {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		System.out.println("Tulokset ... puuttuvat vielä");
 		controller.visualizeFinish();
-		kontrolleri.naytaLoppuaika(Kello.getInstance().getAika());
 		for (Palvelupiste p : palvelupisteet) {
 			Statistics.getInstance().getPalvelupisteValues(p);
 		}

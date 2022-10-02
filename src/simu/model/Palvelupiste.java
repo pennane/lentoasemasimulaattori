@@ -15,7 +15,7 @@ import simu.framework.Trace;
 public class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
-	private ArrayList<Double> palveluajat = new ArrayList<Double>();
+	private ArrayList<Long> palveluajat = new ArrayList<Long>();
 	public String palvelupisteDescription;
 	protected ContinuousGenerator generator;
 	protected Tapahtumalista tapahtumalista;
@@ -25,14 +25,15 @@ public class Palvelupiste {
 
 	private boolean varattu = false;
 
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi, String tiedot) {
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi,
+			String tiedot) {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
 		this.palvelupisteDescription = tiedot;
 	}
 
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista,String tiedot) {
+	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, String tiedot) {
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.palvelupisteDescription = tiedot;
