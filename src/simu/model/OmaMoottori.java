@@ -3,6 +3,8 @@ package simu.model;
 import static constants.Constants.minutes;
 import static constants.Constants.seconds;
 
+import java.util.Optional;
+
 import controller.IControllerMtoV;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
@@ -15,24 +17,28 @@ import simu.framework.Trace;
 
 public class OmaMoottori extends Moottori {
 
+	private LentoLista lentoLista;
+
 	private Saapumisprosessi saapumisprosessi;
-	PalvelupisteRouter checkIn;
-	PalvelupisteRouter baggageDrop;
-	PalvelupisteRouter passportControl;
-	PalvelupisteRouter ticketInspection;
-	PalvelupisteRouter securityCheck;
+	private PalvelupisteRouter checkIn;
+	private PalvelupisteRouter baggageDrop;
+	private PalvelupisteRouter passportControl;
+	private PalvelupisteRouter ticketInspection;
+	private PalvelupisteRouter securityCheck;
 
 	public OmaMoottori(IControllerMtoV controller) {
 		super(controller);
 
+		lentoLista = new LentoLista();
+
 		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, 10, "checkin");
-		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END, 8,
-				"baggagedrop");
-		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 4, "securitycheck");
+		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,
+				10, "baggagedrop");
+		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 10, "securitycheck");
 		passportControl = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.PASSPORTCONTROL_END, 4, "passportcontrol");
+				TapahtumanTyyppi.PASSPORTCONTROL_END, 10, "passportcontrol");
 		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.TICKETINSPECTION_END, 20, "ticketinspection");
+				TapahtumanTyyppi.TICKETINSPECTION_END, 10, "ticketinspection");
 
 		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(10)), tapahtumalista,
 				TapahtumanTyyppi.CHECKIN_ENTER);
@@ -42,12 +48,12 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet.add(securityCheck);
 		palvelupisteet.add(passportControl);
 		palvelupisteet.add(ticketInspection);
-
 	}
 
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
+		new LentokoneGeneraattori(lentoLista).generoi(100); // TODO: määrä kontrollerista
 	}
 
 	@Override
@@ -57,11 +63,21 @@ public class OmaMoottori extends Moottori {
 		switch (t.getTyyppi()) {
 
 		case CHECKIN_ENTER:
-			a = new LentoasemaAsiakas();
-			checkIn.lisaaJonoon(a);
+			Optional<Lentokone> maybeLentokone = lentoLista.findNextAvailable();
+
+			// This happens when all of the lentokonees are filled
+			if (maybeLentokone.isEmpty())
+				break;
+
+			Lentokone lentokone = maybeLentokone.get();
+			lentokone.incrementPassengersInAirport();
+
+			checkIn.lisaaJonoon(new LentoasemaAsiakas(lentokone));
+
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
 			controller.visualizeCurrentTime(Kello.getInstance().getAika());
+
 			break;
 		case CHECKIN_END_SELF:
 			a = checkIn.lopetaPalvelu(t.getPalvelupisteId());
@@ -89,10 +105,17 @@ public class OmaMoottori extends Moottori {
 			break;
 		case TICKETINSPECTION_END:
 			a = ticketInspection.lopetaPalvelu(t.getPalvelupisteId());
+			a.getLentokone().incrementWaitingPassengers();
 			a.setPoistumisaika(Kello.getInstance().getAika());
-			controller.visualizeAirplane(a.getFlightType());
 			a.raportti();
 			Statistics.getInstance().getAsiakasValues(a);
+
+			break;
+		case SCHENGE_PLANE_DEPARTING:
+			controller.visualizeAirplane(FlightType.Shengen);
+			break;
+		case INTERNATIONAL_PLANE_DEPARTING:
+			controller.visualizeAirplane(FlightType.International);
 			break;
 		default:
 			System.out.println(t.getTyyppi());
@@ -105,6 +128,15 @@ public class OmaMoottori extends Moottori {
 		for (PalvelupisteRouter p : palvelupisteet) {
 			if (p.pisteVapaana() && p.onJonossa()) {
 				p.aloitaPalvelu();
+			}
+		}
+		for (Lentokone l : lentoLista.getLennot()) {
+			if (l.canDepart()) {
+				Trace.out(Trace.Level.WAR,
+						l.getFlightType() + " lento lähtee " + nykyaika() + ". Kapasiteetti: " + l.getPassengerCount()
+								+ ", Kyydissä: " + l.getPassengersWaiting() + ", Jäi kyydistä: "
+								+ (l.getPassengersInAirport() - l.getPassengersWaiting()));
+				tapahtumalista.lisaa(l.startDeparting());
 			}
 		}
 	}

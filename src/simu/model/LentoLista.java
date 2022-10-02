@@ -1,24 +1,26 @@
 package simu.model;
 
-import java.util.LinkedList;
+import java.util.Optional;
+import java.util.PriorityQueue;
 
 public class LentoLista {
 
-	LinkedList<Lentokone> lennot;
-	
+	PriorityQueue<Lentokone> lennot;
+
 	public LentoLista() {
-		this.lennot = new LinkedList<>();
+		this.lennot = new PriorityQueue<>();
 	}
+
 	public void lisaaListaan(Lentokone lentokone) {
 		lennot.add(lentokone);
 	}
-	public void poistaListalta() {
-		lennot.remove();
+
+	public PriorityQueue<Lentokone> getLennot() {
+		return lennot;
 	}
-	public Lentokone getSeuraava() {
-		return lennot.getFirst();
-	}
-	public Lentokone getViimeinen() {
-		return lennot.getLast();
+
+	
+	public Optional<Lentokone> findNextAvailable() {
+		return lennot.stream().sorted().filter(l -> l.hasAvailableSeats() && !l.getHasDeparted()).findFirst();
 	}
 }
