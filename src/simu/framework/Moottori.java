@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 import controller.IControllerMtoV;
 import simu.model.Palvelupiste;
+import simu.model.PalvelupisteRouter;
 
 public abstract class Moottori extends Thread implements IMoottori { // UUDET MÄÄRITYKSET
 
-	private long simulointiaika = 0;
-	private long viive = 0;
+	protected long simulointiaika = 0;
+	protected long viive = 0;
 
-	private Kello kello;
+	protected Kello kello;
 
 	protected Tapahtumalista tapahtumalista;
-	protected ArrayList<Palvelupiste> palvelupisteet;
+	protected ArrayList<PalvelupisteRouter> palvelupisteet;
 
 	protected IControllerMtoV controller;
 
@@ -63,13 +64,13 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET M�
 
 	}
 
-	private void suoritaBTapahtumat() {
+	protected void suoritaBTapahtumat() {
 		while (tapahtumalista.getSeuraavanAika() == kello.getAika()) {
 			suoritaTapahtuma(tapahtumalista.poista());
 		}
 	}
 
-	private void yritaCTapahtumat() { // määrittele protectediksi, josa haluat ylikirjoittaa
+	protected void yritaCTapahtumat() { // määrittele protectediksi, josa haluat ylikirjoittaa
 		for (Palvelupiste p : palvelupisteet) {
 			if (!p.onVarattu() && p.onJonossa()) {
 				p.aloitaPalvelu();
@@ -77,17 +78,16 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET M�
 		}
 	}
 
-	private long nykyaika() {
+	protected long nykyaika() {
 		return tapahtumalista.getSeuraavanAika();
 	}
 
-	private boolean simuloidaan() {
+	protected boolean simuloidaan() {
 		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
 		return kello.getAika() < simulointiaika;
 	}
 
-	private void viive() {
-		Trace.out(Trace.Level.INFO, "Viive " + viive);
+	protected void viive() {
 		try {
 			sleep(viive);
 		} catch (InterruptedException e) {

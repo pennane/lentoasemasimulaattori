@@ -55,7 +55,7 @@ public class Asiakas {
 		Trace.out(Trace.Level.INFO, "Asiakas " + id + " viipyi: " + (poistumisaika - saapumisaika));
 		double leadtime = poistumisaika - saapumisaika;
 		sumLeadtime += leadtime;
-		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + getAverageLeadtime());
+		Trace.out(Trace.Level.INFO, "Asiakkaiden läpimenoaikojen keskiarvo tähän asti " + getAverageLeadtime());
 	}
 
 }
