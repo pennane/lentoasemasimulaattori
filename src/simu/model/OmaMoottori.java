@@ -8,6 +8,7 @@ import java.util.Optional;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.controller.IControllerMtoV;
+import simu.data.Database;
 import simu.data.Statistics;
 import simu.framework.Kello;
 import simu.framework.Moottori;
@@ -165,7 +166,15 @@ public class OmaMoottori extends Moottori {
 		System.out.println("Tulokset ... puuttuvat vielä");
 		controller.visualizeFinish();
 		for (Palvelupiste p : palvelupisteet) {
+			System.out.println("debug palvelupisten nimi " + p.getPalvelupisteDescription());
 			Statistics.getInstance().getPalvelupisteValues(p);
+		}
+		Database dao = new Database();
+		try {
+			dao.writeToDatabase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

@@ -91,9 +91,12 @@ public abstract class Palvelupiste {
 	}
 
 	public double findMedian() {
+		if (palveluajat.size() == 0) {
+			return 1;
+		}
 		ArrayList<Long> palveluajat = new ArrayList<Long>(this.palveluajat);
 		Collections.sort(palveluajat);
-
+		System.out.println("debuuuug " + palveluajat.size());
 		if (palveluajat.size() % 2 == 1)
 			return palveluajat.get((palveluajat.size() + 1) / 2 - 1);
 		else {
