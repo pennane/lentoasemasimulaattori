@@ -6,18 +6,20 @@ public class SimulatorSettings {
 	
 	private double customersPerMinute;
 	private double planesPerDay;
-	private double checkInAmount;
-	private double baggageDropAmount;
-	private double securityCheckAmount;
-	private double passportControlAmount;
-	private double ticketInspectionAmount;
+	private int checkInAmount;
+	private int baggageDropAmount;
+	private int securityCheckAmount;
+	private int passportControlAmount;
+	private int ticketInspectionAmount;
 	private double shengenProbability; // 0-1
 	private double baggageProbability; // 0-1
 
+
 	public SimulatorSettings(long simulationDurationSeconds, long simulationDelay, double customersPerMinute,
-			double planesPerDay, double checkInAmount, double baggageDropAmount, double securityCheckAmount,
-			double passportControlAmount, double ticketInspectionAmount, double shengenProbability,
+			double planesPerDay, int checkInAmount, int baggageDropAmount, int securityCheckAmount,
+			int passportControlAmount, int ticketInspectionAmount, double shengenProbability,
 			double baggageProbability) {
+		super();
 		this.simulationDurationSeconds = simulationDurationSeconds;
 		this.simulationDelay = simulationDelay;
 		this.customersPerMinute = customersPerMinute;
@@ -30,7 +32,7 @@ public class SimulatorSettings {
 		this.shengenProbability = shengenProbability;
 		this.baggageProbability = baggageProbability;
 	}
-	
+
 	public long getSimulationDurationSeconds() {
 		return simulationDurationSeconds;
 	}
@@ -47,23 +49,23 @@ public class SimulatorSettings {
 		return planesPerDay;
 	}
 
-	public double getCheckInAmount() {
+	public int getCheckInAmount() {
 		return checkInAmount;
 	}
 
-	public double getBaggageDropAmount() {
+	public int getBaggageDropAmount() {
 		return baggageDropAmount;
 	}
 
-	public double getSecurityCheckAmount() {
+	public int getSecurityCheckAmount() {
 		return securityCheckAmount;
 	}
 
-	public double getPassportControlAmount() {
+	public int getPassportControlAmount() {
 		return passportControlAmount;
 	}
 
-	public double getTicketInspectionAmount() {
+	public int getTicketInspectionAmount() {
 		return ticketInspectionAmount;
 	}
 
