@@ -68,7 +68,7 @@ public class Database {
 			// Parameters start with 1
 			int yeet = 1;
 			for (String i : tiedot.keySet()) {
-				// System.out.println("key: " + i + " value: " + tiedot.get(i));
+				System.out.println("key: " + i + " value: " + tiedot.get(i));
 				preparedStatement.setDouble(yeet, tiedot.get(i));
 				yeet++;
 			}

@@ -57,7 +57,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 
 		// This method should never be called if there is no unoccupied service points.
 		// The orElseThrow is to catch possible developer errors
-		 PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
+		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
 				.orElseThrow();
 
 		Long palveluaika = (long) generator.sample();
