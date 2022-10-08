@@ -1,6 +1,8 @@
 package simu.model;
 
 public class SimulatorSettings {
+	private double simulationDurationSeconds;
+	private double simulationDelay;
 	private double customersPerMinute;
 	private double planesPerDay;
 	private double checkInAmount;
@@ -11,10 +13,12 @@ public class SimulatorSettings {
 	private double shengenProbability; // 0-1
 	private double baggageProbability; // 0-1
 
-	public SimulatorSettings(double customersPerMinute, double planesPerDay, double checkInAmount,
-			double baggageDropAmount, double securityCheckAmount, double passportControlAmount,
-			double ticketInspectionAmount, double shengenProbability, double baggageProbability) {
-		super();
+	public SimulatorSettings(double simulationDurationSeconds, double simulationDelay, double customersPerMinute,
+			double planesPerDay, double checkInAmount, double baggageDropAmount, double securityCheckAmount,
+			double passportControlAmount, double ticketInspectionAmount, double shengenProbability,
+			double baggageProbability) {
+		this.simulationDurationSeconds = simulationDurationSeconds;
+		this.simulationDelay = simulationDelay;
 		this.customersPerMinute = customersPerMinute;
 		this.planesPerDay = planesPerDay;
 		this.checkInAmount = checkInAmount;
@@ -24,6 +28,14 @@ public class SimulatorSettings {
 		this.ticketInspectionAmount = ticketInspectionAmount;
 		this.shengenProbability = shengenProbability;
 		this.baggageProbability = baggageProbability;
+	}
+	
+	public double getSimulationDurationSeconds() {
+		return simulationDurationSeconds;
+	}
+
+	public double getSimulationDelay() {
+		return simulationDelay;
 	}
 
 	public double getCustomersPerMinute() {
