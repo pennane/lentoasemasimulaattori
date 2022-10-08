@@ -1,13 +1,13 @@
-package controller;
+package simu.controller;
 
-import constants.Constants;
 import javafx.application.Platform;
+import simu.constants.Constants;
 import simu.framework.IMoottori;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
 import simu.model.FlightType;
 import simu.model.OmaMoottori;
-import view.ISimulatorGUI;
+import simu.view.ISimulatorGUI;
 
 public class Controller implements IControllerVtoM, IControllerMtoV {
 

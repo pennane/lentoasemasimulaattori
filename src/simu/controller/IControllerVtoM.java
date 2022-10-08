@@ -1,4 +1,4 @@
-package controller;
+package simu.controller;
 
 public interface IControllerVtoM {
 	public void launchSimulation();

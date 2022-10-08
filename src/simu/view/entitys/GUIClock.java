@@ -1,8 +1,8 @@
-package view.entitys;
+package simu.view.entitys;
 
-import constants.Constants;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import simu.constants.Constants;
 
 public class GUIClock {
 	private static final int DIAMETER = 62;

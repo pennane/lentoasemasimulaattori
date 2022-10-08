@@ -1,10 +1,10 @@
 package simu.model;
 
-import constants.Constants;
 import eduni.distributions.RandomGenerator;
 import eduni.distributions.Uniform;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
+import simu.constants.Constants;
 
 public class LentokoneGeneraattori {
 

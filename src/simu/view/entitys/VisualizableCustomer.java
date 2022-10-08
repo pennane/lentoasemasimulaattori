@@ -1,4 +1,4 @@
-package view.entitys;
+package simu.view.entitys;
 
 public class VisualizableCustomer extends VisualizablePoint {
 	private static double ANIMATION_DURATION = 4000;

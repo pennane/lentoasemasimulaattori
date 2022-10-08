@@ -1,4 +1,4 @@
-package view;
+package simu.view;
 
 import java.util.ArrayList;
 
@@ -7,9 +7,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import view.entitys.GUIClock;
-import view.entitys.VisualizableAirplane;
-import view.entitys.VisualizableCustomer;
+import simu.view.entitys.GUIClock;
+import simu.view.entitys.VisualizableAirplane;
+import simu.view.entitys.VisualizableCustomer;
 
 public class Visualization implements IVisualization {
 
