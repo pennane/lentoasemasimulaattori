@@ -185,13 +185,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			System.out.println("debug palvelupisten nimi " + p.getPalvelupisteDescription());
 			Statistics.getInstance().getPalvelupisteValues(p);
 		}
-		Database dao = new Database();
-		try {
-			dao.writeToDatabase();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	@Override

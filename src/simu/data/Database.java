@@ -55,7 +55,7 @@ public class Database {
 
 	}
 
-	public void writeToDatabase() throws Exception {
+	public void writeToDatabase(SimulationData simdata) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
