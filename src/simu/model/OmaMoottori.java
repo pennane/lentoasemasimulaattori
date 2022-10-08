@@ -1,13 +1,13 @@
 package simu.model;
 
-import static constants.Constants.minutes;
-import static constants.Constants.seconds;
+import static simu.constants.Constants.minutes;
+import static simu.constants.Constants.seconds;
 
 import java.util.Optional;
 
-import controller.IControllerMtoV;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
+import simu.controller.IControllerMtoV;
 import simu.data.Statistics;
 import simu.framework.Kello;
 import simu.framework.Moottori;

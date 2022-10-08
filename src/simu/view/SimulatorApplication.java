@@ -1,15 +1,11 @@
-package view;
+package simu.view;
 
 import java.io.IOException;
 
 import javafx.application.Application;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class SimulatorApplication extends Application {
@@ -30,7 +26,7 @@ public class SimulatorApplication extends Application {
 	public void initLayout() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(SimulatorApplication.class.getResource("Root.fxml"));
+			loader.setLocation(SimulatorApplication.class.getResource("./Root.fxml"));
 			rootLayout = (BorderPane) loader.load();
 
 			// Show the scene containing the root layout.
