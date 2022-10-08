@@ -1,4 +1,4 @@
-package view.entitys;
+package simu.view.entitys;
 
 import javafx.scene.canvas.Canvas;
 

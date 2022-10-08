@@ -1,13 +1,13 @@
-package controller;
+package simu.controller;
 
-import constants.Constants;
 import javafx.application.Platform;
+import simu.constants.Constants;
 import simu.framework.IMoottori;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
 import simu.model.FlightType;
 import simu.model.OmaMoottori;
-import view.ISimulatorGUI;
+import simu.view.ISimulatorGUI;
 
 public class Controller implements IControllerVtoM, IControllerMtoV {
 
@@ -18,11 +18,9 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		this.ui = ui;
 	}
 
-	// Moottorin ohjausta:
-
 	@Override
 	public void launchSimulation() {
-		moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
+		moottori = new OmaMoottori(this);
 		moottori.setSimulointiaika(Constants.SIMULATION_DURATION);
 		moottori.setViive(Constants.SIMULATION_DELAY);
 		Trace.setTraceLevel(Level.WAR);

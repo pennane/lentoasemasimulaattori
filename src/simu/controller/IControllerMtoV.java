@@ -1,4 +1,4 @@
-package controller;
+package simu.controller;
 
 import simu.model.FlightType;
 
