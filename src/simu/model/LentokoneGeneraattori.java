@@ -11,6 +11,7 @@ public class LentokoneGeneraattori {
 
 	private static int QUARTERS_BEFORE_FIRST_PLANE = 6;
 
+	// TODO: KÄYTÄ USERIN ANTAMAA WEIGHTTIÄ 
 	private double shengen_weight = 0.5; // Mikä osuus lentokoneista keskimäärin lentää shengen alueella 0.0 ... 1.0
 	private double international_weight = 1.0 - shengen_weight;
 	private LentoLista lista;
@@ -24,7 +25,7 @@ public class LentokoneGeneraattori {
 		RandomGenerator rnd = new RandomGenerator();
 		Uniform urnd = new Uniform(100, 300);
 
-		int simulationHours = Constants.SIMULATION_DURATION / Constants.SECONDS_IN_HOUR;
+		int simulationHours = Constants.DEFAULT_SIMULATION_DURATION_SECONDS / Constants.SECONDS_IN_HOUR;
 		int simulationQuarters = (int) Math.floor(simulationHours * 4);
 		Uniform departingQuarterGenerator = new Uniform(QUARTERS_BEFORE_FIRST_PLANE, simulationQuarters);
 

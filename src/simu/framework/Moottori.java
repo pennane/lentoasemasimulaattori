@@ -91,7 +91,7 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 		try {
 			sleep(viive);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 

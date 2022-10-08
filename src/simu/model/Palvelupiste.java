@@ -91,6 +91,8 @@ public abstract class Palvelupiste {
 	}
 
 	public double findMedian() {
+		if (palveluajat.size() == 0)
+			return 0;
 		ArrayList<Long> palveluajat = new ArrayList<Long>(this.palveluajat);
 		Collections.sort(palveluajat);
 

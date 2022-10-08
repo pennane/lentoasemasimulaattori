@@ -1,10 +1,14 @@
 package simu.model;
 
+import java.util.Optional;
+
+import simu.constants.Constants;
+
 public class SimulatorSettings {
-	private long simulationDurationSeconds;
-	private long simulationDelay;
-	
-	private double customersPerMinute;
+	private Long simulationDurationSeconds;
+	private Long simulationDelay;
+
+	private double meanSecondsBetweenCustomers;
 	private double planesPerDay;
 	private int checkInAmount;
 	private int baggageDropAmount;
@@ -14,23 +18,28 @@ public class SimulatorSettings {
 	private double shengenProbability; // 0-1
 	private double baggageProbability; // 0-1
 
+	private <T> T valueOr(T val, T constant) {
+		return Optional.ofNullable(val).orElse(constant);
+	}
 
-	public SimulatorSettings(long simulationDurationSeconds, long simulationDelay, double customersPerMinute,
+	public SimulatorSettings(Long simulationDurationSeconds, Long simulationDelay, double meanSecondsBetweenCustomers,
 			double planesPerDay, int checkInAmount, int baggageDropAmount, int securityCheckAmount,
 			int passportControlAmount, int ticketInspectionAmount, double shengenProbability,
 			double baggageProbability) {
 		super();
-		this.simulationDurationSeconds = simulationDurationSeconds;
-		this.simulationDelay = simulationDelay;
-		this.customersPerMinute = customersPerMinute;
-		this.planesPerDay = planesPerDay;
-		this.checkInAmount = checkInAmount;
-		this.baggageDropAmount = baggageDropAmount;
-		this.securityCheckAmount = securityCheckAmount;
-		this.passportControlAmount = passportControlAmount;
-		this.ticketInspectionAmount = ticketInspectionAmount;
-		this.shengenProbability = shengenProbability;
-		this.baggageProbability = baggageProbability;
+		this.simulationDurationSeconds = valueOr(simulationDurationSeconds,
+				(long) Constants.DEFAULT_SIMULATION_DURATION_SECONDS);
+		this.simulationDelay = valueOr(simulationDelay, (long) Constants.DEFAULT_SIMULATION_DELAY);
+		this.meanSecondsBetweenCustomers = valueOr(meanSecondsBetweenCustomers,
+				Constants.DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS);
+		this.planesPerDay = valueOr(planesPerDay, Constants.DEFAULT_PLANES_PER_DAY);
+		this.checkInAmount = valueOr(checkInAmount, Constants.DEFAULT_CHECKIN_AMOUNT);
+		this.baggageDropAmount = valueOr(baggageDropAmount, Constants.DEFAULT_BAGGAGE_DROP_AMOUNT);
+		this.securityCheckAmount = valueOr(securityCheckAmount, Constants.DEFAULT_SECURITY_CHECK_AMOUNT);
+		this.passportControlAmount = valueOr(passportControlAmount, Constants.DEFAULT_PASSPORT_CONTROL_AMOUNT);
+		this.ticketInspectionAmount = valueOr(ticketInspectionAmount, Constants.DEFAULT_TICKET_INSPECTION_AMOUNT);
+		this.shengenProbability = valueOr(shengenProbability, Constants.DEFAULT_SHENGEN_PROBABILITY);
+		this.baggageProbability = valueOr(baggageProbability, Constants.DEFAULT_BAGGE_PROBABILITY);
 	}
 
 	public long getSimulationDurationSeconds() {
@@ -41,8 +50,8 @@ public class SimulatorSettings {
 		return simulationDelay;
 	}
 
-	public double getCustomersPerMinute() {
-		return customersPerMinute;
+	public double getMeanSecondsBetweenCustomers() {
+		return meanSecondsBetweenCustomers;
 	}
 
 	public double getPlanesPerDay() {
@@ -84,6 +93,15 @@ public class SimulatorSettings {
 	public void setSimulationDelay(long simulationDelay) {
 		this.simulationDelay = simulationDelay;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "SimulatorSettings [simulationDurationSeconds=" + simulationDurationSeconds + ", simulationDelay="
+				+ simulationDelay + ", meanSecondsBetweenCustomers=" + meanSecondsBetweenCustomers + ", planesPerDay="
+				+ planesPerDay + ", checkInAmount=" + checkInAmount + ", baggageDropAmount=" + baggageDropAmount
+				+ ", securityCheckAmount=" + securityCheckAmount + ", passportControlAmount=" + passportControlAmount
+				+ ", ticketInspectionAmount=" + ticketInspectionAmount + ", shengenProbability=" + shengenProbability
+				+ ", baggageProbability=" + baggageProbability + "]";
+	}
+
 }

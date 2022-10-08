@@ -1,45 +1,27 @@
 package simu.view;
 
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import simu.controller.Controller;
 import simu.controller.IControllerVtoM;
 
-public class SimulatorGUI implements ISimulatorGUI {
+public class SimulatorGUI extends Application implements ISimulatorGUI {
+
+	private Stage primaryStage;
+	private BorderPane rootLayout;
 
 	// Kontrollerin esittely (tarvitaan käyttöliittymässä)
 	private IControllerVtoM controller;
 
-	private SimulatorApplication application;
+	private IVisualization visualization; // Työjuhta
 
-	@FXML
-	private Canvas simulationRoot; // Käyttöliittymäkomponentti
-
-	@FXML
-	private IVisualization visualization = null; // Työjuhta
-
-	@FXML
-	private Button startButton;
-	@FXML
-	private Button accellerateButton;
-	@FXML
-	private Button decelerateButton;
-
-	public void handleStart() {
-		System.out.println("Start");
-		if (visualization == null) {
-			visualization = new Visualization(simulationRoot);
-		}
-		if (controller == null) {
-			controller = new Controller(this);
-		}
-	}
-
-	public void handleLaunchSimulation() {
-		System.out.println("SIMULOIDAAAN :DD");
-		startButton.setDisable(true);
-		controller.launchSimulation();
+	public SimulatorGUI() {
 	}
 
 	@Override
@@ -47,7 +29,59 @@ public class SimulatorGUI implements ISimulatorGUI {
 		return visualization;
 	}
 
-	public void setApplication(SimulatorApplication application) {
-		this.application = application;
+	@Override
+	public void setVisualization(IVisualization visualization) {
+		this.visualization = visualization;
+	}
+
+	@Override
+	public IControllerVtoM getController() {
+		return this.controller;
+	}
+
+	@Override
+	public void start(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		this.primaryStage.setTitle("Simulaattori");
+
+		if (controller == null) {
+			controller = new Controller(this);
+		}
+
+		initializeRootLayout();
+	}
+
+	public void initializeRootLayout() {
+		try {
+			// Load root layout from fxml file.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(SimulatorGUI.class.getResource("RootLayout.fxml"));
+			rootLayout = (BorderPane) loader.load();
+
+			Scene scene = new Scene(rootLayout);
+			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
+
+			RootLayoutController rootLayoutController = loader.getController();
+			rootLayoutController.initialize(this);
+
+			primaryStage.show();
+			rootLayoutController.showSimulationView();
+
+		} catch (IOException e) {
+			// e.printStackTrace();
+		}
+	}
+
+	public void setCenterView(Node view) {
+		rootLayout.setCenter(view);
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 }
