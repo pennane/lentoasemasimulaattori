@@ -1,4 +1,4 @@
-package constants;
+package simu.constants;
 
 public class Constants {
 	public static final int SECONDS_IN_MINUTE = 60;

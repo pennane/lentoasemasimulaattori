@@ -2,7 +2,7 @@ package simu.framework;
 
 import java.util.ArrayList;
 
-import controller.IControllerMtoV;
+import simu.controller.IControllerMtoV;
 import simu.model.Palvelupiste;
 import simu.model.PalvelupisteRouter;
 

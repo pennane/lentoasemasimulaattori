@@ -1,10 +1,10 @@
-package view;
+package simu.view;
 
-import controller.Controller;
-import controller.IControllerVtoM;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import simu.controller.Controller;
+import simu.controller.IControllerVtoM;
 
 public class SimulatorGUI implements ISimulatorGUI {
 
