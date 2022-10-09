@@ -1,7 +1,7 @@
 package simu.model;
 
-import static simu.constants.Constants.minutes;
-import static simu.constants.Constants.seconds;
+import static simu.util.Time.minutes;
+import static simu.util.Time.seconds;
 
 import java.util.Optional;
 
