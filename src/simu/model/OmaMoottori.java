@@ -1,7 +1,6 @@
 package simu.model;
 
-import static simu.constants.Constants.minutes;
-import static simu.constants.Constants.seconds;
+import static simu.util.Time.minutes;
 
 import java.util.Optional;
 
@@ -16,7 +15,9 @@ import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
 import simu.framework.Trace;
 
-public class OmaMoottori extends Moottori {
+public class OmaMoottori extends Moottori implements IOmaMoottori {
+
+	private SimulatorSettings settings;
 
 	private LentoLista lentoLista;
 
@@ -27,21 +28,29 @@ public class OmaMoottori extends Moottori {
 	private PalvelupisteRouter ticketInspection;
 	private PalvelupisteRouter securityCheck;
 
-	public OmaMoottori(IControllerMtoV controller) {
+	private int completedEvents;
+
+	public OmaMoottori(IControllerMtoV controller, SimulatorSettings settings) {
+
 		super(controller);
+
+		completedEvents = 0;
+
+		this.settings = settings;
 
 		lentoLista = new LentoLista();
 
-		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, 10, "checkin");
+		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, settings.getCheckInAmount(), "checkin");
 		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,
-				10, "baggagedrop");
-		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, 10, "securitycheck");
+				settings.getBaggageDropAmount(), "baggagedrop");
+		securityCheck = new SecurityRouter(new Negexp(minutes(2)), tapahtumalista, settings.getSecurityCheckAmount(),
+				"securitycheck");
 		passportControl = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.PASSPORTCONTROL_END, 10, "passportcontrol");
+				TapahtumanTyyppi.PASSPORTCONTROL_END, settings.getPassportControlAmount(), "passportcontrol");
 		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
-				TapahtumanTyyppi.TICKETINSPECTION_END, 10, "ticketinspection");
+				TapahtumanTyyppi.TICKETINSPECTION_END, settings.getTicketInspectionAmount(), "ticketinspection");
 
-		saapumisprosessi = new Saapumisprosessi(new Negexp(seconds(10)), tapahtumalista,
+		saapumisprosessi = new Saapumisprosessi(new Negexp(settings.getMeanSecondsBetweenCustomers()), tapahtumalista,
 				TapahtumanTyyppi.CHECKIN_ENTER);
 
 		palvelupisteet.add(checkIn);
@@ -54,7 +63,7 @@ public class OmaMoottori extends Moottori {
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
-		new LentokoneGeneraattori(lentoLista).generoi(100); // TODO: määrä kontrollerista
+		new LentokoneGeneraattori(lentoLista, settings).generoi((int) Math.round(settings.getPlanesPerDay()));
 	}
 
 	@Override
@@ -77,7 +86,6 @@ public class OmaMoottori extends Moottori {
 
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
-			controller.visualizeCurrentTime(Kello.getInstance().getAika());
 
 			break;
 		case CHECKIN_END_SELF:
@@ -86,7 +94,7 @@ public class OmaMoottori extends Moottori {
 			break;
 		case CHECKIN_END_BAGGAGE:
 			a = checkIn.lopetaPalvelu(t.getPalvelupisteId());
-			securityCheck.lisaaJonoon(a);
+			baggageDrop.lisaaJonoon(a);
 			break;
 		case SECURITYCHECK_END_SCHENGE:
 			a = securityCheck.lopetaPalvelu(t.getPalvelupisteId());
@@ -122,6 +130,13 @@ public class OmaMoottori extends Moottori {
 			System.out.println(t.getTyyppi());
 			throw new UnsupportedOperationException();
 		}
+		completedEvents++;
+
+		// Visualizations or other third party things that don't need to be run for
+		// every event
+		if (completedEvents % 10 == 0) {
+			controller.visualizeCurrentTime(Kello.getInstance().getAika());
+		}
 	}
 
 	@Override
@@ -133,7 +148,7 @@ public class OmaMoottori extends Moottori {
 		}
 		for (Lentokone l : lentoLista.getLennot()) {
 			if (l.canDepart()) {
-				Trace.out(Trace.Level.WAR,
+				Trace.out(Trace.Level.INFO,
 						l.getFlightType() + " lento lähtee " + nykyaika() + ". Kapasiteetti: " + l.getPassengerCount()
 								+ ", Kyydissä: " + l.getPassengersWaiting() + ", Jäi kyydistä: "
 								+ (l.getPassengersInAirport() - l.getPassengersWaiting()));
@@ -163,18 +178,52 @@ public class OmaMoottori extends Moottori {
 	@Override
 	protected void tulokset() {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
-		System.out.println("Tulokset ... puuttuvat vielä");
+
+		controller.visualizeCurrentTime(Kello.getInstance().getAika());
 		controller.visualizeFinish();
+
 		for (Palvelupiste p : palvelupisteet) {
 			System.out.println("debug palvelupisten nimi " + p.getPalvelupisteDescription());
-			Statistics.getInstance().getPalvelupisteValues(p);
+			// Statistics.getInstance().getPalvelupisteValues(p);
 		}
-		Database dao = new Database();
+		Statistics.getInstance().getCheckinValues(palvelupisteet.get(0));
+		Statistics.getInstance().getbaggagedropValues(palvelupisteet.get(1));
+		Statistics.getInstance().getSecuritycheckValues(palvelupisteet.get(2));
+		Statistics.getInstance().getPassportValues(palvelupisteet.get(3));
+		Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
+	}
+
+	@Override
+	public void setSimulointiaika(long aika) {
+		this.settings.setSimulationDurationSeconds(aika);
+	}
+
+	public long getSimulointiaika() {
+		return this.settings.getSimulationDurationSeconds();
+	}
+
+	@Override
+	protected boolean simuloidaan() {
+		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
+		return kello.getAika() < getSimulointiaika();
+	}
+
+	@Override
+	public void setSettingsViive(long viive) {
+		settings.setSimulationDelay(viive);
+	}
+
+	@Override
+	public long getSettingsViive() {
+		return settings.getSimulationDelay();
+	}
+
+	@Override
+	protected void viive() {
 		try {
-			dao.writeToDatabase();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			sleep(getSettingsViive());
+		} catch (InterruptedException e) {
+			// e.printStackTrace();
 		}
 	}
 

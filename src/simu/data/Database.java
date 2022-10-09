@@ -55,7 +55,7 @@ public class Database {
 
 	}
 
-	public void writeToDatabase() throws Exception {
+	public void writeToDatabase(SimulationData simdata) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -66,12 +66,18 @@ public class Database {
 			// "insert test data to test database");
 
 			// Parameters start with 1
-			int yeet = 1;
-			for (String i : tiedot.keySet()) {
-				System.out.println("key: " + i + " value: " + tiedot.get(i));
-				preparedStatement.setDouble(yeet, tiedot.get(i));
-				yeet++;
-			}
+
+			preparedStatement.setDouble(1, simdata.getCheckinAverage());
+			preparedStatement.setDouble(2, simdata.getCheckinmedian());
+			preparedStatement.setDouble(3, simdata.getBaggagedropAverage());
+			preparedStatement.setDouble(4, simdata.getBaggagedropmedian());
+			preparedStatement.setDouble(5, simdata.getSecuritycheckAverage());
+			preparedStatement.setDouble(6, simdata.getSecuritycheckmedian());
+			preparedStatement.setDouble(7, simdata.getPassportcontrolAverage());
+			preparedStatement.setDouble(8, simdata.getPassportcontrolmedian());
+			preparedStatement.setDouble(9, simdata.getTicketinspectionAverage());
+			preparedStatement.setDouble(10, simdata.getTicketinspectionmedian());
+			preparedStatement.setDouble(11, simdata.getCustomerRunTimeAverage());
 			preparedStatement.executeUpdate();
 
 		} catch (Exception e) {

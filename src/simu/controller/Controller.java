@@ -1,17 +1,17 @@
 package simu.controller;
 
 import javafx.application.Platform;
-import simu.constants.Constants;
-import simu.framework.IMoottori;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
 import simu.model.FlightType;
+import simu.model.IOmaMoottori;
 import simu.model.OmaMoottori;
+import simu.model.SimulatorSettings;
 import simu.view.ISimulatorGUI;
 
 public class Controller implements IControllerVtoM, IControllerMtoV {
 
-	private IMoottori moottori;
+	private IOmaMoottori moottori;
 	private ISimulatorGUI ui;
 
 	public Controller(ISimulatorGUI ui) {
@@ -19,10 +19,9 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 	}
 
 	@Override
-	public void launchSimulation() {
-		moottori = new OmaMoottori(this);
-		moottori.setSimulointiaika(Constants.SIMULATION_DURATION);
-		moottori.setViive(Constants.SIMULATION_DELAY);
+	public void launchSimulation(SimulatorSettings settings) {
+		moottori = new OmaMoottori(this, settings);
+
 		Trace.setTraceLevel(Level.WAR);
 		((Thread) moottori).start();
 	}
@@ -63,12 +62,12 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 
 	@Override
 	public void accellerateSimulation() {
-		// TODO Auto-generated method stub
+		moottori.setSettingsViive(Math.max(moottori.getSettingsViive() - 1, 1));
 	}
 
 	@Override
 	public void decelerateSimulation() {
-		// TODO Auto-generated method stub
+		moottori.setSettingsViive(moottori.getSettingsViive() + 1);
 	}
 
 }
