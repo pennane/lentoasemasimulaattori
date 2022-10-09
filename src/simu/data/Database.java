@@ -64,13 +64,13 @@ public class Database {
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
 			resultSet = statement.executeQuery("select * from test where ID=1");
-
+			return writeResultSet(resultSet);
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			close();
 		}
-		return writeResultSet(resultSet);
+
 	}
 
 	private SimulationData writeResultSet(ResultSet resultSet) throws SQLException {
