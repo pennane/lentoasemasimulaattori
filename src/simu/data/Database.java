@@ -97,7 +97,7 @@ public class Database {
 		return yeet;
 	}
 
-	public void getAllIdFromDatabase() throws Exception {
+	public ArrayList<Integer> getAllIdFromDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -108,8 +108,8 @@ public class Database {
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
 			resultSet = statement.executeQuery("select ID from test");
-			writeIdResultSet(resultSet);
 
+			return writeIdResultSet(resultSet);
 		} catch (Exception e) {
 			throw e;
 		} finally {
