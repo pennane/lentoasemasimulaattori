@@ -18,7 +18,6 @@ public class Database {
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private HashMap<String, Long> tiedot = Statistics.getInstance().getTulokset();
 
 	public void readDataBase() throws Exception {
 		try {

@@ -8,6 +8,7 @@ import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.controller.IControllerMtoV;
 import simu.data.Database;
+import simu.data.Datadaoimpl;
 import simu.data.Statistics;
 import simu.framework.Kello;
 import simu.framework.Moottori;
@@ -191,6 +192,8 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		Statistics.getInstance().getSecuritycheckValues(palvelupisteet.get(2));
 		Statistics.getInstance().getPassportValues(palvelupisteet.get(3));
 		Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
+		Datadaoimpl dao = new Datadaoimpl();
+		dao.SaveSimulationData(Statistics.getInstance().getTulokset());
 	}
 
 	@Override

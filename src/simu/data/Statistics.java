@@ -63,8 +63,8 @@ public class Statistics {
 
 	}
 
-	public HashMap<String, Long> getTulokset() {
-		return this.tulokset;
+	public SimulationData getTulokset() {
+		return data;
 
 	}
 }
