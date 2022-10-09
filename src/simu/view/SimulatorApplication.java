@@ -3,10 +3,12 @@ package simu.view;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class SimulatorApplication extends Application {
 	private Stage primaryStage;
@@ -33,7 +35,17 @@ public class SimulatorApplication extends Application {
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
+			//Add event handler for quitting the simulation once the window is closed
+			primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>()
+	        {
+	            @Override
+	            public void handle(WindowEvent window)
+	            {
+	            	System.exit(1);
+	            }
+	        });
 			primaryStage.show();
+			
 			
 			SimulatorGUI controller = loader.getController();
 			controller.setApplication(this);
