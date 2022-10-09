@@ -194,7 +194,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
 		Datadaoimpl dao = new Datadaoimpl();
 		dao.SaveSimulationData(Statistics.getInstance().getTulokset());
-		dao.getAllData();
+		System.out.println(dao.getAllData().getBaggagedropAverage());
 	}
 
 	@Override
