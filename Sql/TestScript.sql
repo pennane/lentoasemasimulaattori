@@ -1,3 +1,4 @@
+CREATE SCHEMA `test` ;
 CREATE TABLE test (
     ID int NOT NULL AUTO_INCREMENT,
 	checkinA double,
