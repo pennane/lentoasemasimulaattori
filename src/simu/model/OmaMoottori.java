@@ -90,7 +90,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			break;
 		case CHECKIN_END_BAGGAGE:
 			a = checkIn.lopetaPalvelu(t.getPalvelupisteId());
-			securityCheck.lisaaJonoon(a);
+			baggageDrop.lisaaJonoon(a);
 			break;
 		case SECURITYCHECK_END_SCHENGE:
 			a = securityCheck.lopetaPalvelu(t.getPalvelupisteId());
