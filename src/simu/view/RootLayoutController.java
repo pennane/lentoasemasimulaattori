@@ -16,21 +16,21 @@ public class RootLayoutController {
 	public void showSimulationView() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(SimulatorGUI.class.getResource("SimulationLayout.fxml"));
+			loader.setLocation(RootLayoutController.class.getResource("SimulationLayout.fxml"));
 			BorderPane simulationView = (BorderPane) loader.load();
 			simulatorGUI.setCenterView(simulationView);
 
 			SimulationLayoutController viewController = loader.getController();
 			viewController.initialize(simulatorGUI);
 		} catch (IOException e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 
 	public void showHistoryView() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(SimulatorGUI.class.getResource("HistoryLayout.fxml"));
+			loader.setLocation(RootLayoutController.class.getResource("HistoryLayout.fxml"));
 			BorderPane historyView = (BorderPane) loader.load();
 
 			simulatorGUI.setCenterView(historyView);
@@ -38,7 +38,7 @@ public class RootLayoutController {
 			HistoryLayoutController viewController = loader.getController();
 			viewController.initialize(simulatorGUI);
 		} catch (IOException e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 
