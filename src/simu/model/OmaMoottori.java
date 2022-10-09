@@ -27,13 +27,13 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	private PalvelupisteRouter ticketInspection;
 	private PalvelupisteRouter securityCheck;
 
-	private int completedEvents;
+	private int completedBEvents;
 
 	public OmaMoottori(IControllerMtoV controller, SimulatorSettings settings) {
 
 		super(controller);
 
-		completedEvents = 0;
+		completedBEvents = 0;
 
 		this.settings = settings;
 
@@ -62,7 +62,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
-		new LentokoneGeneraattori(lentoLista, settings).generoi((int) Math.round(settings.getPlanesPerDay()));
+		new LentokoneGeneraattori(lentoLista, settings).generoi(Math.round(settings.getPlanesPerDay()));
 	}
 
 	@Override
@@ -129,11 +129,12 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			System.out.println(t.getTyyppi());
 			throw new UnsupportedOperationException();
 		}
-		completedEvents++;
+		completedBEvents++;
 
 		// Visualizations or other third party things that don't need to be run for every event
-		if (completedEvents % 10 == 0) {
+		if (completedBEvents % 10 == 0) {
 			controller.visualizeCurrentTime(Kello.getInstance().getAika());
+			
 		}
 	}
 
@@ -215,7 +216,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		try {
 			sleep(getSettingsViive());
 		} catch (InterruptedException e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 
