@@ -1,12 +1,21 @@
 package simu.view;
 
-import static simu.constants.Constants.*;
-
+import static simu.constants.Constants.DEFAULT_BAGGAGE_DROP_AMOUNT;
+import static simu.constants.Constants.DEFAULT_BAGGAGE_DROP_PROBABILITY;
+import static simu.constants.Constants.DEFAULT_CHECKIN_AMOUNT;
+import static simu.constants.Constants.DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS;
+import static simu.constants.Constants.DEFAULT_PASSPORT_CONTROL_AMOUNT;
+import static simu.constants.Constants.DEFAULT_PLANES_PER_DAY;
+import static simu.constants.Constants.DEFAULT_SECURITY_CHECK_AMOUNT;
+import static simu.constants.Constants.DEFAULT_SHENGEN_PROBABILITY;
+import static simu.constants.Constants.DEFAULT_TICKET_INSPECTION_AMOUNT;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import simu.model.IntermediateStats;
 import simu.model.SimulatorSettings;
 
 public class SimulationLayoutController {
@@ -42,6 +51,56 @@ public class SimulationLayoutController {
 	@FXML
 	private Button decelerateButton;
 
+	@FXML
+	private Label totalInQueue;
+	@FXML
+	private Label totalServed;
+	@FXML
+	private Label totalAvgLeadTime;
+	@FXML
+	private Label checkInInQueue;
+	@FXML
+	private Label checkInServed;
+	@FXML
+	private Label checkInAvgLeadTime;
+	@FXML
+	private Label baggageDropInQueue;
+	@FXML
+	private Label baggageDropServed;
+	@FXML
+	private Label baggageDropAvgLeadTime;
+	@FXML
+	private Label securityCheckInQueue;
+	@FXML
+	private Label securityCheckServed;
+	@FXML
+	private Label securityCheckAvgLeadTime;
+	@FXML
+	private Label passportControlInQueue;
+	@FXML
+	private Label passportControlServed;
+	@FXML
+	private Label passportControlAvgLeadTime;
+	@FXML
+	private Label ticketInspectionInQueue;
+	@FXML
+	private Label ticketInspectionServed;
+	@FXML
+	private Label ticketInspectionAvgLeadTime;
+
+	@FXML
+	private Label shengePlanesLeft;
+	@FXML
+	private Label shengeCustomersServed;
+	@FXML
+	private Label shengeCustomersInAirport;
+	@FXML
+	private Label internationalPlanesLeft;
+	@FXML
+	private Label internationalCustomersServed;
+	@FXML
+	private Label internationalCustomersInAirport;
+
 	private SimulatorGUI simulatorGUI;
 
 	public void initialize(SimulatorGUI simulatorGUI) {
@@ -51,6 +110,8 @@ public class SimulationLayoutController {
 			visualization = new Visualization(simulationRoot);
 			this.simulatorGUI.setVisualization(visualization);
 		}
+
+		this.simulatorGUI.setSimulationLayoutController(this);
 
 		meanSecondsBetweenCustomers.setText(DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS.toString());
 		planesPerDay.setText(DEFAULT_PLANES_PER_DAY.toString());
@@ -97,5 +158,34 @@ public class SimulationLayoutController {
 
 	public IVisualization getVisualization() {
 		return visualization;
+	}
+
+	public void showIntermediateStats(IntermediateStats stats) {
+		totalInQueue.setText(stats.getTotalInQueue().toString());
+		totalServed.setText(stats.getTotalServed().toString());
+		totalAvgLeadTime.setText(stats.getTotalAvgLeadTime().toString());
+
+		checkInInQueue.setText(stats.getCheckInInQueue().toString());
+		checkInServed.setText(stats.getCheckInServed().toString());
+		checkInAvgLeadTime.setText(stats.getCheckInAvgLeadTime().toString());
+		baggageDropInQueue.setText(stats.getBaggageDropInQueue().toString());
+		baggageDropServed.setText(stats.getBaggageDropServed().toString());
+		baggageDropAvgLeadTime.setText(stats.getBaggageDropAvgLeadTime().toString());
+		securityCheckInQueue.setText(stats.getSecurityCheckInQueue().toString());
+		securityCheckServed.setText(stats.getSecurityCheckServed().toString());
+		securityCheckAvgLeadTime.setText(stats.getSecurityCheckAvgLeadTime().toString());
+		passportControlInQueue.setText(stats.getPassportControlInQueue().toString());
+		passportControlServed.setText(stats.getPassportControlServed().toString());
+		passportControlAvgLeadTime.setText(stats.getPassportControlAvgLeadTime().toString());
+		ticketInspectionInQueue.setText(stats.getTicketInspectionInQueue().toString());
+		ticketInspectionServed.setText(stats.getTicketInspectionServed().toString());
+		ticketInspectionAvgLeadTime.setText(stats.getTicketInspectionAvgLeadTime().toString());
+
+		shengePlanesLeft.setText(stats.getShengePlanesLeft().toString());
+		shengeCustomersServed.setText(stats.getShengeCustomersServed().toString());
+		shengeCustomersInAirport.setText(stats.getShengeCustomersInAirport().toString());
+		internationalPlanesLeft.setText(stats.getInternationalPlanesLeft().toString());
+		internationalCustomersServed.setText(stats.getInternationalCustomersServed().toString());
+		internationalCustomersInAirport.setText(stats.getInternationalCustomersInAirport().toString());
 	}
 }

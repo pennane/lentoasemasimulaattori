@@ -5,7 +5,10 @@ import java.util.PriorityQueue;
 
 public class LentoLista {
 
-	// TODO: remove planes from the queue after the planes have departed
+	// Don't ever remove stuff from the queue.
+	// The departed planes are still used for calculating stuff.
+	// TODO: The data structure could be changed though, as the queue functionality
+	// is not needed.
 
 	PriorityQueue<Lentokone> lennot;
 
@@ -23,5 +26,38 @@ public class LentoLista {
 
 	public Optional<Lentokone> findNextAvailable() {
 		return lennot.stream().sorted().filter(l -> l.hasAvailableSeats() && !l.getHasDeparted()).findFirst();
+	}
+
+	public int findShengenCustomersInAirportCount() {
+		return lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.Shengen && !l.getHasDeparted())
+				.mapToInt(l -> l.getPassengersInAirport()).sum();
+
+	}
+
+	public int findInternationalCustomersInAirportCount() {
+		return lennot.stream().sorted()
+				.filter(l -> l.getFlightType() == FlightType.International && !l.getHasDeparted())
+				.mapToInt(l -> l.getPassengersInAirport()).sum();
+
+	}
+
+	public int findDepartedShengenPlanesCount() {
+		return (int) lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.Shengen && l.getHasDeparted())
+				.count();
+	}
+
+	public int findDepartedInternationalPlanesCount() {
+		return (int) lennot.stream().sorted()
+				.filter(l -> l.getFlightType() == FlightType.International && l.getHasDeparted()).count();
+	}
+
+	public int findDepartedShengenCustomersCount() {
+		return lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.Shengen && l.getHasDeparted())
+				.mapToInt(l -> l.getPassengersWaiting()).sum();
+	}
+
+	public int findDepartedInternationalCustomersCount() {
+		return lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.International && l.getHasDeparted())
+				.mapToInt(l -> l.getPassengersWaiting()).sum();
 	}
 }

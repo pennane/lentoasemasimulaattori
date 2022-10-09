@@ -35,7 +35,7 @@
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="469.0260009765625" minWidth="10.0" prefWidth="455.5241394042969" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0260009765625" minWidth="0.0" percentWidth="5.0" prefWidth="455.5241394042969" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.0260009765625" minWidth="10.0" percentWidth="11.0" prefWidth="455.5241394042969" />
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="469.0260009765625" minWidth="10.0" prefWidth="455.5241394042969" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="469.0260009765625" minWidth="10.0" prefWidth="455.5241394042969" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="469.0260009765625" minWidth="10.0" prefWidth="455.5241394042969" />
                     </columnConstraints>
                     <rowConstraints>
@@ -45,41 +45,44 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label styleClass="label-heading" text="Jonossa" GridPane.rowIndex="1" />
-                        <Label styleClass="label-heading" text="Palveltu" GridPane.rowIndex="2" />
-                        <Label prefHeight="45.0" prefWidth="80.0" styleClass="label-heading" text="avg Läpimenoaika" wrapText="true" GridPane.rowIndex="3" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Kaikki" GridPane.columnIndex="1" />
+                        <Label styleClass="label-heading" text="In queue" GridPane.rowIndex="1" />
+                        <Label styleClass="label-heading" text="Served" GridPane.rowIndex="2" />
+                        <Label prefHeight="45.0" prefWidth="80.0" styleClass="label-heading" text="Avg lead time" wrapText="true" GridPane.rowIndex="3" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Total" GridPane.columnIndex="1" />
                         <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Checkin" GridPane.columnIndex="2" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Baggage" wrapText="true" GridPane.columnIndex="3" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Passitarkastus" wrapText="true" GridPane.columnIndex="5" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Turvatarkastus" wrapText="true" GridPane.columnIndex="4" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Portilla" GridPane.columnIndex="6" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Shenge" GridPane.columnIndex="9" />
-                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Kansainvälinen" wrapText="true" GridPane.columnIndex="10" />
-                        <Label styleClass="label-heading" text="Lähtenyt" wrapText="true" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-                        <Label styleClass="label-heading" text="Tulossa" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <Label text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                        <Label text="0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                        <Label text="0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                        <Label text="0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                        <Label text="0" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="9" GridPane.rowIndex="2" />
-                        <Label text="0" GridPane.columnIndex="10" GridPane.rowIndex="1" />
-                        <Label text="0" GridPane.columnIndex="10" GridPane.rowIndex="2" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Baggage drop" wrapText="true" GridPane.columnIndex="3" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Passport control" wrapText="true" GridPane.columnIndex="5" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Security check" wrapText="true" GridPane.columnIndex="4" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="At gates" GridPane.columnIndex="6" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Shengen" GridPane.columnIndex="9" />
+                        <Label prefHeight="45.0" prefWidth="80.0" rotate="90.0" styleClass="label-heading" text="Intenational" wrapText="true" GridPane.columnIndex="10" />
+                        <Label styleClass="label-heading" text="Departed" wrapText="true" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                        <Label styleClass="label-heading" text="Customers served" wrapText="true" GridPane.columnIndex="8" GridPane.rowIndex="2" />
+                        <Label fx:id="totalInQueue" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="checkInInQueue" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="baggageDropInQueue" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label fx:id="securityCheckInQueue" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Label fx:id="passportControlInQueue" text="0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                        <Label fx:id="ticketInspectionInQueue" text="0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                        <Label fx:id="totalServed" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="checkInServed" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="totalAvgLeadTime" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="checkInAvgLeadTime" text="0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="baggageDropServed" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label fx:id="securityCheckServed" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <Label fx:id="baggageDropAvgLeadTime" text="0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label fx:id="securityCheckAvgLeadTime" text="0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Label fx:id="passportControlServed" text="0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                        <Label fx:id="passportControlAvgLeadTime" text="0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                        <Label fx:id="ticketInspectionServed" text="0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                        <Label fx:id="ticketInspectionAvgLeadTime" text="0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Label fx:id="shengePlanesLeft" text="0" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+                        <Label fx:id="shengeCustomersServed" text="0" GridPane.columnIndex="9" GridPane.rowIndex="2" />
+                        <Label fx:id="internationalPlanesLeft" text="0" GridPane.columnIndex="10" GridPane.rowIndex="1" />
+                        <Label fx:id="internationalCustomersServed" text="0" GridPane.columnIndex="10" GridPane.rowIndex="2" />
+                        <Label styleClass="label-heading" text="Customers at airport" wrapText="true" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+                        <Label fx:id="shengeCustomersInAirport" text="0" GridPane.columnIndex="9" GridPane.rowIndex="3" />
+                        <Label fx:id="internationalCustomersInAirport" text="0" GridPane.columnIndex="10" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
@@ -118,7 +121,7 @@
                   <Label text="Security checks" GridPane.rowIndex="5" />
                   <Label text="Passport checks" GridPane.rowIndex="6" />
                   <Label text="Gates" GridPane.rowIndex="7" />
-                  <Label text="Shenge %" GridPane.rowIndex="9" />
+                  <Label text="Shengen probability" GridPane.rowIndex="9" />
                   <Label text="Baggage %" GridPane.rowIndex="10" />
                   <Label text="Sec between customers" />
                   <Label text="Planes/day" GridPane.rowIndex="1" />
