@@ -1,11 +1,19 @@
 package simu.view;
 
-import static simu.constants.Constants.*;
-
+import static simu.constants.Constants.DEFAULT_BAGGAGE_DROP_AMOUNT;
+import static simu.constants.Constants.DEFAULT_BAGGAGE_DROP_PROBABILITY;
+import static simu.constants.Constants.DEFAULT_CHECKIN_AMOUNT;
+import static simu.constants.Constants.DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS;
+import static simu.constants.Constants.DEFAULT_PASSPORT_CONTROL_AMOUNT;
+import static simu.constants.Constants.DEFAULT_PLANES_PER_DAY;
+import static simu.constants.Constants.DEFAULT_SECURITY_CHECK_AMOUNT;
+import static simu.constants.Constants.DEFAULT_SHENGEN_PROBABILITY;
+import static simu.constants.Constants.DEFAULT_TICKET_INSPECTION_AMOUNT;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import simu.model.SimulatorSettings;
 
@@ -41,6 +49,56 @@ public class SimulationLayoutController {
 	private Button accellerateButton;
 	@FXML
 	private Button decelerateButton;
+
+	@FXML
+	private Label totalInQueue;
+	@FXML
+	private Label totalServed;
+	@FXML
+	private Label totalAvgLeadTime;
+	@FXML
+	private Label checkInInQueue;
+	@FXML
+	private Label checkInServed;
+	@FXML
+	private Label checkInAvgLeadTime;
+	@FXML
+	private Label baggageDropInQueue;
+	@FXML
+	private Label baggageDropServed;
+	@FXML
+	private Label baggageDropAvgLeadTime;
+	@FXML
+	private Label securityCheckInQueue;
+	@FXML
+	private Label securityCheckServed;
+	@FXML
+	private Label securityCheckAvgLeadTime;
+	@FXML
+	private Label passportControlInQueue;
+	@FXML
+	private Label passportControlServed;
+	@FXML
+	private Label passportControlAvgLeadTime;
+	@FXML
+	private Label ticketInspectionInQueue;
+	@FXML
+	private Label ticketInspectionServed;
+	@FXML
+	private Label ticketInspectionAvgLeadTime;
+
+	@FXML
+	private Label shengePlanesLeft;
+	@FXML
+	private Label shengeCustomersServed;
+	@FXML
+	private Label shengeCustomersInAirport;
+	@FXML
+	private Label internationalPlanesLeft;
+	@FXML
+	private Label internationalCustomersServed;
+	@FXML
+	private Label internationalCustomersInAirport;
 
 	private SimulatorGUI simulatorGUI;
 
