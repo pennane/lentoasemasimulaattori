@@ -3,11 +3,13 @@ package simu.view;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import simu.controller.Controller;
 import simu.controller.IControllerVtoM;
 
@@ -61,7 +63,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
-
+			//Add event handler for quitting the simulation once the window is closed
+			primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>()
+	        {
+	            @Override
+	            public void handle(WindowEvent window)
+	            {
+	            	System.exit(1);
+	            }
+	        });
 			RootLayoutController rootLayoutController = loader.getController();
 			rootLayoutController.initialize(this);
 
