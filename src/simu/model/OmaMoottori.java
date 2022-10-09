@@ -132,7 +132,8 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		}
 		completedEvents++;
 
-		// Visualizations or other third party things that don't need to be run for every event
+		// Visualizations or other third party things that don't need to be run for
+		// every event
 		if (completedEvents % 10 == 0) {
 			controller.visualizeCurrentTime(Kello.getInstance().getAika());
 		}
@@ -183,9 +184,13 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 		for (Palvelupiste p : palvelupisteet) {
 			System.out.println("debug palvelupisten nimi " + p.getPalvelupisteDescription());
-			Statistics.getInstance().getPalvelupisteValues(p);
+			// Statistics.getInstance().getPalvelupisteValues(p);
 		}
-
+		Statistics.getInstance().getCheckinValues(palvelupisteet.get(0));
+		Statistics.getInstance().getbaggagedropValues(palvelupisteet.get(1));
+		Statistics.getInstance().getSecuritycheckValues(palvelupisteet.get(2));
+		Statistics.getInstance().getPassportValues(palvelupisteet.get(3));
+		Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
 	}
 
 	@Override
