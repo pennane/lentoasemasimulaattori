@@ -9,4 +9,6 @@ public interface IMoottori {
 	public void setViive(long aika);
 
 	public long getViive();
+
+
 }
