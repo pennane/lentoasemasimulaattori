@@ -29,6 +29,9 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 	private int completedBEvents;
 
+	IntermediateStats intermediateStats;
+	LentoasemaAsiakas a;
+
 	public OmaMoottori(IControllerMtoV controller, SimulatorSettings settings) {
 
 		super(controller);
@@ -68,7 +71,6 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t) { // B-vaiheen tapahtumat
 
-		LentoasemaAsiakas a;
 		switch (t.getTyyppi()) {
 
 		case CHECKIN_ENTER:
@@ -81,7 +83,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			Lentokone lentokone = maybeLentokone.get();
 			lentokone.incrementPassengersInAirport();
 
-			checkIn.lisaaJonoon(new LentoasemaAsiakas(lentokone));
+			checkIn.lisaaJonoon(new LentoasemaAsiakas(lentokone, settings.getBaggageProbability()));
 
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
@@ -131,10 +133,16 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		}
 		completedBEvents++;
 
-		// Visualizations or other third party things that don't need to be run for every event
+		// Visualizations or other third party things that don't need to be run for
+		// every event
 		if (completedBEvents % 10 == 0) {
 			controller.visualizeCurrentTime(Kello.getInstance().getAika());
-			
+
+			IntermediateStats intermediateStats = new IntermediateStats();
+			intermediateStats.buildRouterStats(checkIn, baggageDrop, securityCheck, passportControl, ticketInspection);
+			intermediateStats.buildPlaneStats(lentoLista);
+			intermediateStats.buildTotalStats();
+			controller.visualizeIntermediateStats(intermediateStats);
 		}
 	}
 
@@ -216,7 +224,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		try {
 			sleep(getSettingsViive());
 		} catch (InterruptedException e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 

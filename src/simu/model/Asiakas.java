@@ -42,7 +42,7 @@ public class Asiakas {
 		return id;
 	}
 
-	public double getAverageLeadtime() {
+	public static double getAverageLeadtime() {
 		return sumLeadtime / getTotalAsiakkaat();
 	}
 
