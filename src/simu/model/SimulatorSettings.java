@@ -1,8 +1,7 @@
 package simu.model;
 
-import java.util.Optional;
-
 import simu.constants.Constants;
+import simu.util.Fp;
 
 public class SimulatorSettings {
 	private Long simulationDurationSeconds;
@@ -18,28 +17,26 @@ public class SimulatorSettings {
 	private double shengenProbability; // 0-1
 	private double baggageProbability; // 0-1
 
-	private <T> T valueOr(T val, T constant) {
-		return Optional.ofNullable(val).orElse(constant);
-	}
+	
 
 	public SimulatorSettings(Long simulationDurationSeconds, Long simulationDelay, double meanSecondsBetweenCustomers,
 			int planesPerDay, int checkInAmount, int baggageDropAmount, int securityCheckAmount,
 			int passportControlAmount, int ticketInspectionAmount, double shengenProbability,
 			double baggageProbability) {
 		super();
-		this.simulationDurationSeconds = valueOr(simulationDurationSeconds,
+		this.simulationDurationSeconds = Fp.valueOr(simulationDurationSeconds,
 				(long) Constants.DEFAULT_SIMULATION_DURATION_SECONDS);
-		this.simulationDelay = valueOr(simulationDelay, (long) Constants.DEFAULT_SIMULATION_DELAY);
-		this.meanSecondsBetweenCustomers = valueOr(meanSecondsBetweenCustomers,
+		this.simulationDelay = Fp.valueOr(simulationDelay, (long) Constants.DEFAULT_SIMULATION_DELAY);
+		this.meanSecondsBetweenCustomers = Fp.valueOr(meanSecondsBetweenCustomers,
 				Constants.DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS);
-		this.planesPerDay = valueOr(planesPerDay, Constants.DEFAULT_PLANES_PER_DAY);
-		this.checkInAmount = valueOr(checkInAmount, Constants.DEFAULT_CHECKIN_AMOUNT);
-		this.baggageDropAmount = valueOr(baggageDropAmount, Constants.DEFAULT_BAGGAGE_DROP_AMOUNT);
-		this.securityCheckAmount = valueOr(securityCheckAmount, Constants.DEFAULT_SECURITY_CHECK_AMOUNT);
-		this.passportControlAmount = valueOr(passportControlAmount, Constants.DEFAULT_PASSPORT_CONTROL_AMOUNT);
-		this.ticketInspectionAmount = valueOr(ticketInspectionAmount, Constants.DEFAULT_TICKET_INSPECTION_AMOUNT);
-		this.shengenProbability = valueOr(shengenProbability, Constants.DEFAULT_SHENGEN_PROBABILITY);
-		this.baggageProbability = valueOr(baggageProbability, Constants.DEFAULT_BAGGE_PROBABILITY);
+		this.planesPerDay = Fp.valueOr(planesPerDay, Constants.DEFAULT_PLANES_PER_DAY);
+		this.checkInAmount = Fp.valueOr(checkInAmount, Constants.DEFAULT_CHECKIN_AMOUNT);
+		this.baggageDropAmount = Fp.valueOr(baggageDropAmount, Constants.DEFAULT_BAGGAGE_DROP_AMOUNT);
+		this.securityCheckAmount = Fp.valueOr(securityCheckAmount, Constants.DEFAULT_SECURITY_CHECK_AMOUNT);
+		this.passportControlAmount = Fp.valueOr(passportControlAmount, Constants.DEFAULT_PASSPORT_CONTROL_AMOUNT);
+		this.ticketInspectionAmount = Fp.valueOr(ticketInspectionAmount, Constants.DEFAULT_TICKET_INSPECTION_AMOUNT);
+		this.shengenProbability = Fp.valueOr(shengenProbability, Constants.DEFAULT_SHENGEN_PROBABILITY);
+		this.baggageProbability = Fp.valueOr(baggageProbability, Constants.DEFAULT_BAGGAGE_DROP_PROBABILITY);
 	}
 
 	public long getSimulationDurationSeconds() {

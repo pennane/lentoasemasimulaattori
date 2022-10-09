@@ -1,13 +1,7 @@
 package simu.view;
 
-import static simu.constants.Constants.DEFAULT_BAGGAGE_DROP_AMOUNT;
-import static simu.constants.Constants.DEFAULT_CHECKIN_AMOUNT;
-import static simu.constants.Constants.DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS;
-import static simu.constants.Constants.DEFAULT_PASSPORT_CONTROL_AMOUNT;
-import static simu.constants.Constants.DEFAULT_PLANES_PER_DAY;
-import static simu.constants.Constants.DEFAULT_SECURITY_CHECK_AMOUNT;
-import static simu.constants.Constants.DEFAULT_SHENGEN_PROBABILITY;
-import static simu.constants.Constants.DEFAULT_TICKET_INSPECTION_AMOUNT;
+import static simu.constants.Constants.*;
+
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -66,7 +60,7 @@ public class SimulationLayoutController {
 		passportControlAmount.setText(DEFAULT_PASSPORT_CONTROL_AMOUNT.toString());
 		ticketInspectionAmount.setText(DEFAULT_TICKET_INSPECTION_AMOUNT.toString());
 		shengenProbability.setText(DEFAULT_SHENGEN_PROBABILITY.toString());
-		baggageProbability.setText(DEFAULT_BAGGAGE_DROP_AMOUNT.toString());
+		baggageProbability.setText(DEFAULT_BAGGAGE_DROP_PROBABILITY.toString());
 	}
 
 	public void handleLaunchSimulation() {
