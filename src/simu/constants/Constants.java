@@ -30,4 +30,6 @@ public class Constants {
 	public static final Integer DEFAULT_TICKET_INSPECTION_AMOUNT = 11;
 	public static final Double DEFAULT_SHENGEN_PROBABILITY = 0.75;
 	public static final Double DEFAULT_BAGGE_PROBABILITY = 0.55;
+	
+	public static final int DEFAULT_QUARTERS_BEFORE_FIRST_PLANE = 4;
 }
