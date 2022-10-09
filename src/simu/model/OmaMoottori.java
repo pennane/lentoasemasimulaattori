@@ -27,9 +27,13 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	private PalvelupisteRouter ticketInspection;
 	private PalvelupisteRouter securityCheck;
 
+	private int completedEvents;
+
 	public OmaMoottori(IControllerMtoV controller, SimulatorSettings settings) {
 
 		super(controller);
+
+		completedEvents = 0;
 
 		this.settings = settings;
 
@@ -81,7 +85,6 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
-			controller.visualizeCurrentTime(Kello.getInstance().getAika());
 
 			break;
 		case CHECKIN_END_SELF:
@@ -126,6 +129,12 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			System.out.println(t.getTyyppi());
 			throw new UnsupportedOperationException();
 		}
+		completedEvents++;
+
+		// Visualizations or other third party things that don't need to be run for every event
+		if (completedEvents % 10 == 0) {
+			controller.visualizeCurrentTime(Kello.getInstance().getAika());
+		}
 	}
 
 	@Override
@@ -167,8 +176,10 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	protected void tulokset() {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
-		System.out.println("Tulokset ... puuttuvat vielä");
+
+		controller.visualizeCurrentTime(Kello.getInstance().getAika());
 		controller.visualizeFinish();
+
 		for (Palvelupiste p : palvelupisteet) {
 			Statistics.getInstance().getPalvelupisteValues(p);
 		}
