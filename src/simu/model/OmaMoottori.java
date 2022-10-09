@@ -58,7 +58,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
-		new LentokoneGeneraattori(lentoLista, settings).generoi(100); // TODO: määrä kontrollerista
+		new LentokoneGeneraattori(lentoLista, settings).generoi((int) Math.round(settings.getPlanesPerDay()));
 	}
 
 	@Override

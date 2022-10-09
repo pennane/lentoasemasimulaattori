@@ -85,7 +85,7 @@ public class SimulationLayoutController {
 		decelerateButton.setDisable(false);
 
 		SimulatorSettings settings = new SimulatorSettings(null, null,
-				Double.parseDouble(meanSecondsBetweenCustomers.getText()), Double.parseDouble(planesPerDay.getText()),
+				Double.parseDouble(meanSecondsBetweenCustomers.getText()), Integer.parseInt(planesPerDay.getText()),
 				Integer.parseInt(checkInAmount.getText()), Integer.parseInt(baggageDropAmount.getText()),
 				Integer.parseInt(securityCheckAmount.getText()), Integer.parseInt(passportControlAmount.getText()),
 				Integer.parseInt(ticketInspectionAmount.getText()), Double.parseDouble(shengenProbability.getText()),

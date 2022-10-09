@@ -9,7 +9,7 @@ public class SimulatorSettings {
 	private Long simulationDelay;
 
 	private double meanSecondsBetweenCustomers;
-	private double planesPerDay;
+	private int planesPerDay;
 	private int checkInAmount;
 	private int baggageDropAmount;
 	private int securityCheckAmount;
@@ -23,7 +23,7 @@ public class SimulatorSettings {
 	}
 
 	public SimulatorSettings(Long simulationDurationSeconds, Long simulationDelay, double meanSecondsBetweenCustomers,
-			double planesPerDay, int checkInAmount, int baggageDropAmount, int securityCheckAmount,
+			int planesPerDay, int checkInAmount, int baggageDropAmount, int securityCheckAmount,
 			int passportControlAmount, int ticketInspectionAmount, double shengenProbability,
 			double baggageProbability) {
 		super();
@@ -54,7 +54,7 @@ public class SimulatorSettings {
 		return meanSecondsBetweenCustomers;
 	}
 
-	public double getPlanesPerDay() {
+	public int getPlanesPerDay() {
 		return planesPerDay;
 	}
 
