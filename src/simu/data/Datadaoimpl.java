@@ -1,17 +1,20 @@
 package simu.data;
 
+import java.util.ArrayList;
+
 public class Datadaoimpl implements dataDao {
 	Database database = new Database();
 
 	@Override
 	public SimulationData getAllData() {
+		SimulationData data = null;
 		try {
-			database.getAllFromDatabase();
+			data = database.getAllFromDatabase();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return data;
 	}
 
 	@Override
@@ -22,6 +25,12 @@ public class Datadaoimpl implements dataDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public ArrayList<Integer> getSimulationRunId() {
+
+		return null;
 	}
 
 }

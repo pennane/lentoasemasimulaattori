@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
@@ -18,41 +19,6 @@ public class Database {
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-
-	public void readDataBase() throws Exception {
-		try {
-			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
-			// Setup the connection with the DB
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
-
-			// Statements allow to issue SQL queries to the database
-			statement = connect.createStatement();
-			// Result set get the result of the SQL query
-			resultSet = statement.executeQuery("select * from test");
-			writeResultSet(resultSet);
-
-			// PreparedStatements can use variables and are more efficient
-			preparedStatement = connect.prepareStatement("insert into  test values (default, ?)");
-			// "insert test data to test database");
-			// Parameters start with 1
-			preparedStatement.setString(1, "yeet");
-			preparedStatement.executeUpdate();
-
-			preparedStatement = connect.prepareStatement("SELECT yeet from test");
-			resultSet = preparedStatement.executeQuery();
-			writeResultSet(resultSet);
-
-			// resultSet = statement.executeQuery("select * test");
-			// writeMetaData(resultSet);
-
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			close();
-		}
-
-	}
 
 	public void writeToDatabase(SimulationData simdata) throws Exception {
 		try {
@@ -87,7 +53,7 @@ public class Database {
 
 	}
 
-	public void getAllFromDatabase() throws Exception {
+	public SimulationData getAllFromDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -97,8 +63,52 @@ public class Database {
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
-			resultSet = statement.executeQuery("select * from test");
-			writeResultSet(resultSet);
+			resultSet = statement.executeQuery("select * from test where ID=1");
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			close();
+		}
+		return writeResultSet(resultSet);
+	}
+
+	private SimulationData writeResultSet(ResultSet resultSet) throws SQLException {
+		// ResultSet is initially before the first data set
+		SimulationData yeet = new SimulationData();
+		while (resultSet.next()) {
+			// It is possible to get the columns via name
+			// also possible to get the columns via the column number
+			// which starts at 1
+			// e.g. resultSet.getSTring(2);
+			yeet.setCheckinAverage(resultSet.getDouble("checkinA"));
+			yeet.setCheckinmedian(resultSet.getDouble("checkinMed"));
+			yeet.setBaggagedropAverage(resultSet.getDouble("baggageA"));
+			yeet.setBaggagedropmedian(resultSet.getDouble("baggageMed"));
+			yeet.setSecuritycheckAverage(resultSet.getDouble("securityA"));
+			yeet.setSecuritycheckmedian(resultSet.getDouble("securityMed"));
+			yeet.setPassportcontrolAverage(resultSet.getDouble("PassportA"));
+			yeet.setPassportcontrolmedian(resultSet.getDouble("passportMed"));
+			yeet.setTicketinspectionAverage(resultSet.getDouble("TicketA"));
+			yeet.setTicketinspectionmedian(resultSet.getDouble("TicketMed"));
+			yeet.setCustomerRunTimeAverage(resultSet.getDouble("AsiakasAv"));
+
+		}
+		return yeet;
+	}
+
+	public void getAllIdFromDatabase() throws Exception {
+		try {
+			// This will load the MySQL driver, each DB has its own driver
+			Class.forName("com.mysql.jdbc.Driver");
+			// Setup the connection with the DB
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
+
+			// Statements allow to issue SQL queries to the database
+			statement = connect.createStatement();
+			// Result set get the result of the SQL query
+			resultSet = statement.executeQuery("select ID from test");
+			writeIdResultSet(resultSet);
 
 		} catch (Exception e) {
 			throw e;
@@ -108,17 +118,14 @@ public class Database {
 
 	}
 
-	private void writeResultSet(ResultSet resultSet) throws SQLException {
+	private ArrayList<Integer> writeIdResultSet(ResultSet rs) throws SQLException {
 		// ResultSet is initially before the first data set
-		while (resultSet.next()) {
-			// It is possible to get the columns via name
-			// also possible to get the columns via the column number
-			// which starts at 1
-			// e.g. resultSet.getSTring(2);
-			String data = resultSet.getString("yeet");
-			System.out.println("tiedot: " + data);
+		ArrayList<Integer> lista = new ArrayList();
+		while (rs.next()) {
+			lista.add(rs.getInt("id"));
 
 		}
+		return lista;
 	}
 
 	// You need to close the resultSet
