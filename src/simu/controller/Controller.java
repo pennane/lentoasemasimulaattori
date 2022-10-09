@@ -5,6 +5,7 @@ import simu.framework.Trace;
 import simu.framework.Trace.Level;
 import simu.model.FlightType;
 import simu.model.IOmaMoottori;
+import simu.model.IntermediateStats;
 import simu.model.OmaMoottori;
 import simu.model.SimulatorSettings;
 import simu.view.ISimulatorGUI;
@@ -58,6 +59,11 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 	@Override
 	public void visualizeFinish() {
 		Platform.runLater(() -> ui.getVisualization().finish());
+	}
+
+	@Override
+	public void visualizeIntermediateStats(IntermediateStats stats) {
+		Platform.runLater(() -> ui.getSimulationLayoutController().showIntermediateStats(stats));
 	}
 
 	@Override

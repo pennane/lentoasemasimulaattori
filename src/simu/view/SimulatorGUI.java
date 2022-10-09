@@ -22,6 +22,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 	private IControllerVtoM controller;
 
 	private IVisualization visualization; // Työjuhta
+	private SimulationLayoutController simulationLayoutController;
 
 	public SimulatorGUI() {
 	}
@@ -35,6 +36,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 	public void setVisualization(IVisualization visualization) {
 		this.visualization = visualization;
 	}
+	
+	
 
 	@Override
 	public IControllerVtoM getController() {
@@ -94,4 +97,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+	@Override
+	public void setSimulationLayoutController(SimulationLayoutController controller) {
+		this.simulationLayoutController = controller;
+	}
+
+	@Override
+	public SimulationLayoutController getSimulationLayoutController() {
+		return simulationLayoutController;
+	}
+
 }

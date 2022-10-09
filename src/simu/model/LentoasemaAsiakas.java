@@ -10,8 +10,10 @@ public class LentoasemaAsiakas extends Asiakas {
 	private boolean hasMatakatavat; // muuttuja jolla ilmaistaan onko asiakkaalla matkatavaroita
 	private Lentokone lentokone;
 
-	public LentoasemaAsiakas(Lentokone lentokone) {
-		this.hasMatakatavat = ThreadLocalRandom.current().nextBoolean();
+	public LentoasemaAsiakas(Lentokone lentokone, double baggageProbability) {
+
+		double rand = ThreadLocalRandom.current().nextDouble();
+		this.hasMatakatavat = rand < baggageProbability;
 		this.lentokone = lentokone;
 	}
 
