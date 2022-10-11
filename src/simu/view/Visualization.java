@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import simu.model.FlightType;
 import simu.view.entitys.GUIClock;
 import simu.view.entitys.VisualizableAirplane;
 import simu.view.entitys.VisualizableCustomer;
@@ -21,6 +22,8 @@ public class Visualization implements IVisualization {
 	private double planeImageBaseY;
 	private double customerBaseY;
 
+	private Image plane2Image;
+	
 	private GUIClock clock;
 	private ArrayList<VisualizableAirplane> airplanes;
 	private ArrayList<VisualizableCustomer> customers;
@@ -34,7 +37,7 @@ public class Visualization implements IVisualization {
 
 		airportImage = new Image(getClass().getResourceAsStream("images/airport.png"));
 		planeImage = new Image(getClass().getResourceAsStream("images/plane.png"));
-
+		plane2Image = new Image(getClass().getResourceAsStream("images/plane2.png"));
 		airplanes = new ArrayList<>();
 		customers = new ArrayList<>();
 
@@ -51,7 +54,12 @@ public class Visualization implements IVisualization {
 			public void handle(long now) {
 				drawBackground();
 				for (VisualizableAirplane airplane : airplanes) {
-					ctx.drawImage(planeImage, airplane.getX().doubleValue(), airplane.getY().doubleValue());
+					if(airplane.getType() == FlightType.International) {
+						ctx.drawImage(planeImage, airplane.getX().doubleValue(), airplane.getY().doubleValue());
+					}else {
+						ctx.drawImage(plane2Image, airplane.getX().doubleValue(), airplane.getY().doubleValue());
+					}
+					
 				}
 				ctx.setFill(Color.BLACK);
 				for (VisualizableCustomer customer : customers) {
@@ -92,8 +100,8 @@ public class Visualization implements IVisualization {
 		customer.getTimeline().play();
 	}
 
-	public void summonPlane() {
-		VisualizableAirplane plane = new VisualizableAirplane(canvas, planeImageBaseX, planeImageBaseY);
+	public void summonPlane(FlightType type) {
+		VisualizableAirplane plane = new VisualizableAirplane(canvas, planeImageBaseX, planeImageBaseY, type);
 		airplanes.add(plane);
 		plane.getTimeline().setOnFinished(event -> airplanes.remove(plane));
 		plane.getTimeline().play();
@@ -101,12 +109,12 @@ public class Visualization implements IVisualization {
 
 	@Override
 	public void shengeDepart() {
-		summonPlane();
+		summonPlane(FlightType.Shengen);
 	}
 
 	@Override
 	public void internationalDepart() {
-		summonPlane();
+		summonPlane(FlightType.International);
 	}
 
 	@Override
