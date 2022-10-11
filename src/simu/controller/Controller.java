@@ -58,12 +58,12 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 
 	@Override
 	public void visualizeFinish() {
-		Platform.runLater(() -> ui.getVisualization().finish());
+		Platform.runLater(() -> ui.getSimulationLayoutController().handleFinish());
 	}
 
 	@Override
 	public void visualizeIntermediateStats(IntermediateStats stats) {
-		Platform.runLater(() -> ui.getSimulationLayoutController().showIntermediateStats(stats));
+		Platform.runLater(() -> ui.getSimulationLayoutController().visualizeIntermediateStats(stats));
 	}
 
 	@Override

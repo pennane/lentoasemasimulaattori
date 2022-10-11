@@ -17,6 +17,11 @@ public class LentoasemaAsiakas extends Asiakas {
 		this.lentokone = lentokone;
 	}
 
+	public static void reset() {
+		Asiakas.totalAsiakkaat = 0;
+		Asiakas.sumLeadtime = 0;
+	}
+
 	public FlightType getFlightType() {
 		return lentokone.getFlightType();
 	}

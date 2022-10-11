@@ -7,8 +7,8 @@ public class Asiakas {
 	private long saapumisaika;
 	private long poistumisaika;
 	private int id;
-	private static int totalAsiakkaat = 0;
-	private static long sumLeadtime = 0; // lead time = läpimenoaika
+	protected static int totalAsiakkaat = 0;
+	protected static long sumLeadtime = 0; // lead time = läpimenoaika
 
 	public static int getTotalAsiakkaat() {
 		return Asiakas.totalAsiakkaat;

@@ -9,4 +9,5 @@ public interface IOmaMoottori {
 	public void setSettingsViive(long aika);
 
 	public long getSettingsViive();
+	
 }
