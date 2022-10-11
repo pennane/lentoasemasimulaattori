@@ -232,6 +232,11 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
 		return kello.getAika() < getSimulointiaika();
 	}
+	
+	@Override
+	public boolean isSimulationRunning() {
+		return kello.getAika() != 0 && kello.getAika() < getSimulointiaika();
+	}
 
 	@Override
 	public void setSettingsViive(long viive) {
@@ -252,4 +257,11 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		}
 	}
 
+	@Override
+	public SimulatorSettings getSimulatorSettings() {
+		return settings;
+	}
+
+
+	
 }
