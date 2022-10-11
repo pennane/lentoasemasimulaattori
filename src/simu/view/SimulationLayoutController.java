@@ -126,6 +126,7 @@ public class SimulationLayoutController {
 
 	public void handleLaunchSimulation() {
 		startButton.setDisable(true);
+
 		meanSecondsBetweenCustomers.setDisable(true);
 		planesPerDay.setDisable(true);
 		checkInAmount.setDisable(true);
@@ -160,7 +161,7 @@ public class SimulationLayoutController {
 		return visualization;
 	}
 
-	public void showIntermediateStats(IntermediateStats stats) {
+	public void visualizeIntermediateStats(IntermediateStats stats) {
 		totalInQueue.setText(stats.getTotalInQueue().toString());
 		totalServed.setText(stats.getTotalServed().toString());
 		totalAvgLeadTime.setText(stats.getTotalAvgLeadTime().toString());
@@ -187,5 +188,22 @@ public class SimulationLayoutController {
 		internationalPlanesLeft.setText(stats.getInternationalPlanesLeft().toString());
 		internationalCustomersServed.setText(stats.getInternationalCustomersServed().toString());
 		internationalCustomersInAirport.setText(stats.getInternationalCustomersInAirport().toString());
+	}
+
+	public void handleFinish() {
+		startButton.setDisable(false);
+
+		meanSecondsBetweenCustomers.setDisable(false);
+		planesPerDay.setDisable(false);
+		checkInAmount.setDisable(false);
+		baggageDropAmount.setDisable(false);
+		securityCheckAmount.setDisable(false);
+		passportControlAmount.setDisable(false);
+		ticketInspectionAmount.setDisable(false);
+		shengenProbability.setDisable(false);
+		baggageProbability.setDisable(false);
+
+		accellerateButton.setDisable(true);
+		decelerateButton.setDisable(true);
 	}
 }

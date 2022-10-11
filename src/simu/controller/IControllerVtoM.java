@@ -7,4 +7,5 @@ public interface IControllerVtoM {
 	
 	public void accellerateSimulation();
 	public void decelerateSimulation();
+	
 }

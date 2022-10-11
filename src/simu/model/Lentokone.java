@@ -41,6 +41,10 @@ public class Lentokone implements Comparable<Lentokone> {
 		passengersInAirport = 0;
 		hasDeparted = false;
 	}
+	
+	public static void reset() {
+		totalPlanes = 0;
+	}
 
 	public int getId() {
 		return id;

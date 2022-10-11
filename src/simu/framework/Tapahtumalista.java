@@ -21,4 +21,8 @@ public class Tapahtumalista {
 		return lista.peek().getAika();
 	}
 
+	public boolean isEmpty() {
+		return lista.isEmpty();
+	}
+
 }

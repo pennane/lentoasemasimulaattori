@@ -7,7 +7,6 @@ import java.util.Optional;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.controller.IControllerMtoV;
-import simu.data.Database;
 import simu.data.Datadaoimpl;
 import simu.data.Statistics;
 import simu.framework.Kello;
@@ -15,6 +14,7 @@ import simu.framework.Moottori;
 import simu.framework.Saapumisprosessi;
 import simu.framework.Tapahtuma;
 import simu.framework.Trace;
+import simu.framework.Trace.Level;
 
 public class OmaMoottori extends Moottori implements IOmaMoottori {
 
@@ -35,12 +35,11 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	LentoasemaAsiakas a;
 
 	public OmaMoottori(IControllerMtoV controller, SimulatorSettings settings) {
-
 		super(controller);
 
-		completedBEvents = 0;
-
 		this.settings = settings;
+
+		completedBEvents = 0;
 
 		lentoLista = new LentoLista();
 
@@ -66,6 +65,9 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 	@Override
 	protected void alustukset() {
+		Kello.getInstance().setAika(0);
+		LentoasemaAsiakas.reset();
+		Lentokone.reset();
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
 		new LentokoneGeneraattori(lentoLista, settings).generoi(Math.round(settings.getPlanesPerDay()));
 	}
@@ -149,6 +151,13 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	}
 
 	@Override
+	protected void suoritaBTapahtumat() {
+		while (!tapahtumalista.isEmpty() && tapahtumalista.getSeuraavanAika() == kello.getAika()) {
+			suoritaTapahtuma(tapahtumalista.poista());
+		}
+	}
+
+	@Override
 	protected void yritaCTapahtumat() { // määrittele protectediksi, josa haluat ylikirjoittaa
 		for (PalvelupisteRouter p : palvelupisteet) {
 			if (p.pisteVapaana() && p.onJonossa()) {
@@ -188,21 +197,25 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	protected void tulokset() {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 
-		controller.visualizeCurrentTime(Kello.getInstance().getAika());
-		controller.visualizeFinish();
+		try {
+			Statistics.getInstance().getCheckinValues(palvelupisteet.get(0));
+			Statistics.getInstance().getbaggagedropValues(palvelupisteet.get(1));
+			Statistics.getInstance().getSecuritycheckValues(palvelupisteet.get(2));
+			Statistics.getInstance().getPassportValues(palvelupisteet.get(3));
+			Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
 
-		for (Palvelupiste p : palvelupisteet) {
-			System.out.println("debug palvelupisten nimi " + p.getPalvelupisteDescription());
-			// Statistics.getInstance().getPalvelupisteValues(p);
+			Datadaoimpl dao = new Datadaoimpl();
+
+			dao.SaveSimulationData(Statistics.getInstance().getTulokset());
+
+			System.out.println(dao.getAllData().getBaggagedropAverage());
+		} catch (Exception e) {
+			Trace.out(Level.ERR, "Db stuff failed " + e.toString());
 		}
-		Statistics.getInstance().getCheckinValues(palvelupisteet.get(0));
-		Statistics.getInstance().getbaggagedropValues(palvelupisteet.get(1));
-		Statistics.getInstance().getSecuritycheckValues(palvelupisteet.get(2));
-		Statistics.getInstance().getPassportValues(palvelupisteet.get(3));
-		Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
-		Datadaoimpl dao = new Datadaoimpl();
-		dao.SaveSimulationData(Statistics.getInstance().getTulokset());
-		System.out.println(dao.getAllData().getBaggagedropAverage());
+
+		controller.visualizeCurrentTime(Kello.getInstance().getAika());
+
+		controller.visualizeFinish();
 	}
 
 	@Override
