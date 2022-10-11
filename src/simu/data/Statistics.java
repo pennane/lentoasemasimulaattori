@@ -2,6 +2,7 @@ package simu.data;
 
 import java.util.HashMap;
 
+import simu.model.Asiakas;
 import simu.model.LentoasemaAsiakas;
 import simu.model.Palvelupiste;
 
@@ -59,7 +60,7 @@ public class Statistics {
 
 	public void getAsiakasValues(LentoasemaAsiakas p) {
 		// tulokset.put("asiakkaan läpimeno keskiarvo", (long) p.getAverageLeadtime());
-		data.setCustomerRunTimeAverage(p.getAverageLeadtime());
+		data.setCustomerRunTimeAverage(Asiakas.getAverageLeadtime());
 
 	}
 

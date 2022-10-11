@@ -10,4 +10,8 @@ public interface IOmaMoottori {
 
 	public long getSettingsViive();
 	
+	public boolean isSimulationRunning();
+	
+	public SimulatorSettings getSimulatorSettings();
+	
 }

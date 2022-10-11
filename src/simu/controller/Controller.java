@@ -76,4 +76,17 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		moottori.setSettingsViive(moottori.getSettingsViive() + 1);
 	}
 
+	@Override
+	public boolean isSimulationRunning() {
+		return moottori != null && moottori.isSimulationRunning();
+	}
+
+	@Override
+	public SimulatorSettings getSimulatorSettings() {
+		if (moottori == null) {
+			return null;
+		}
+		return moottori.getSimulatorSettings();
+	}
+
 }

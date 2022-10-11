@@ -105,13 +105,19 @@ public class SimulationLayoutController {
 
 	public void initialize(SimulatorGUI simulatorGUI) {
 		this.simulatorGUI = simulatorGUI;
-
+		
 		if (visualization == null) {
 			visualization = new Visualization(simulationRoot);
 			this.simulatorGUI.setVisualization(visualization);
 		}
 
 		this.simulatorGUI.setSimulationLayoutController(this);
+		
+		if (simulatorGUI.getController().isSimulationRunning()) {
+			showSimulationRunningButtonState();
+		} else {
+			showSimulationStoppedButtonState();
+		}
 
 		meanSecondsBetweenCustomers.setText(DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS.toString());
 		planesPerDay.setText(DEFAULT_PLANES_PER_DAY.toString());
@@ -125,20 +131,7 @@ public class SimulationLayoutController {
 	}
 
 	public void handleLaunchSimulation() {
-		startButton.setDisable(true);
-
-		meanSecondsBetweenCustomers.setDisable(true);
-		planesPerDay.setDisable(true);
-		checkInAmount.setDisable(true);
-		baggageDropAmount.setDisable(true);
-		securityCheckAmount.setDisable(true);
-		passportControlAmount.setDisable(true);
-		ticketInspectionAmount.setDisable(true);
-		shengenProbability.setDisable(true);
-		baggageProbability.setDisable(true);
-
-		accellerateButton.setDisable(false);
-		decelerateButton.setDisable(false);
+		showSimulationRunningButtonState();
 
 		SimulatorSettings settings = new SimulatorSettings(null, null,
 				Double.parseDouble(meanSecondsBetweenCustomers.getText()), Integer.parseInt(planesPerDay.getText()),
@@ -191,6 +184,28 @@ public class SimulationLayoutController {
 	}
 
 	public void handleFinish() {
+		showSimulationStoppedButtonState();
+	}
+	
+
+	public void showSimulationRunningButtonState() {
+		startButton.setDisable(true);
+
+		meanSecondsBetweenCustomers.setDisable(true);
+		planesPerDay.setDisable(true);
+		checkInAmount.setDisable(true);
+		baggageDropAmount.setDisable(true);
+		securityCheckAmount.setDisable(true);
+		passportControlAmount.setDisable(true);
+		ticketInspectionAmount.setDisable(true);
+		shengenProbability.setDisable(true);
+		baggageProbability.setDisable(true);
+
+		accellerateButton.setDisable(false);
+		decelerateButton.setDisable(false);
+	}
+	
+	public void showSimulationStoppedButtonState() {
 		startButton.setDisable(false);
 
 		meanSecondsBetweenCustomers.setDisable(false);
