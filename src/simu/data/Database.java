@@ -19,13 +19,15 @@ public class Database {
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
+	private Secrets secrets = new Secrets();
 
 	public void writeToDatabase(SimulationData simdata) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
+			// Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
+			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
 
 			preparedStatement = connect.prepareStatement("insert into  test values (default, ?,?,?,?,?,?,?,?,?,?,?)");
 			// "insert test data to test database");
@@ -56,9 +58,10 @@ public class Database {
 	public SimulationData getAllFromDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
+			// Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
+			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
 
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
@@ -100,10 +103,13 @@ public class Database {
 	public ArrayList<Integer> getAllIdFromDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
+			// Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
-
+			// connect = DriverManager
+			// .getConnection("jdbc:mysql:mysql.metropolia.fi/henrivue?" +
+			// "user=henrivue&password=kilppari345");
+			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
