@@ -73,6 +73,26 @@ public class Database {
 
 	}
 
+	public SimulationData getAllFromId(int num) throws Exception {
+		try {
+			// This will load the MySQL driver, each DB has its own driver
+			Class.forName("com.mysql.jdbc.Driver");
+			// Setup the connection with the DB
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
+
+			// Statements allow to issue SQL queries to the database
+			statement = connect.createStatement();
+			// Result set get the result of the SQL query
+			resultSet = statement.executeQuery("select * from test where ID=" + num);
+			return writeResultSet(resultSet);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			close();
+		}
+
+	}
+
 	private SimulationData writeResultSet(ResultSet resultSet) throws SQLException {
 		// ResultSet is initially before the first data set
 		SimulationData yeet = new SimulationData();

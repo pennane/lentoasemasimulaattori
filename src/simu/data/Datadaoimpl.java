@@ -33,4 +33,15 @@ public class Datadaoimpl implements dataDao {
 		return null;
 	}
 
+	@Override
+	public SimulationData getAllFromId(int num) {
+		SimulationData data = null;
+		try {
+			data = database.getAllFromId(num);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
 }

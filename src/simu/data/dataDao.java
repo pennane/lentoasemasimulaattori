@@ -8,5 +8,7 @@ public interface dataDao {
 
 	public SimulationData getAllData();
 
+	public SimulationData getAllFromId(int num);
+
 	public void SaveSimulationData(SimulationData simdata);
 }
