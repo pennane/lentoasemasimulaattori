@@ -2,6 +2,7 @@ package simu.data;
 
 public class SimulationData {
 
+	private int id;
 	private double passportcontrolAverage;
 	private double passportcontrolmedian;
 	private double baggagedropAverage;
@@ -27,7 +28,7 @@ public class SimulationData {
 	private double passportcontrolBusyTime;
 	private double ticketinspectionBusyTime;
 
-	public SimulationData(double passportcontrolAverage, double passportcontrolmedian, double baggagedropAverage,
+	public SimulationData(int id, double passportcontrolAverage, double passportcontrolmedian, double baggagedropAverage,
 			double baggagedropmedian, double securitycheckAverage, double securitycheckmedian,
 			double ticketinspectionAverage, double ticketinspectionmedian, double checkinAverage, double checkinmedian,
 			double customerRunTimeAverage, int arivedCustomerAmount, int servicedCustomerAmount,
@@ -36,6 +37,7 @@ public class SimulationData {
 			double checkinBusyTime, double baggagedropBusyTime, double securitycheckBusyTime,
 			double passportcontrolBusyTime, double ticketinspectionBusyTime) {
 		super();
+		this.id = id;
 		this.passportcontrolAverage = passportcontrolAverage;
 		this.passportcontrolmedian = passportcontrolmedian;
 		this.baggagedropAverage = baggagedropAverage;
@@ -64,7 +66,12 @@ public class SimulationData {
 
 	public SimulationData() {
 	}
-
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public double getPassportcontrolAverage() {
 		return passportcontrolAverage;
 	}

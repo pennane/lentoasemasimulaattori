@@ -25,3 +25,12 @@
 .aside {
 		-fx-background-color: #fcfcfc;
 }
+#historyListView .list-cell{
+	-fx-alignment: center;
+}
+.list-cell{
+    -fx-font-size:15.0;
+}
+.scroll-bar:vertical{
+	-fx-pref-width: 26.5;
+}
