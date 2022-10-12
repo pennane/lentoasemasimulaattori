@@ -10,6 +10,12 @@ import simu.framework.Tapahtuma;
 import simu.framework.Tapahtumalista;
 import simu.framework.Trace;
 
+/**
+ * This has been made abstract so that it is not accidentally used in code by
+ * itself.
+ * 
+ * The simulator only uses PalvelupisteRouter now.
+ */
 public abstract class Palvelupiste {
 
 	protected LinkedList<LentoasemaAsiakas> jono = new LinkedList<>();
@@ -82,7 +88,7 @@ public abstract class Palvelupiste {
 		return palvellutAsiakkaat;
 	}
 
-	public double findPalveluajanKeskiarvo() {
+	public double findPalveluaikaKeskiarvo() {
 		double keskiarvo = 0;
 		for (int i = 0; i < palveluajat.size(); i++) {
 			keskiarvo = keskiarvo + palveluajat.get(i);
@@ -90,7 +96,7 @@ public abstract class Palvelupiste {
 		return keskiarvo / palveluajat.size();
 	}
 
-	public double findMedian() {
+	public double findPalveluaikaAverage() {
 
 		ArrayList<Long> palveluajat = new ArrayList<Long>(this.palveluajat);
 		Collections.sort(palveluajat);

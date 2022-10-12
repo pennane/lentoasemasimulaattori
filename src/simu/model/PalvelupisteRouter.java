@@ -12,35 +12,43 @@ import simu.framework.Tapahtumalista;
  * airport has one area for passport checking but the area might have multiple
  * service points
  * 
+ * Sorry for Finglish
+ * 
  * @author arttupennanen
  *
  */
 public class PalvelupisteRouter extends Palvelupiste {
 	private int nextId;
-	protected ArrayList<PalvelupisteEntiteetti> palveluPisteet;
+	protected ArrayList<PalvelupisteEntiteetti> servicePoints;
 
 	/**
-	 * Fill the servicepoint array with unoccupied servicepoints *
+	 * Fill the servicepoint array with new unoccupied servicepoints
 	 */
-	private void instantiatePalveluPisteet(int palvelupisteidenMaara, String kuvaus) {
+	private void instantiatePalveluPisteet(int servicepointCount, String servicePointDescription) {
 		nextId = 0;
-		palveluPisteet = new ArrayList<>();
-		for (int i = 0; i < palvelupisteidenMaara; i++) {
-			palveluPisteet.add(new PalvelupisteEntiteetti(kuvaus + (nextId++)));
+		servicePoints = new ArrayList<>();
+		for (int i = 0; i < servicepointCount; i++) {
+			servicePoints.add(new PalvelupisteEntiteetti(servicePointDescription + (nextId++)));
 		}
 
 	}
 
+	/**
+	 * Constructor for usage without a subclass
+	 */
 	public PalvelupisteRouter(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi,
-			int palvelupisteidenMaara, String kuvaus) {
-		super(generator, tapahtumalista, tyyppi, kuvaus);
-		instantiatePalveluPisteet(palvelupisteidenMaara, kuvaus);
+			int servicepointCount, String description) {
+		super(generator, tapahtumalista, tyyppi, description);
+		instantiatePalveluPisteet(servicepointCount, description);
 	}
 
-	public PalvelupisteRouter(ContinuousGenerator generator, Tapahtumalista tapahtumalista, int palvelupisteidenMaara,
-			String kuvaus) {
-		super(generator, tapahtumalista, kuvaus);
-		instantiatePalveluPisteet(palvelupisteidenMaara, kuvaus);
+	/**
+	 * Constructor for sublclasses that do not introduce the event type yet
+	 */
+	protected PalvelupisteRouter(ContinuousGenerator generator, Tapahtumalista tapahtumalista, int servicepointCount,
+			String description) {
+		super(generator, tapahtumalista, description);
+		instantiatePalveluPisteet(servicepointCount, description);
 	}
 
 	/**
@@ -49,7 +57,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 	 * @return
 	 */
 	public Boolean pisteVapaana() {
-		return palveluPisteet.stream().anyMatch(p -> p.getVarattu() == false);
+		return servicePoints.stream().anyMatch(p -> p.getVarattu() == false);
 	}
 
 	@Override
@@ -57,7 +65,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 
 		// This method should never be called if there is no unoccupied service points.
 		// The orElseThrow is to catch possible developer errors
-		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
+		PalvelupisteEntiteetti palvelupiste = servicePoints.stream().filter(p -> p.getVarattu() == false).findAny()
 				.orElseThrow();
 
 		Long palveluaika = (long) generator.sample();
@@ -71,7 +79,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 
 	@Override
 	public void aloitaPalvelu(TapahtumanTyyppi tapahtumanTyyppi) {
-		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getVarattu() == false).findAny()
+		PalvelupisteEntiteetti palvelupiste = servicePoints.stream().filter(p -> p.getVarattu() == false).findAny()
 				.orElseThrow();
 
 		Long palveluaika = (long) generator.sample();
@@ -86,7 +94,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 	public LentoasemaAsiakas lopetaPalvelu(String palvelupisteID) {
 		palvellutAsiakkaat++;
 
-		PalvelupisteEntiteetti palvelupiste = palveluPisteet.stream().filter(p -> p.getId().equals(palvelupisteID))
+		PalvelupisteEntiteetti palvelupiste = servicePoints.stream().filter(p -> p.getId().equals(palvelupisteID))
 				.findAny().orElseThrow();
 
 		return palvelupiste.lopetaPalvelu();

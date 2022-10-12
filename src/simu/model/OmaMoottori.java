@@ -17,6 +17,12 @@ import simu.framework.Tapahtuma;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
 
+/**
+ * The heart of the model. The backbone of the simulation.
+ * 
+ * Overrides multiple methods of the Moottori class
+ *
+ */
 public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 	private SimulatorSettings settings;
@@ -24,6 +30,8 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	private LentoLista lentoLista;
 
 	private Saapumisprosessi saapumisprosessi;
+
+	// Notice that each service point is actually a router now
 	private PalvelupisteRouter checkIn;
 	private PalvelupisteRouter baggageDrop;
 	private PalvelupisteRouter passportControl;
@@ -44,6 +52,9 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 		lentoLista = new LentoLista();
 
+		// Instatiate the servicepoint routers
+		// The distribution settinsgs are static, but the amount of each service point
+		// is dynamic
 		checkIn = new CheckinRouter(new Normal(minutes(3), 2), tapahtumalista, settings.getCheckInAmount(), "checkin");
 		baggageDrop = new PalvelupisteRouter(new Normal(minutes(7), 2), tapahtumalista, TapahtumanTyyppi.BAGGAGE_END,
 				settings.getBaggageDropAmount(), "baggagedrop");
@@ -64,6 +75,12 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		palvelupisteet.add(ticketInspection);
 	}
 
+	/**
+	 * Initialization of the related methods for a new simulation run
+	 * 
+	 * Reseting the Kello, LentoasemaAsiakas and Lentokone classess allows us to run
+	 * subsequential simulations.
+	 */
 	@Override
 	protected void alustukset() {
 		Kello.getInstance().setAika(0);
@@ -81,7 +98,9 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		case CHECKIN_ENTER:
 			Optional<Lentokone> maybeLentokone = lentoLista.findNextAvailable();
 
-			// This happens when all of the lentokonees are filled
+			// This happens when all of the lentokonees are filled, which means that if
+			// there are no airplanes any customer can board, there won't be any new
+			// customers
 			if (maybeLentokone.isEmpty())
 				break;
 
@@ -92,7 +111,6 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 			saapumisprosessi.generoiSeuraava();
 			controller.visualizeCustomer();
-
 			break;
 		case CHECKIN_END_SELF:
 			a = checkIn.lopetaPalvelu(t.getPalvelupisteId());
@@ -124,7 +142,6 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			a.setPoistumisaika(Kello.getInstance().getAika());
 			a.raportti();
 			Statistics.getInstance().getAsiakasValues(a);
-
 			break;
 		case SCHENGE_PLANE_DEPARTING:
 			controller.visualizeAirplane(FlightType.Shengen);
@@ -136,6 +153,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			System.out.println(t.getTyyppi());
 			throw new UnsupportedOperationException();
 		}
+
 		completedBEvents++;
 
 		// Visualizations or other third party things that don't need to be run for
@@ -208,7 +226,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 			dao.SaveSimulationData(Statistics.getInstance().getTulokset());
 
-			//System.out.println(dao.getAllData().getBaggagedropAverage());
+			// System.out.println(dao.getAllData().getBaggagedropAverage());
 		} catch (Exception e) {
 			Trace.out(Level.ERR, "Db stuff failed " + e.toString());
 		}
@@ -219,23 +237,32 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	}
 
 	@Override
+	protected boolean simuloidaan() {
+		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
+		return kello.getAika() < getSimulointiaika();
+	}
+
+	@Override
+	public boolean isSimulationRunning() {
+		return kello.getAika() != 0 && kello.getAika() < getSimulointiaika();
+	}
+
+	@Override
+	protected void viive() {
+		try {
+			sleep(getSettingsViive());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void setSimulointiaika(long aika) {
 		this.settings.setSimulationDurationSeconds(aika);
 	}
 
 	public long getSimulointiaika() {
 		return this.settings.getSimulationDurationSeconds();
-	}
-
-	@Override
-	protected boolean simuloidaan() {
-		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
-		return kello.getAika() < getSimulointiaika();
-	}
-	
-	@Override
-	public boolean isSimulationRunning() {
-		return kello.getAika() != 0 && kello.getAika() < getSimulointiaika();
 	}
 
 	@Override
@@ -249,19 +276,8 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	}
 
 	@Override
-	protected void viive() {
-		try {
-			sleep(getSettingsViive());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
 	public SimulatorSettings getSimulatorSettings() {
 		return settings;
 	}
 
-
-	
 }

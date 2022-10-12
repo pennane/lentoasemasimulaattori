@@ -3,8 +3,7 @@ package simu.model;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Asiakkaan jatke, jonka ominaisuutena on lentokoneen ja matkatavaroiden
- * tietojen pitäminen.
+ * Extension of Asiakas It holds information of baggage and its airplane
  */
 public class LentoasemaAsiakas extends Asiakas {
 	private boolean hasMatakatavat; // muuttuja jolla ilmaistaan onko asiakkaalla matkatavaroita

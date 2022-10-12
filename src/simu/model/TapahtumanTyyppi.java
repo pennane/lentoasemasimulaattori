@@ -1,6 +1,10 @@
 package simu.model;
 
 
+/**
+ * Enum type for each possible B event in the simulator
+ *
+ */
 public enum TapahtumanTyyppi {
 	CHECKIN_ENTER,
 	CHECKIN_START,
