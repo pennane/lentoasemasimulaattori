@@ -12,6 +12,18 @@ import simu.view.entitys.GUIClock;
 import simu.view.entitys.VisualizableAirplane;
 import simu.view.entitys.VisualizableCustomer;
 
+/**
+ * Animation central of the simulation
+ * 
+ * Animate the simulation by visualizing arriving customers, departing airplanes
+ * and running time
+ * 
+ * Heart of the visualization is an AnimationTimer which runs constantly and
+ * listens for calls from the motor
+ * 
+ * @author arttupennanen
+ *
+ */
 public class Visualization implements IVisualization {
 
 	private Image airportImage;
@@ -23,7 +35,7 @@ public class Visualization implements IVisualization {
 	private double customerBaseY;
 
 	private Image plane2Image;
-	
+
 	private GUIClock clock;
 	private ArrayList<VisualizableAirplane> airplanes;
 	private ArrayList<VisualizableCustomer> customers;
@@ -54,12 +66,12 @@ public class Visualization implements IVisualization {
 			public void handle(long now) {
 				drawBackground();
 				for (VisualizableAirplane airplane : airplanes) {
-					if(airplane.getType() == FlightType.International) {
+					if (airplane.getType() == FlightType.International) {
 						ctx.drawImage(planeImage, airplane.getX().doubleValue(), airplane.getY().doubleValue());
-					}else {
+					} else {
 						ctx.drawImage(plane2Image, airplane.getX().doubleValue(), airplane.getY().doubleValue());
 					}
-					
+
 				}
 				ctx.setFill(Color.BLACK);
 				for (VisualizableCustomer customer : customers) {
@@ -117,6 +129,10 @@ public class Visualization implements IVisualization {
 		summonPlane(FlightType.International);
 	}
 
+	/**
+	 * This gets called when the simulation finishes. There has not yet been a
+	 * vision for what we could want to visualize in those cases, though.
+	 */
 	@Override
 	public void finish() {
 		// TODO Auto-generated method stub

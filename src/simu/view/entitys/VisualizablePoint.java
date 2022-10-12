@@ -7,6 +7,13 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.util.Duration;
 
+/**
+ * A thing that can be given into the Visualization and drawn into the canvas
+ * every frame
+ * 
+ * @author arttupennanen
+ *
+ */
 public abstract class VisualizablePoint {
 	public Timeline getTimeline() {
 		return timeline;
