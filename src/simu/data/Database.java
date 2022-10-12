@@ -1,5 +1,6 @@
 package simu.data;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ public class Database {
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
-	private ResultSet resultSet = null;
+	private ResultSet rS = null;
 	private Secrets secrets = new Secrets();
 
 	public void writeToDatabase(SimulationData simdata) throws Exception {
@@ -55,7 +56,7 @@ public class Database {
 
 	}
 
-	public SimulationData getAllFromDatabase() throws Exception {
+	public SimulationData[] getAllFromDatabase() throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			// Class.forName("com.mysql.jdbc.Driver");
@@ -66,8 +67,30 @@ public class Database {
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
-			resultSet = statement.executeQuery("select * from test where ID=1");
-			return writeResultSet(resultSet);
+			rS = statement.executeQuery("select * from test");
+			ArrayList<SimulationData> dataArray = new ArrayList<>();
+			while(rS.next()) {
+				dataArray.add(new SimulationData(
+						rS.getInt("ID"),
+						rS.getDouble("PassportA"),
+						rS.getDouble("passportMed"),
+						rS.getDouble("baggageA"),
+						rS.getDouble("baggageMed"),
+						rS.getDouble("securityA"),
+						rS.getDouble("securityMed"),
+						rS.getDouble("TicketA"),
+						rS.getDouble("TicketMed"),
+						rS.getDouble("checkinA"),
+						rS.getDouble("checkinMed"),
+						rS.getDouble("AsiakasAv"),
+						0,0,0,0,0,0,0,0,0,0,0,0,0
+						));
+			}
+			SimulationData[] returnArray = new SimulationData[dataArray.size()];
+			for(int i = 0; i < dataArray.size(); i++) {
+				returnArray[i] = dataArray.get(i);
+			}
+			return returnArray;
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -86,8 +109,8 @@ public class Database {
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
-			resultSet = statement.executeQuery("select * from test where ID=" + num);
-			return writeResultSet(resultSet);
+			rS = statement.executeQuery("select * from test where ID=" + num);
+			return writeResultSet(rS);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -133,9 +156,9 @@ public class Database {
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
-			resultSet = statement.executeQuery("select ID from test");
+			rS = statement.executeQuery("select ID from test");
 
-			return writeIdResultSet(resultSet);
+			return writeIdResultSet(rS);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -157,8 +180,8 @@ public class Database {
 	// You need to close the resultSet
 	private void close() {
 		try {
-			if (resultSet != null) {
-				resultSet.close();
+			if (rS != null) {
+				rS.close();
 			}
 
 			if (statement != null) {

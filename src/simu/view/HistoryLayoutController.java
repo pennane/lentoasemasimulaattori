@@ -32,13 +32,6 @@ public class HistoryLayoutController {
 		
 		historyDataListView.setFocusTraversable(false);
 		
-		//Testi
-		testData = new SimulationData(1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-		testData2 = new SimulationData(2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-		allData.add(testData2);
-		allData.add(testData);
-		//----
-		
 		refreshData();
 	}
 	//Generates a String array for the ListView that displays the previous simulations
@@ -80,21 +73,25 @@ public class HistoryLayoutController {
 	}
  	//Gets the data from dao and adds listeners to ListView items
 	public void refreshData() {
-		
-		// TODO: Hakee kaikki datat
-		
+		allData.clear();
+		SimulationData[] daoData = dao.getAllData();
+		for(SimulationData d : daoData) {
+			allData.add(d);
+		}
 		historyListView.getItems().clear();
+		historyDataListView.getItems().clear();
 		historyListView.getItems().addAll(generateHistoryList());
 		historyListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 				try {
-					String selectedString = historyListView.getSelectionModel().getSelectedItem().replace(historyText, "");
-					int selectedId = Integer.parseInt(selectedString);
-					SimulationData data = (SimulationData) allData.stream().filter(d -> selectedId == d.getId()).findAny().orElse(null);
-					historyDataListView.getItems().clear();
-					historyDataListView.getItems().addAll(generateDataList(data));
-				
+					String selectedString = historyListView.getSelectionModel().getSelectedItem();
+					if(selectedString != null) {
+						int selectedId = Integer.parseInt(selectedString.replace(historyText, ""));
+						SimulationData data = (SimulationData) allData.stream().filter(d -> selectedId == d.getId()).findAny().orElse(null);
+						historyDataListView.getItems().clear();
+						historyDataListView.getItems().addAll(generateDataList(data));	
+					}
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
