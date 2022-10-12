@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import simu.model.SimulatorSettings;
 
+/**
+ * file contains implementation on dataDao
+ * 
+ * @author henri vuento
+ *
+ */
 public class Datadaoimpl implements dataDao {
 	Database database = new Database();
 
