@@ -3,7 +3,7 @@ package simu.util;
 import simu.constants.Constants;
 
 /**
- * Class for static time related utility methods
+ * Home of static time related utility methods
  */
 public class Time {
 	/**

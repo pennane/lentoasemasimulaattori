@@ -1,5 +1,11 @@
 package simu.view.entitys;
 
+/**
+ * Customer that can be animated into the visualization canvas
+ * 
+ * @author arttupennanen
+ *
+ */
 public class VisualizableCustomer extends VisualizablePoint {
 	private static double ANIMATION_DURATION = 4000;
 

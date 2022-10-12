@@ -18,12 +18,18 @@ import javafx.scene.control.TextField;
 import simu.model.IntermediateStats;
 import simu.model.SimulatorSettings;
 
+/**
+ * The layout controller for simulation
+ * 
+ * Contains the Canvas visualization, simulation run settings, and realtime
+ * statistics.
+ * 
+ */
 public class SimulationLayoutController {
 
 	@FXML
-	private Canvas simulationRoot; // Käyttöliittymäkomponentti
-
-	private IVisualization visualization = null; // Työjuhta
+	private Canvas visualizationContainer;
+	private IVisualization visualization;
 
 	@FXML
 	private TextField meanSecondsBetweenCustomers;
@@ -103,16 +109,21 @@ public class SimulationLayoutController {
 
 	private SimulatorGUI simulatorGUI;
 
+	/**
+	 * This has to be run before the functionality can be safely accessed
+	 * 
+	 * @param simulatorGUI GUI instance of the simulation
+	 */
 	public void initialize(SimulatorGUI simulatorGUI) {
 		this.simulatorGUI = simulatorGUI;
-		
+
 		if (visualization == null) {
-			visualization = new Visualization(simulationRoot);
+			visualization = new Visualization(visualizationContainer);
 			this.simulatorGUI.setVisualization(visualization);
 		}
 
 		this.simulatorGUI.setSimulationLayoutController(this);
-		
+
 		if (simulatorGUI.getController().isSimulationRunning()) {
 			showSimulationRunningButtonState();
 		} else {
@@ -130,6 +141,13 @@ public class SimulationLayoutController {
 		baggageProbability.setText(DEFAULT_BAGGAGE_DROP_PROBABILITY.toString());
 	}
 
+	public IVisualization getVisualization() {
+		return visualization;
+	}
+
+	/**
+	 * Accessed from layout Starts a new simulation
+	 */
 	public void handleLaunchSimulation() {
 		showSimulationRunningButtonState();
 
@@ -142,18 +160,34 @@ public class SimulationLayoutController {
 		simulatorGUI.getController().launchSimulation(settings);
 	}
 
+	/**
+	 * Accessed from layout Request to Accelerate simulation
+	 */
 	public void handleAccelerateSimulation() {
 		simulatorGUI.getController().accellerateSimulation();
 	}
 
+	/**
+	 * Accessed from layout Request to Decelerate simulation
+	 */
 	public void handleDecelerateSimulation() {
 		simulatorGUI.getController().decelerateSimulation();
 	}
 
-	public IVisualization getVisualization() {
-		return visualization;
+	/**
+	 * Accessed from controller Does the necessary GUI updates when the simulation
+	 * is over
+	 */
+	public void handleFinish() {
+		showSimulationStoppedButtonState();
 	}
 
+	/**
+	 * Mega thought out implementation of showing the realtime stats in the
+	 * simulation view
+	 * 
+	 * @param stats
+	 */
 	public void visualizeIntermediateStats(IntermediateStats stats) {
 		totalInQueue.setText(stats.getTotalInQueue().toString());
 		totalServed.setText(stats.getTotalServed().toString());
@@ -183,11 +217,9 @@ public class SimulationLayoutController {
 		internationalCustomersInAirport.setText(stats.getInternationalCustomersInAirport().toString());
 	}
 
-	public void handleFinish() {
-		showSimulationStoppedButtonState();
-	}
-	
-
+	/**
+	 * Set the inputs disabled state to match state of simulation running
+	 */
 	public void showSimulationRunningButtonState() {
 		startButton.setDisable(true);
 
@@ -204,7 +236,10 @@ public class SimulationLayoutController {
 		accellerateButton.setDisable(false);
 		decelerateButton.setDisable(false);
 	}
-	
+
+	/**
+	 * Set the inputs disabled state to match state of simulation of being off
+	 */
 	public void showSimulationStoppedButtonState() {
 		startButton.setDisable(false);
 
