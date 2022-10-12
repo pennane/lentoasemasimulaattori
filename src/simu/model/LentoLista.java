@@ -2,13 +2,14 @@ package simu.model;
 
 import java.util.Optional;
 import java.util.PriorityQueue;
+import java.util.stream.Stream;
 
 public class LentoLista {
 
 	// Don't ever remove stuff from the queue.
 	// The departed planes are still used for calculating stuff.
 	// TODO: The data structure could be changed though, as the queue functionality
-	// is not needed.
+	// is not necessarily needed, only the priority is.
 
 	PriorityQueue<Lentokone> lennot;
 
@@ -24,40 +25,47 @@ public class LentoLista {
 		return lennot;
 	}
 
-	public Optional<Lentokone> findNextAvailable() {
-		return lennot.stream().sorted().filter(l -> l.hasAvailableSeats() && !l.getHasDeparted()).findFirst();
+	private Stream<Lentokone> planesStream() {
+		return lennot.stream().sorted();
 	}
 
+	public Optional<Lentokone> findNextAvailable() {
+		return planesStream().filter(l -> l.hasAvailableSeats() && !l.getHasDeparted()).findFirst();
+	}
+
+	/**
+	 * <3 stream api and somewhat functional programming
+	 * 
+	 * this can be read like a book
+	 */
 	public int findShengenCustomersInAirportCount() {
-		return lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.Shengen && !l.getHasDeparted())
+		return planesStream().filter(l -> l.getFlightType() == FlightType.Shengen && !l.getHasDeparted())
 				.mapToInt(l -> l.getPassengersInAirport()).sum();
 
 	}
 
 	public int findInternationalCustomersInAirportCount() {
-		return lennot.stream().sorted()
-				.filter(l -> l.getFlightType() == FlightType.International && !l.getHasDeparted())
+		return planesStream().filter(l -> l.getFlightType() == FlightType.International && !l.getHasDeparted())
 				.mapToInt(l -> l.getPassengersInAirport()).sum();
 
 	}
 
 	public int findDepartedShengenPlanesCount() {
-		return (int) lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.Shengen && l.getHasDeparted())
-				.count();
+		return (int) planesStream().filter(l -> l.getFlightType() == FlightType.Shengen && l.getHasDeparted()).count();
 	}
 
 	public int findDepartedInternationalPlanesCount() {
-		return (int) lennot.stream().sorted()
-				.filter(l -> l.getFlightType() == FlightType.International && l.getHasDeparted()).count();
+		return (int) planesStream().filter(l -> l.getFlightType() == FlightType.International && l.getHasDeparted())
+				.count();
 	}
 
 	public int findDepartedShengenCustomersCount() {
-		return lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.Shengen && l.getHasDeparted())
+		return planesStream().filter(l -> l.getFlightType() == FlightType.Shengen && l.getHasDeparted())
 				.mapToInt(l -> l.getPassengersWaiting()).sum();
 	}
 
 	public int findDepartedInternationalCustomersCount() {
-		return lennot.stream().sorted().filter(l -> l.getFlightType() == FlightType.International && l.getHasDeparted())
+		return planesStream().filter(l -> l.getFlightType() == FlightType.International && l.getHasDeparted())
 				.mapToInt(l -> l.getPassengersWaiting()).sum();
 	}
 }

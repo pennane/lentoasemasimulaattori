@@ -23,38 +23,38 @@ public class Statistics {
 	}
 
 	public void getPalvelupisteValues(Palvelupiste p) {
-		tulokset.put(p.getPalvelupisteDescription() + " keskiarvo", (long) p.findPalveluajanKeskiarvo());
-		tulokset.put(p.getPalvelupisteDescription() + " mediaani", (long) p.findMedian());
+		tulokset.put(p.getPalvelupisteDescription() + " keskiarvo", (long) p.findPalveluaikaKeskiarvo());
+		tulokset.put(p.getPalvelupisteDescription() + " mediaani", (long) p.findPalveluaikaAverage());
 
 	}
 
 	public void getCheckinValues(Palvelupiste p) {
-		data.setCheckinAverage(p.findPalveluajanKeskiarvo());
-		data.setCheckinmedian(p.findMedian());
+		data.setCheckinAverage(p.findPalveluaikaKeskiarvo());
+		data.setCheckinmedian(p.findPalveluaikaAverage());
 
 	}
 
 	public void getbaggagedropValues(Palvelupiste p) {
-		data.setBaggagedropAverage(p.findPalveluajanKeskiarvo());
-		data.setBaggagedropmedian(p.findMedian());
+		data.setBaggagedropAverage(p.findPalveluaikaKeskiarvo());
+		data.setBaggagedropmedian(p.findPalveluaikaAverage());
 
 	}
 
 	public void getSecuritycheckValues(Palvelupiste p) {
-		data.setSecuritycheckAverage(p.findPalveluajanKeskiarvo());
-		data.setSecuritycheckmedian(p.findMedian());
+		data.setSecuritycheckAverage(p.findPalveluaikaKeskiarvo());
+		data.setSecuritycheckmedian(p.findPalveluaikaAverage());
 
 	}
 
 	public void getPassportValues(Palvelupiste p) {
-		data.setPassportcontrolAverage(p.findPalveluajanKeskiarvo());
-		data.setPassportcontrolmedian(p.findMedian());
+		data.setPassportcontrolAverage(p.findPalveluaikaKeskiarvo());
+		data.setPassportcontrolmedian(p.findPalveluaikaAverage());
 
 	}
 
 	public void getTicketinspectionValues(Palvelupiste p) {
-		data.setTicketinspectionAverage(p.findPalveluajanKeskiarvo());
-		data.setTicketinspectionmedian(p.findMedian());
+		data.setTicketinspectionAverage(p.findPalveluaikaKeskiarvo());
+		data.setTicketinspectionmedian(p.findPalveluaikaAverage());
 
 	}
 

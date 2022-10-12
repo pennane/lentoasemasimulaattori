@@ -18,7 +18,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
 
-	// Kontrollerin esittely (tarvitaan käyttöliittymässä)
 	private IControllerVtoM controller;
 
 	private IVisualization visualization; // Työjuhta

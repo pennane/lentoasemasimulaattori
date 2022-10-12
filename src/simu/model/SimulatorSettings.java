@@ -3,6 +3,14 @@ package simu.model;
 import simu.constants.Constants;
 import simu.util.Fp;
 
+/**
+ * The settings object for configuring a simulator run.
+ * 
+ * Basicly just a bunch of getters and setters. If a null value is passed for
+ * any datapoint in constructor, a default value is used instead from the
+ * Constants class
+ * 
+ */
 public class SimulatorSettings {
 	private Long simulationDurationSeconds;
 	private Long simulationDelay;
@@ -17,8 +25,9 @@ public class SimulatorSettings {
 	private double shengenProbability; // 0-1
 	private double baggageProbability; // 0-1
 
-	
-
+	/**
+	 * Defaults to values presented in Constants class
+	 */
 	public SimulatorSettings(Long simulationDurationSeconds, Long simulationDelay, double meanSecondsBetweenCustomers,
 			int planesPerDay, int checkInAmount, int baggageDropAmount, int securityCheckAmount,
 			int passportControlAmount, int ticketInspectionAmount, double shengenProbability,

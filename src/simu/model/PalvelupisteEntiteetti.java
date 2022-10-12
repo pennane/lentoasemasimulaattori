@@ -1,5 +1,17 @@
 package simu.model;
 
+/**
+ * To be used inside PalvelupisteRouter
+ * 
+ * Simple service point
+ *
+ * Acts as a single service point, eq single desk or single gate whereas the
+ * PalvelupisteRouter is the whole collection of these said service points
+ * 
+ * Better name would have been just Palvelupiste, but that could have caused
+ * misunderstandings in what is the responsibility of this class
+ *
+ */
 public class PalvelupisteEntiteetti {
 	private Boolean varattu;
 	private String id;
@@ -24,7 +36,7 @@ public class PalvelupisteEntiteetti {
 	}
 
 	public LentoasemaAsiakas lopetaPalvelu() {
-		
+
 		this.varattu = false;
 		LentoasemaAsiakas asiakas = this.asiakas;
 		this.asiakas = null;

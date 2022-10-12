@@ -38,23 +38,23 @@ public class IntermediateStats {
 
 		checkInInQueue = checkInRouter.jono.size();
 		checkInServed = checkInRouter.getPalvellutAsiakkaat();
-		checkInAvgLeadTime = (int) checkInRouter.findPalveluajanKeskiarvo();
+		checkInAvgLeadTime = (int) checkInRouter.findPalveluaikaKeskiarvo();
 
 		baggageDropInQueue = baggageDropRouter.jono.size();
 		baggageDropServed = baggageDropRouter.getPalvellutAsiakkaat();
-		baggageDropAvgLeadTime = (int) baggageDropRouter.findPalveluajanKeskiarvo();
+		baggageDropAvgLeadTime = (int) baggageDropRouter.findPalveluaikaKeskiarvo();
 
 		securityCheckInQueue = securityCheckRouter.jono.size();
 		securityCheckServed = securityCheckRouter.getPalvellutAsiakkaat();
-		securityCheckAvgLeadTime = (int) securityCheckRouter.findPalveluajanKeskiarvo();
+		securityCheckAvgLeadTime = (int) securityCheckRouter.findPalveluaikaKeskiarvo();
 
 		passportControlInQueue = passportControlRouter.jono.size();
 		passportControlServed = passportControlRouter.getPalvellutAsiakkaat();
-		passportControlAvgLeadTime = (int) passportControlRouter.findPalveluajanKeskiarvo();
+		passportControlAvgLeadTime = (int) passportControlRouter.findPalveluaikaKeskiarvo();
 
 		ticketInspectionInQueue = ticketInspectionRouter.jono.size();
 		ticketInspectionServed = ticketInspectionRouter.getPalvellutAsiakkaat();
-		ticketInspectionAvgLeadTime = (int) ticketInspectionRouter.findPalveluajanKeskiarvo();
+		ticketInspectionAvgLeadTime = (int) ticketInspectionRouter.findPalveluaikaKeskiarvo();
 	}
 
 	public void buildPlaneStats(LentoLista planes) {
