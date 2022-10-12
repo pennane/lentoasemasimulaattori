@@ -10,5 +10,7 @@ public interface dataDao {
 
 	public SimulationData[] getAllData();
 
+	public SimulatorSettings getSimulationSettings(int i);
+
 	public void SaveSimulationData(SimulationData simdata, SimulatorSettings s);
 }
