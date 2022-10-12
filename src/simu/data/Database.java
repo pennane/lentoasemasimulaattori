@@ -87,7 +87,7 @@ public class Database {
 
 	}
 
-	public SimulationData getAllFromId(int num) throws Exception {
+	public SimulationData getSettingsFromRunId(int num) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("org.mariadb.jdbc.Driver");
