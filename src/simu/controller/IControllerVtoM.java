@@ -8,4 +8,8 @@ public interface IControllerVtoM {
 	public void accellerateSimulation();
 	public void decelerateSimulation();
 	
+	public boolean isSimulationRunning();
+	
+	public SimulatorSettings getSimulatorSettings();
+	
 }

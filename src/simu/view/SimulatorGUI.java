@@ -36,8 +36,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 	public void setVisualization(IVisualization visualization) {
 		this.visualization = visualization;
 	}
-	
-	
 
 	@Override
 	public IControllerVtoM getController() {
@@ -66,15 +64,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
-			//Add event handler for quitting the simulation once the window is closed
-			primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>()
-	        {
-	            @Override
-	            public void handle(WindowEvent window)
-	            {
-	            	System.exit(1);
-	            }
-	        });
+			// Add event handler for quitting the simulation once the window is closed
+			primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent window) {
+					System.exit(1);
+				}
+			});
 			RootLayoutController rootLayoutController = loader.getController();
 			rootLayoutController.initialize(this);
 
