@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import simu.data.Datadaoimpl;
 import simu.data.SimulationData;
+import simu.model.SimulatorSettings;
 
 public class HistoryLayoutController {
 
@@ -43,7 +44,7 @@ public class HistoryLayoutController {
  		return dataString;
 	}
 	//Generates a String array for the ListView that displays the selected simulations data
- 	private String[] generateDataList(SimulationData data) {
+ 	private String[] generateDataList(SimulationData data, SimulatorSettings settings) {
 		return new String[]{
 				"Passport control average: " + data.getPassportcontrolAverage(),
 				"Passport control median: " + data.getPassportcontrolmedian(),
@@ -72,6 +73,18 @@ public class HistoryLayoutController {
 				"Passport control busy time: " + data.getPassportcontrolBusyTime(),
 				"Ticket inspection busy time: " + data.getTicketinspectionBusyTime()
 				*/
+				"--------------SETTINGS--------------",
+				"Simulation duration in seconds: " + settings.getSimulationDurationSeconds(),
+				"Simulation delay: " + settings.getSimulationDelay(),
+				"Mean seconds between customers: " + settings.getMeanSecondsBetweenCustomers(),
+				"Planes per day: " + settings.getPlanesPerDay(),
+				"Check in amount: " + settings.getCheckInAmount(),
+				"Bag drop amount: " + settings.getBaggageDropAmount(),
+				"Securit check amount: " + settings.getSecurityCheckAmount(),
+				"Passport control amount: " + settings.getPassportControlAmount(),
+				"Ticket inspection amount: " + settings.getTicketInspectionAmount(),
+				"Schengen probability: " + settings.getShengenProbability(),
+				"Bag probability: " + settings.getBaggageProbability()
 		};
 	}
  	//Gets the data from dao and adds listeners to ListView items
@@ -92,8 +105,9 @@ public class HistoryLayoutController {
 					if(selectedString != null) {
 						int selectedId = Integer.parseInt(selectedString.replace(historyText, ""));
 						SimulationData data = (SimulationData) allData.stream().filter(d -> selectedId == d.getId()).findAny().orElse(null);
+						SimulatorSettings settings = dao.getSimulationSettings(selectedId);
 						historyDataListView.getItems().clear();
-						historyDataListView.getItems().addAll(generateDataList(data));	
+						historyDataListView.getItems().addAll(generateDataList(data, settings));	
 					}
 				}catch(Exception e) {
 					e.printStackTrace();
