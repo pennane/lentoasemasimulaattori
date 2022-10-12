@@ -24,6 +24,15 @@ public class Database {
 	private ResultSet rS = null;
 	private Secrets secrets = new Secrets();
 
+	/**
+	 * method to save data to sql database. this saves first data collected from
+	 * simulation and then settings using id of saved data as foreign key to link
+	 * two tables
+	 * 
+	 * @param simdata is data collected from simulation run
+	 * @param s       is simulation run settings given by user
+	 * @throws Exception sql exeption
+	 */
 	public void writeToDatabase(SimulationData simdata, SimulatorSettings s) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
@@ -63,7 +72,7 @@ public class Database {
 			preparedStatement.setDouble(10, s.getShengenProbability());
 			preparedStatement.setDouble(11, s.getBaggageProbability());
 			preparedStatement.setInt(12, getLatestId());
-
+			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -136,7 +145,7 @@ public class Database {
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
 			rS = statement.executeQuery("SELECT * FROM test WHERE ID = (SELECT MAX(ID) FROM test)");
-			return rS.getInt("ID");
+			return writeId(rS);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -193,6 +202,15 @@ public class Database {
 				rs.getDouble("shengenProbability"), rs.getDouble("baggageProbability"));
 
 		return settings;
+	}
+
+	private int writeId(ResultSet rs) throws SQLException {
+		// ResultSet is initially before the first data set
+		int yeet = 1;
+		while (rs.next()) {
+			yeet = rs.getInt("ID");
+		}
+		return yeet;
 	}
 
 	// You need to close the resultSet
