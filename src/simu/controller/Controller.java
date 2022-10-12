@@ -10,6 +10,12 @@ import simu.model.OmaMoottori;
 import simu.model.SimulatorSettings;
 import simu.view.ISimulatorGUI;
 
+/**
+ * Central controller between the gui and the motor of the simulator
+ * 
+ * The C of MVC
+ *
+ */
 public class Controller implements IControllerVtoM, IControllerMtoV {
 
 	private IOmaMoottori moottori;
@@ -19,6 +25,9 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		this.ui = ui;
 	}
 
+	/**
+	 * Start the simulator. Make the gears of the motor start turning.
+	 */
 	@Override
 	public void launchSimulation(SimulatorSettings settings) {
 		moottori = new OmaMoottori(this, settings);
@@ -27,16 +36,26 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		((Thread) moottori).start();
 	}
 
+	/**
+	 * Schedule updating the clock in the GUI visualization
+	 */
 	@Override
 	public void visualizeCurrentTime(long timeStampSeconds) {
 		Platform.runLater(() -> ui.getVisualization().setSimulationTimeSeconds(timeStampSeconds));
 	}
 
+	/**
+	 * Schedule new customer to arrive in to the GUI visualization
+	 */
 	@Override
 	public void visualizeCustomer() {
 		Platform.runLater(() -> ui.getVisualization().newCustomer());
 	}
 
+	
+	/**
+	 * Schedule new airplane to depart in the GUI visualization
+	 */
 	@Override
 	public void visualizeAirplane(FlightType flightType) {
 		switch (flightType) {
@@ -56,31 +75,49 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 
 	}
 
+	/**
+	 * Schedule visualization of the simulation ending in the GUI layout
+	 */
 	@Override
 	public void visualizeFinish() {
 		Platform.runLater(() -> ui.getSimulationLayoutController().handleFinish());
 	}
 
+	/**
+	 * Schedule visualization of the realtime stats in the GUI layout
+	 */
 	@Override
 	public void visualizeIntermediateStats(IntermediateStats stats) {
 		Platform.runLater(() -> ui.getSimulationLayoutController().visualizeIntermediateStats(stats));
 	}
 
+	/**
+	 * Accelerate the simulation speed
+	 */
 	@Override
 	public void accellerateSimulation() {
 		moottori.setSettingsViive(Math.max(moottori.getSettingsViive() - 1, 1));
 	}
 
+	/**
+	 * Decelerate the simulation speed
+	 */
 	@Override
 	public void decelerateSimulation() {
 		moottori.setSettingsViive(moottori.getSettingsViive() + 1);
 	}
 
+	/**
+	 * Allow GUI to know if the motor instance is simulating
+	 */
 	@Override
 	public boolean isSimulationRunning() {
 		return moottori != null && moottori.isSimulationRunning();
 	}
 
+	/**
+	 *  Allow GUI to fetch the current motor instance settings
+	 */
 	@Override
 	public SimulatorSettings getSimulatorSettings() {
 		if (moottori == null) {

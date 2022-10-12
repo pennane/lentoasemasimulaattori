@@ -21,6 +21,10 @@ public class Tapahtumalista {
 		return lista.peek().getAika();
 	}
 
+	/**
+	 * 
+	 * @return true if the list is empty, false if it is not
+	 */
 	public boolean isEmpty() {
 		return lista.isEmpty();
 	}
