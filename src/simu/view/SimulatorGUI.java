@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -121,6 +122,14 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Simulaattori");
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon.png"));
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon512.png"));
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon256.png"));
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon128.png"));
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon64.png"));
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon32.png"));
+		this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon16.png"));
+		this.primaryStage.show();
 
 		if (controller == null) {
 			controller = new Controller(this);
