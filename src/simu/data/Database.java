@@ -195,12 +195,14 @@ public class Database {
 	 */
 	private SimulatorSettings writeIdResultSet(ResultSet rs) throws SQLException {
 		// ResultSet is initially before the first data set
-		SimulatorSettings settings = new SimulatorSettings(rs.getLong("simulationDurationSeconds"),
-				rs.getLong("simulationDelay"), rs.getDouble("meanSecondsBetweenCustomers"), rs.getInt("planesPerDay"),
-				rs.getInt("checkInAmount"), rs.getInt("baggageDropAmount"), rs.getInt("securityCheckAmount"),
-				rs.getInt("passportControlAmount"), rs.getInt("ticketInspectionAmount"),
-				rs.getDouble("shengenProbability"), rs.getDouble("baggageProbability"));
-
+		SimulatorSettings settings = null;
+		while (rS.next()) {
+			settings = new SimulatorSettings(rs.getLong("simulationDurationSeconds"), rs.getLong("simulationDelay"),
+					rs.getDouble("meanSecondsBetweenCustomers"), rs.getInt("planesPerDay"), rs.getInt("checkInAmount"),
+					rs.getInt("baggageDropAmount"), rs.getInt("securityCheckAmount"),
+					rs.getInt("passportControlAmount"), rs.getInt("ticketInspectionAmount"),
+					rs.getDouble("shengenProbability"), rs.getDouble("baggageProbability"));
+		}
 		return settings;
 	}
 
