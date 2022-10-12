@@ -29,6 +29,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * @param passengerCount The total amount of fitting passengers
 	 * @param departingTime  The timestamp in seconds when the plane is to depart
 	 */
+	//Constructor for Lentokone
 	public Lentokone(FlightType flightType, int passengerCount, long departingTime) {
 		id = totalPlanes;
 		totalPlanes++;
@@ -41,39 +42,39 @@ public class Lentokone implements Comparable<Lentokone> {
 		passengersInAirport = 0;
 		hasDeparted = false;
 	}
-
+	//Reset plane
 	public static void reset() {
 		totalPlanes = 0;
 	}
-
+	//Get this planes ID
 	public int getId() {
 		return id;
 	}
-
+	//Get the FlighType of this flight
 	public FlightType getFlightType() {
 		return flightType;
 	}
-
+	//Get how many passengers have been assigned to this flight
 	public int getPassengerCount() {
 		return passengerCount;
 	}
-
+	//Get how many passengers are waiting
 	public int getPassengersWaiting() {
 		return passengersWaiting;
 	}
-
+	//Get how many passengers are in airport
 	public int getPassengersInAirport() {
 		return passengersInAirport;
 	}
-
+	//Increase how many passengers are waiting
 	public void incrementWaitingPassengers() {
 		passengersWaiting++;
 	}
-
+	//Increase how many passengers in airport
 	public void incrementPassengersInAirport() {
 		passengersInAirport++;
 	}
-
+	//Has the flight departed
 	public boolean getHasDeparted() {
 		return hasDeparted;
 	}
@@ -86,6 +87,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * 
 	 * @return boolean
 	 */
+	//Returns wether the conditions are met for the flight to depart
 	public boolean canDepart() {
 		return !hasDeparted && (Kello.getInstance().getAika() >= departingTime || passengersWaiting >= passengerCount);
 	}
@@ -95,6 +97,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * 
 	 * @return boolean
 	 */
+	//Returns if plane has seats left or not
 	public boolean hasAvailableSeats() {
 		return passengerCount > passengersInAirport;
 	}
@@ -104,6 +107,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * 
 	 * @return B event for the plane departure
 	 */
+	//Returns Tapahtuma for planes set to depart
 	public Tapahtuma startDeparting() {
 		hasDeparted = true;
 
@@ -128,6 +132,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * Planes departing sooner are to appear first
 	 */
 	@Override
+	//Compare function
 	public int compareTo(Lentokone o) {
 		return (int) (o.departingTime - this.departingTime);
 	}
