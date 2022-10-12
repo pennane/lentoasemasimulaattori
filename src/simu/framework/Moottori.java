@@ -84,7 +84,7 @@ public abstract class Moottori extends Thread implements IMoottori { // UUDET MÃ
 
 	protected boolean simuloidaan() {
 		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
-		return kello.getAika() < simulointiaika;
+		return !tapahtumalista.isEmpty() && kello.getAika() < simulointiaika;
 	}
 
 	protected void viive() {
