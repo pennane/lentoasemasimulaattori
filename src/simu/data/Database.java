@@ -69,25 +69,15 @@ public class Database {
 			// Result set get the result of the SQL query
 			rS = statement.executeQuery("select * from test");
 			ArrayList<SimulationData> dataArray = new ArrayList<>();
-			while(rS.next()) {
-				dataArray.add(new SimulationData(
-						rS.getInt("ID"),
-						rS.getDouble("PassportA"),
-						rS.getDouble("passportMed"),
-						rS.getDouble("baggageA"),
-						rS.getDouble("baggageMed"),
-						rS.getDouble("securityA"),
-						rS.getDouble("securityMed"),
-						rS.getDouble("TicketA"),
-						rS.getDouble("TicketMed"),
-						rS.getDouble("checkinA"),
-						rS.getDouble("checkinMed"),
-						rS.getDouble("AsiakasAv"),
-						0,0,0,0,0,0,0,0,0,0,0,0,0
-						));
+			while (rS.next()) {
+				dataArray.add(new SimulationData(rS.getInt("ID"), rS.getDouble("PassportA"),
+						rS.getDouble("passportMed"), rS.getDouble("baggageA"), rS.getDouble("baggageMed"),
+						rS.getDouble("securityA"), rS.getDouble("securityMed"), rS.getDouble("TicketA"),
+						rS.getDouble("TicketMed"), rS.getDouble("checkinA"), rS.getDouble("checkinMed"),
+						rS.getDouble("AsiakasAv"), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
 			SimulationData[] returnArray = new SimulationData[dataArray.size()];
-			for(int i = 0; i < dataArray.size(); i++) {
+			for (int i = 0; i < dataArray.size(); i++) {
 				returnArray[i] = dataArray.get(i);
 			}
 			return returnArray;
@@ -102,10 +92,9 @@ public class Database {
 	public SimulationData getAllFromId(int num) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/test?" + "user=root&password=root");
-
+			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
@@ -149,9 +138,6 @@ public class Database {
 			// Class.forName("com.mysql.jdbc.Driver");
 			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
-			// connect = DriverManager
-			// .getConnection("jdbc:mysql:mysql.metropolia.fi/henrivue?" +
-			// "user=henrivue&password=kilppari345");
 			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
