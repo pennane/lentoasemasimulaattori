@@ -24,6 +24,11 @@ public class Statistics {
 		return instanssi;
 	}
 
+	/**
+	 * find palvelupiste average and median
+	 * 
+	 * @param p palvelupiste where to get values
+	 */
 	public void getPalvelupisteValues(Palvelupiste p) {
 		tulokset.put(p.getPalvelupisteDescription() + " keskiarvo", (long) p.findPalveluaikaKeskiarvo());
 		tulokset.put(p.getPalvelupisteDescription() + " mediaani", (long) p.findPalveluaikaAverage());
