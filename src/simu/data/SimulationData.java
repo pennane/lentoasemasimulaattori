@@ -1,7 +1,13 @@
 package simu.data;
 
+/**
+ * 
+ * @author henri vuento
+ *
+ *         class to store simulation data
+ */
 public class SimulationData {
-
+	// variables to store all data collected from simulation
 	private int id;
 	private double passportcontrolAverage;
 	private double passportcontrolmedian;
@@ -28,14 +34,43 @@ public class SimulationData {
 	private double passportcontrolBusyTime;
 	private double ticketinspectionBusyTime;
 
-	public SimulationData(int id, double passportcontrolAverage, double passportcontrolmedian, double baggagedropAverage,
-			double baggagedropmedian, double securitycheckAverage, double securitycheckmedian,
-			double ticketinspectionAverage, double ticketinspectionmedian, double checkinAverage, double checkinmedian,
-			double customerRunTimeAverage, int arivedCustomerAmount, int servicedCustomerAmount,
-			int passportcontrolCustomerAmount, int checkinCustomerAmount, int baggagedropCustomerAmount,
-			int ticketinspectionCustomerAmount, int securitycheckCustomerAmount, double simulationTotaltime,
-			double checkinBusyTime, double baggagedropBusyTime, double securitycheckBusyTime,
-			double passportcontrolBusyTime, double ticketinspectionBusyTime) {
+	/**
+	 * Constuctor where you can set data at creation
+	 * 
+	 * @param id
+	 * @param passportcontrolAverage
+	 * @param passportcontrolmedian
+	 * @param baggagedropAverage
+	 * @param baggagedropmedian
+	 * @param securitycheckAverage
+	 * @param securitycheckmedian
+	 * @param ticketinspectionAverage
+	 * @param ticketinspectionmedian
+	 * @param checkinAverage
+	 * @param checkinmedian
+	 * @param customerRunTimeAverage
+	 * @param arivedCustomerAmount
+	 * @param servicedCustomerAmount
+	 * @param passportcontrolCustomerAmount
+	 * @param checkinCustomerAmount
+	 * @param baggagedropCustomerAmount
+	 * @param ticketinspectionCustomerAmount
+	 * @param securitycheckCustomerAmount
+	 * @param simulationTotaltime
+	 * @param checkinBusyTime
+	 * @param baggagedropBusyTime
+	 * @param securitycheckBusyTime
+	 * @param passportcontrolBusyTime
+	 * @param ticketinspectionBusyTime
+	 */
+	public SimulationData(int id, double passportcontrolAverage, double passportcontrolmedian,
+			double baggagedropAverage, double baggagedropmedian, double securitycheckAverage,
+			double securitycheckmedian, double ticketinspectionAverage, double ticketinspectionmedian,
+			double checkinAverage, double checkinmedian, double customerRunTimeAverage, int arivedCustomerAmount,
+			int servicedCustomerAmount, int passportcontrolCustomerAmount, int checkinCustomerAmount,
+			int baggagedropCustomerAmount, int ticketinspectionCustomerAmount, int securitycheckCustomerAmount,
+			double simulationTotaltime, double checkinBusyTime, double baggagedropBusyTime,
+			double securitycheckBusyTime, double passportcontrolBusyTime, double ticketinspectionBusyTime) {
 		super();
 		this.id = id;
 		this.passportcontrolAverage = passportcontrolAverage;
@@ -64,14 +99,20 @@ public class SimulationData {
 		this.ticketinspectionBusyTime = ticketinspectionBusyTime;
 	}
 
+	/**
+	 * Constructor to create without setting the instance variables
+	 */
 	public SimulationData() {
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public double getPassportcontrolAverage() {
 		return passportcontrolAverage;
 	}
