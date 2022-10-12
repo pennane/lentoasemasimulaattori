@@ -1,5 +1,5 @@
 package simu.framework;
-
+//Singleton for time for the simulation
 public class Kello {
 
 	private long aika;

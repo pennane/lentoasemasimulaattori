@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.stream.Stream;
 
+//List for Lentokone
 public class LentoLista {
 
 	// Don't ever remove stuff from the queue.
