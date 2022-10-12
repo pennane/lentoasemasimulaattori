@@ -71,7 +71,8 @@ public class Database {
 			preparedStatement.setInt(9, s.getTicketInspectionAmount());
 			preparedStatement.setDouble(10, s.getShengenProbability());
 			preparedStatement.setDouble(11, s.getBaggageProbability());
-			preparedStatement.setInt(12, getLatestId());
+			preparedStatement.setInt(12, getLatestId()); // use getLatestId() to link settings to simulation data using
+															// id
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			throw e;
@@ -81,10 +82,15 @@ public class Database {
 
 	}
 
+	/**
+	 * method to get all simulation data from database
+	 * 
+	 * @return returns array that includes all data from database
+	 * @throws Exception sql exception
+	 */
 	public SimulationData[] getAllFromDatabase() throws Exception {
 		try {
-			// This will load the MySQL driver, each DB has its own driver
-			// Class.forName("com.mysql.jdbc.Driver");
+			// This will load the Mariadb driver, each DB has its own driver
 			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
 			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
@@ -114,10 +120,17 @@ public class Database {
 
 	}
 
+	/**
+	 * method to get settings used in simulation with id
+	 * 
+	 * @param num is the id simulation run
+	 * @return settings corresponding to id
+	 * @throws Exception sql exception
+	 */
 	public SimulatorSettings getSettingsFromRunId(int num) throws Exception {
 
 		try {
-			// This will load the MySQL driver, each DB has its own driver
+			// This will load the Mariadb driver, each DB has its own driver
 			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
 			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
@@ -134,10 +147,16 @@ public class Database {
 
 	}
 
+	/**
+	 * method used to get latest id number from database
+	 * 
+	 * @return Latest id in database
+	 * @throws Exception sql Exception
+	 */
 	public int getLatestId() throws Exception {
 
 		try {
-			// This will load the MySQL driver, each DB has its own driver
+			// This will load the Mariadb driver, each DB has its own driver
 			Class.forName("org.mariadb.jdbc.Driver");
 			// Setup the connection with the DB
 			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
@@ -154,6 +173,13 @@ public class Database {
 
 	}
 
+	/**
+	 * legacy
+	 * 
+	 * @param resultSet
+	 * @return
+	 * @throws SQLException
+	 */
 	private SimulationData writeResultSet(ResultSet resultSet) throws SQLException {
 		// ResultSet is initially before the first data set
 		SimulationData yeet = new SimulationData();
@@ -178,20 +204,12 @@ public class Database {
 		return yeet;
 	}
 
-	/*
-	 * public ArrayList<Integer> getAllIdFromDatabase() throws Exception { try { //
-	 * This will load the MySQL driver, each DB has its own driver //
-	 * Class.forName("com.mysql.jdbc.Driver");
-	 * Class.forName("org.mariadb.jdbc.Driver"); // Setup the connection with the DB
-	 * connect = DriverManager.getConnection(secrets.DatabaseAdress,
-	 * secrets.username, secrets.password); // Statements allow to issue SQL queries
-	 * to the database statement = connect.createStatement(); // Result set get the
-	 * result of the SQL query rS = statement.executeQuery("select ID from test");
+	/**
+	 * method to process resultset got from database
 	 * 
-	 * return writeIdResultSet(rS); } catch (Exception e) { throw e; } finally {
-	 * close(); }
-	 * 
-	 * }
+	 * @param rs resultset containing all settings got from database
+	 * @return
+	 * @throws SQLException
 	 */
 	private SimulatorSettings writeIdResultSet(ResultSet rs) throws SQLException {
 		// ResultSet is initially before the first data set

@@ -35,4 +35,16 @@ public class Datadaoimpl implements dataDao {
 		return null;
 	}
 
+	@Override
+	public SimulatorSettings getSimulationSettings(int i) {
+
+		try {
+			return database.getSettingsFromRunId(i);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
