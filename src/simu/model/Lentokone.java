@@ -87,7 +87,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * @return boolean
 	 */
 	public boolean canDepart() {
-		return !hasDeparted && (Kello.getInstance().getAika() >= departingTime || passengersWaiting >= passengerCount);
+		return !hasDeparted && (passengersWaiting >= passengerCount);
 	}
 
 	/**

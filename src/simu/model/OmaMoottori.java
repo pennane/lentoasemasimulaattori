@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
+import eduni.distributions.Poisson;
 import simu.controller.IControllerMtoV;
 import simu.data.Datadaoimpl;
 import simu.data.Statistics;
@@ -53,7 +54,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		ticketInspection = new PalvelupisteRouter(new Normal(minutes(1), 2), tapahtumalista,
 				TapahtumanTyyppi.TICKETINSPECTION_END, settings.getTicketInspectionAmount(), "ticketinspection");
 
-		saapumisprosessi = new Saapumisprosessi(new Negexp(settings.getMeanSecondsBetweenCustomers()), tapahtumalista,
+		saapumisprosessi = new Saapumisprosessi(new Poisson(settings.getMeanSecondsBetweenCustomers()), tapahtumalista,
 				TapahtumanTyyppi.CHECKIN_ENTER);
 
 		palvelupisteet.add(checkIn);
@@ -196,13 +197,12 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	protected void tulokset() {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
-
 		try {
-			Statistics.getInstance().getCheckinValues(palvelupisteet.get(0));
-			Statistics.getInstance().getbaggagedropValues(palvelupisteet.get(1));
-			Statistics.getInstance().getSecuritycheckValues(palvelupisteet.get(2));
-			Statistics.getInstance().getPassportValues(palvelupisteet.get(3));
-			Statistics.getInstance().getTicketinspectionValues(palvelupisteet.get(4));
+			Statistics.getInstance().getCheckinValues(checkIn);
+			Statistics.getInstance().getbaggagedropValues(baggageDrop);
+			Statistics.getInstance().getSecuritycheckValues(securityCheck);
+			Statistics.getInstance().getPassportValues(passportControl);
+			Statistics.getInstance().getTicketinspectionValues(ticketInspection);
 
 			Datadaoimpl dao = new Datadaoimpl();
 
