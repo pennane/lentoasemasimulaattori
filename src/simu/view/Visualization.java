@@ -67,9 +67,9 @@ public class Visualization implements IVisualization {
 				drawBackground();
 				for (VisualizableAirplane airplane : airplanes) {
 					if (airplane.getType() == FlightType.International) {
-						ctx.drawImage(planeImage, airplane.getX().doubleValue(), airplane.getY().doubleValue());
-					} else {
 						ctx.drawImage(plane2Image, airplane.getX().doubleValue(), airplane.getY().doubleValue());
+					} else {
+						ctx.drawImage(planeImage, airplane.getX().doubleValue(), airplane.getY().doubleValue());
 					}
 
 				}
