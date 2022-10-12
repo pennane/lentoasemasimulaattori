@@ -10,12 +10,12 @@ import simu.util.Time;
 public class LentokoneGeneraattori {
 	private SimulatorSettings settings;
 	private LentoLista lista;
-
+	//Constructor for LentokoneGeneraattori
 	public LentokoneGeneraattori(LentoLista lista, SimulatorSettings settings) {
 		this.lista = lista;
 		this.settings = settings;
 	}
-
+	//Generate x amount of new flights
 	public void generoi(int maara) {
 		FlightType type;
 		RandomGenerator rnd = new RandomGenerator();
