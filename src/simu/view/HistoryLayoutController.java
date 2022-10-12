@@ -57,6 +57,7 @@ public class HistoryLayoutController {
 				"Check in median: " + data.getCheckinmedian(),
 				"Customer run time average: " + data.getCustomerRunTimeAverage(),
 				/*
+				 * 
 				"Arived customer amount: " + data.getArivedCustomerAmount(),
 				"Serviced customer amount: " + data.getServicedCustomerAmount(),
 				"Passport control customer amount: " + data.getPassportcontrolCustomerAmount(),
