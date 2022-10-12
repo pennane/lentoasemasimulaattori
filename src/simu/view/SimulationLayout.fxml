@@ -19,7 +19,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="canvas-background" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Canvas fx:id="simulationRoot" height="300.0" width="600.0" />
+                  <Canvas fx:id="visualizationContainer" height="300.0" width="600.0" />
                </children>
             </HBox>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="footer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
