@@ -41,7 +41,7 @@ public class Lentokone implements Comparable<Lentokone> {
 		passengersInAirport = 0;
 		hasDeparted = false;
 	}
-	
+
 	public static void reset() {
 		totalPlanes = 0;
 	}
@@ -87,7 +87,7 @@ public class Lentokone implements Comparable<Lentokone> {
 	 * @return boolean
 	 */
 	public boolean canDepart() {
-		return !hasDeparted && (passengersWaiting >= passengerCount);
+		return !hasDeparted && (Kello.getInstance().getAika() >= departingTime || passengersWaiting >= passengerCount);
 	}
 
 	/**
