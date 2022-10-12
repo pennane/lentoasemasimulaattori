@@ -7,6 +7,7 @@ import simu.framework.Trace;
 import simu.framework.Trace.Level;
 import simu.util.Time;
 
+//Generator for Lentokone
 public class LentokoneGeneraattori {
 	private SimulatorSettings settings;
 	private LentoLista lista;

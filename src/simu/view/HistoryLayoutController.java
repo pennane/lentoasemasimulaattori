@@ -9,7 +9,7 @@ import javafx.scene.control.ListView;
 import simu.data.Datadaoimpl;
 import simu.data.SimulationData;
 import simu.model.SimulatorSettings;
-
+//Controls the layout of HistoryLayout
 public class HistoryLayoutController {
 
 	private Datadaoimpl dao;
