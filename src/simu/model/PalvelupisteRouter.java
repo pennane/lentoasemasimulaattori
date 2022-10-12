@@ -1,6 +1,7 @@
 package simu.model;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import eduni.distributions.ContinuousGenerator;
 import simu.framework.Kello;
@@ -25,7 +26,7 @@ public class PalvelupisteRouter extends Palvelupiste {
 	 * Fill the servicepoint array with new unoccupied servicepoints
 	 */
 	private void instantiatePalveluPisteet(int servicepointCount, String servicePointDescription) {
-		nextId = 0;
+		nextId = 1;
 		servicePoints = new ArrayList<>();
 		for (int i = 0; i < servicepointCount; i++) {
 			servicePoints.add(new PalvelupisteEntiteetti(servicePointDescription + (nextId++)));
@@ -98,6 +99,10 @@ public class PalvelupisteRouter extends Palvelupiste {
 				.findAny().orElseThrow();
 
 		return palvelupiste.lopetaPalvelu();
+	}
+
+	public Stream<PalvelupisteEntiteetti> getDebugStream() {
+		return servicePoints.stream();
 	}
 
 }

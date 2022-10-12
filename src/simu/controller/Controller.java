@@ -96,7 +96,7 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 	 */
 	@Override
 	public void accellerateSimulation() {
-		moottori.setSettingsViive(Math.max(moottori.getSettingsViive() - 1, 1));
+		moottori.setSettingsViive(Math.max(moottori.getSettingsViive() * 0.9, 0.1));
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 	 */
 	@Override
 	public void decelerateSimulation() {
-		moottori.setSettingsViive(moottori.getSettingsViive() + 1);
+	moottori.setSettingsViive(Math.min(moottori.getSettingsViive() * 1.1, 100));
 	}
 
 	/**
