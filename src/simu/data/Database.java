@@ -1,5 +1,6 @@
 package simu.data;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import simu.model.SimulatorSettings;
 
 public class Database {
 
@@ -20,7 +24,7 @@ public class Database {
 	private ResultSet rS = null;
 	private Secrets secrets = new Secrets();
 
-	public void writeToDatabase(SimulationData simdata) throws Exception {
+	public void writeToDatabase(SimulationData simdata, SimulatorSettings s) throws Exception {
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			// Class.forName("com.mysql.jdbc.Driver");
@@ -45,6 +49,20 @@ public class Database {
 			preparedStatement.setDouble(10, simdata.getTicketinspectionmedian());
 			preparedStatement.setDouble(11, simdata.getCustomerRunTimeAverage());
 			preparedStatement.executeUpdate();
+			preparedStatement = connect
+					.prepareStatement("insert into  settings values (default, ?,?,?,?,?,?,?,?,?,?,?,?)");
+			preparedStatement.setLong(1, s.getSimulationDurationSeconds());
+			preparedStatement.setLong(2, s.getSimulationDelay());
+			preparedStatement.setDouble(3, s.getMeanSecondsBetweenCustomers());
+			preparedStatement.setInt(4, s.getPlanesPerDay());
+			preparedStatement.setInt(5, s.getCheckInAmount());
+			preparedStatement.setInt(6, s.getBaggageDropAmount());
+			preparedStatement.setInt(7, s.getSecurityCheckAmount());
+			preparedStatement.setInt(8, s.getPassportControlAmount());
+			preparedStatement.setInt(9, s.getTicketInspectionAmount());
+			preparedStatement.setDouble(10, s.getShengenProbability());
+			preparedStatement.setDouble(11, s.getBaggageProbability());
+			preparedStatement.setInt(12, getLatestId());
 
 		} catch (Exception e) {
 			throw e;
@@ -87,7 +105,8 @@ public class Database {
 
 	}
 
-	public SimulationData getSettingsFromRunId(int num) throws Exception {
+	public SimulatorSettings getSettingsFromRunId(int num) throws Exception {
+
 		try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -96,8 +115,28 @@ public class Database {
 			// Statements allow to issue SQL queries to the database
 			statement = connect.createStatement();
 			// Result set get the result of the SQL query
-			rS = statement.executeQuery("select * from test where ID=" + num);
-			return writeResultSet(rS);
+			rS = statement.executeQuery("select * from settings where RunID=" + num);
+			return writeIdResultSet(rS);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			close();
+		}
+
+	}
+
+	public int getLatestId() throws Exception {
+
+		try {
+			// This will load the MySQL driver, each DB has its own driver
+			Class.forName("org.mariadb.jdbc.Driver");
+			// Setup the connection with the DB
+			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
+			// Statements allow to issue SQL queries to the database
+			statement = connect.createStatement();
+			// Result set get the result of the SQL query
+			rS = statement.executeQuery("SELECT * FROM test WHERE ID = (SELECT MAX(ID) FROM test)");
+			return rS.getInt("ID");
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -130,35 +169,30 @@ public class Database {
 		return yeet;
 	}
 
-	public ArrayList<Integer> getAllIdFromDatabase() throws Exception {
-		try {
-			// This will load the MySQL driver, each DB has its own driver
-			// Class.forName("com.mysql.jdbc.Driver");
-			Class.forName("org.mariadb.jdbc.Driver");
-			// Setup the connection with the DB
-			connect = DriverManager.getConnection(secrets.DatabaseAdress, secrets.username, secrets.password);
-			// Statements allow to issue SQL queries to the database
-			statement = connect.createStatement();
-			// Result set get the result of the SQL query
-			rS = statement.executeQuery("select ID from test");
-
-			return writeIdResultSet(rS);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			close();
-		}
-
-	}
-
-	private ArrayList<Integer> writeIdResultSet(ResultSet rs) throws SQLException {
+	/*
+	 * public ArrayList<Integer> getAllIdFromDatabase() throws Exception { try { //
+	 * This will load the MySQL driver, each DB has its own driver //
+	 * Class.forName("com.mysql.jdbc.Driver");
+	 * Class.forName("org.mariadb.jdbc.Driver"); // Setup the connection with the DB
+	 * connect = DriverManager.getConnection(secrets.DatabaseAdress,
+	 * secrets.username, secrets.password); // Statements allow to issue SQL queries
+	 * to the database statement = connect.createStatement(); // Result set get the
+	 * result of the SQL query rS = statement.executeQuery("select ID from test");
+	 * 
+	 * return writeIdResultSet(rS); } catch (Exception e) { throw e; } finally {
+	 * close(); }
+	 * 
+	 * }
+	 */
+	private SimulatorSettings writeIdResultSet(ResultSet rs) throws SQLException {
 		// ResultSet is initially before the first data set
-		ArrayList<Integer> lista = new ArrayList<>();
-		while (rs.next()) {
-			lista.add(rs.getInt("id"));
+		SimulatorSettings settings = new SimulatorSettings(rs.getLong("simulationDurationSeconds"),
+				rs.getLong("simulationDelay"), rs.getDouble("meanSecondsBetweenCustomers"), rs.getInt("planesPerDay"),
+				rs.getInt("checkInAmount"), rs.getInt("baggageDropAmount"), rs.getInt("securityCheckAmount"),
+				rs.getInt("passportControlAmount"), rs.getInt("ticketInspectionAmount"),
+				rs.getDouble("shengenProbability"), rs.getDouble("baggageProbability"));
 
-		}
-		return lista;
+		return settings;
 	}
 
 	// You need to close the resultSet

@@ -2,6 +2,8 @@ package simu.data;
 
 import java.util.ArrayList;
 
+import simu.model.SimulatorSettings;
+
 public class Datadaoimpl implements dataDao {
 	Database database = new Database();
 
@@ -18,9 +20,9 @@ public class Datadaoimpl implements dataDao {
 	}
 
 	@Override
-	public void SaveSimulationData(SimulationData simdata) {
+	public void SaveSimulationData(SimulationData simdata, SimulatorSettings s) {
 		try {
-			database.writeToDatabase(simdata);
+			database.writeToDatabase(simdata, s);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,15 +35,4 @@ public class Datadaoimpl implements dataDao {
 		return null;
 	}
 
-	@Override
-	public SimulationData getAllFromId(int num) {
-		SimulationData data = null;
-		try {
-			data = database.getAllFromId(num);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return data;
-	}
 }
