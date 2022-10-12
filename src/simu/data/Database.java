@@ -208,7 +208,7 @@ public class Database {
 	 * method to process resultset got from database
 	 * 
 	 * @param rs resultset containing all settings got from database
-	 * @return
+	 * @return SimulatorSettings object containing settings from one simulation
 	 * @throws SQLException
 	 */
 	private SimulatorSettings writeIdResultSet(ResultSet rs) throws SQLException {
@@ -224,6 +224,13 @@ public class Database {
 		return settings;
 	}
 
+	/**
+	 * process resultset and return latest id
+	 * 
+	 * @param rs resultset from database
+	 * @return latest id of database
+	 * @throws SQLException
+	 */
 	private int writeId(ResultSet rs) throws SQLException {
 		// ResultSet is initially before the first data set
 		int yeet = 1;
@@ -233,7 +240,9 @@ public class Database {
 		return yeet;
 	}
 
-	// You need to close the resultSet
+	/**
+	 * function to close resultSet
+	 */
 	private void close() {
 		try {
 			if (rS != null) {
