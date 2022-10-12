@@ -1,17 +1,13 @@
 package simu.constants;
 
+/**
+ * Centralized place for constants for mitigating magic numbers.
+ *
+ */
 public class Constants {
 	public static final Integer SECONDS_IN_MINUTE = 60;
 	public static final Integer SECONDS_IN_HOUR = SECONDS_IN_MINUTE * 60;
 	public static final Integer SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
-
-	public static Integer minutes(int seconds) {
-		return SECONDS_IN_MINUTE * seconds;
-	}
-
-	public static Integer seconds(int seconds) {
-		return seconds;
-	}
 
 	public static final Integer DEFAULT_SIMULATION_DURATION_SECONDS = SECONDS_IN_DAY;
 	public static final Integer DEFAULT_SIMULATION_DELAY = 10;
@@ -20,7 +16,7 @@ public class Constants {
 
 	public static final Double DEFAULT_MEAN_SECONDS_BETWEEN_CUSTOMERS = 8.7d;
 	public static final Integer DEFAULT_PLANES_PER_DAY = 100; // this probably should be dynamically computed from
-																// customers per minute in settings or somewhere? 
+																// customers per minute in settings or somewhere?
 	public static final Integer DEFAULT_CHECKIN_AMOUNT = 21;
 	public static final Integer DEFAULT_BAGGAGE_DROP_AMOUNT = 27;
 	public static final Integer DEFAULT_SECURITY_CHECK_AMOUNT = 14;

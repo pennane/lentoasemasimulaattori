@@ -2,11 +2,25 @@ package simu.util;
 
 import simu.constants.Constants;
 
+/**
+ * Class for static time related utility methods
+ */
 public class Time {
-	public static int minutes(int seconds) {
-		return Constants.SECONDS_IN_MINUTE * seconds;
+	/**
+	 * @param minutes
+	 * @return seconds worth of asked minutes
+	 */
+	public static int minutes(int minutes) {
+		return Constants.SECONDS_IN_MINUTE * minutes;
 	}
 
+	/**
+	 * Beautiful abstraction
+	 * 
+	 * @param seconds
+	 * @return seconds worth of asked seconds
+	 * 
+	 */
 	public static int seconds(int seconds) {
 		return seconds;
 	}

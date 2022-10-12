@@ -4,8 +4,6 @@ import java.util.Optional;
 
 /**
  * Some general logic methods
- * @author arttupennanen
- *
  */
 public class Fp {
 	/**

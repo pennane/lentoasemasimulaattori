@@ -48,5 +48,4 @@ public class Tapahtuma implements Comparable<Tapahtuma> {
 			return 1;
 		return 0;
 	}
-
 }

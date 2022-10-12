@@ -1,6 +1,5 @@
 package simu.data;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Database {
 
@@ -155,7 +153,7 @@ public class Database {
 
 	private ArrayList<Integer> writeIdResultSet(ResultSet rs) throws SQLException {
 		// ResultSet is initially before the first data set
-		ArrayList<Integer> lista = new ArrayList();
+		ArrayList<Integer> lista = new ArrayList<>();
 		while (rs.next()) {
 			lista.add(rs.getInt("id"));
 
