@@ -52,7 +52,6 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 		Platform.runLater(() -> ui.getVisualization().newCustomer());
 	}
 
-	
 	/**
 	 * Schedule new airplane to depart in the GUI visualization
 	 */
@@ -96,7 +95,7 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 	 */
 	@Override
 	public void accellerateSimulation() {
-		moottori.setSettingsViive(Math.max(moottori.getSettingsViive() * 0.9, 0.1));
+		moottori.setSettingsViive(Math.max(moottori.getSettingsViive() - 1, 1));
 	}
 
 	/**
@@ -104,19 +103,11 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 	 */
 	@Override
 	public void decelerateSimulation() {
-	moottori.setSettingsViive(Math.min(moottori.getSettingsViive() * 1.1, 100));
+		moottori.setSettingsViive(moottori.getSettingsViive() + 1);
 	}
 
 	/**
-	 * Allow GUI to know if the motor instance is simulating
-	 */
-	@Override
-	public boolean isSimulationRunning() {
-		return moottori != null && moottori.isSimulationRunning();
-	}
-
-	/**
-	 *  Allow GUI to fetch the current motor instance settings
+	 * Allow GUI to fetch the current motor instance settings
 	 */
 	@Override
 	public SimulatorSettings getSimulatorSettings() {
@@ -124,6 +115,11 @@ public class Controller implements IControllerVtoM, IControllerMtoV {
 			return null;
 		}
 		return moottori.getSimulatorSettings();
+	}
+
+	@Override
+	public boolean isSimulationRunning() {
+		return moottori != null && moottori.isSimulationRunning();
 	}
 
 }
