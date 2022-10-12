@@ -208,7 +208,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 			dao.SaveSimulationData(Statistics.getInstance().getTulokset());
 
-			System.out.println(dao.getAllData().getBaggagedropAverage());
+			//System.out.println(dao.getAllData().getBaggagedropAverage());
 		} catch (Exception e) {
 			Trace.out(Level.ERR, "Db stuff failed " + e.toString());
 		}

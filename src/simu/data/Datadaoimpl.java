@@ -6,8 +6,8 @@ public class Datadaoimpl implements dataDao {
 	Database database = new Database();
 
 	@Override
-	public SimulationData getAllData() {
-		SimulationData data = null;
+	public SimulationData[] getAllData() {
+		SimulationData[] data = null;
 		try {
 			data = database.getAllFromDatabase();
 		} catch (Exception e) {
