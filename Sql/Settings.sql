@@ -1,5 +1,5 @@
-CREATE TABLE Orders (
-    ID int NOT NULL,
+CREATE TABLE settings (
+    ID int NOT NULL AUTO_INCREMENT,
     simulationDurationSeconds Long ,
 	simulationDelay Long ,
 	meanSecondsBetweenCustomers double, 

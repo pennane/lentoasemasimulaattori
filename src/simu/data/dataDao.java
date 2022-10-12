@@ -2,13 +2,13 @@ package simu.data;
 
 import java.util.ArrayList;
 
+import simu.model.SimulatorSettings;
+
 public interface dataDao {
 
 	public ArrayList<Integer> getSimulationRunId();
 
 	public SimulationData[] getAllData();
 
-	public SimulationData getAllFromId(int num);
-
-	public void SaveSimulationData(SimulationData simdata);
+	public void SaveSimulationData(SimulationData simdata, SimulatorSettings s);
 }
