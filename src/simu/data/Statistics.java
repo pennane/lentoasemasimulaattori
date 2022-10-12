@@ -7,6 +7,12 @@ import simu.model.LentoasemaAsiakas;
 import simu.model.Palvelupiste;
 import simu.model.SimulatorSettings;
 
+/**
+ * 
+ * @author henri vuento
+ *
+ *         singleton class for collecting simulation data
+ */
 public class Statistics {
 	private static Statistics instanssi;
 	public HashMap<String, Long> tulokset = new HashMap<String, Long>();
@@ -35,30 +41,55 @@ public class Statistics {
 
 	}
 
+	/**
+	 * find checkin palvelupiste average and median
+	 * 
+	 * @param p palvelupiste where to get values
+	 */
 	public void getCheckinValues(Palvelupiste p) {
 		data.setCheckinAverage(p.findPalveluaikaKeskiarvo());
 		data.setCheckinmedian(p.findPalveluaikaAverage());
 
 	}
 
+	/**
+	 * find baggagedrop palvelupiste average and median
+	 * 
+	 * @param p palvelupiste where to get values
+	 */
 	public void getbaggagedropValues(Palvelupiste p) {
 		data.setBaggagedropAverage(p.findPalveluaikaKeskiarvo());
 		data.setBaggagedropmedian(p.findPalveluaikaAverage());
 
 	}
 
+	/**
+	 * find securitycheck palvelupiste average and median
+	 * 
+	 * @param p palvelupiste where to get values
+	 */
 	public void getSecuritycheckValues(Palvelupiste p) {
 		data.setSecuritycheckAverage(p.findPalveluaikaKeskiarvo());
 		data.setSecuritycheckmedian(p.findPalveluaikaAverage());
 
 	}
 
+	/**
+	 * find passport control palvelupiste average and median
+	 * 
+	 * @param p palvelupiste where to get values
+	 */
 	public void getPassportValues(Palvelupiste p) {
 		data.setPassportcontrolAverage(p.findPalveluaikaKeskiarvo());
 		data.setPassportcontrolmedian(p.findPalveluaikaAverage());
 
 	}
 
+	/**
+	 * find ticket inspection palvelupiste average and median
+	 * 
+	 * @param p palvelupiste where to get values
+	 */
 	public void getTicketinspectionValues(Palvelupiste p) {
 		data.setTicketinspectionAverage(p.findPalveluaikaKeskiarvo());
 		data.setTicketinspectionmedian(p.findPalveluaikaAverage());
