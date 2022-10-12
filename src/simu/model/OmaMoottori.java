@@ -83,7 +83,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	 */
 	@Override
 	protected void alustukset() {
-		Kello.getInstance().setAika(0);
+		kello.setAika(0);
 		LentoasemaAsiakas.reset();
 		Lentokone.reset();
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
@@ -139,7 +139,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		case TICKETINSPECTION_END:
 			a = ticketInspection.lopetaPalvelu(t.getPalvelupisteId());
 			a.getLentokone().incrementWaitingPassengers();
-			a.setPoistumisaika(Kello.getInstance().getAika());
+			a.setPoistumisaika(kello.getAika());
 			a.raportti();
 			Statistics.getInstance().getAsiakasValues(a);
 			break;
@@ -159,7 +159,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		// Visualizations or other third party things that don't need to be run for
 		// every event
 		if (completedBEvents % 10 == 0) {
-			controller.visualizeCurrentTime(Kello.getInstance().getAika());
+			controller.visualizeCurrentTime(kello.getAika());
 
 			IntermediateStats intermediateStats = new IntermediateStats();
 			intermediateStats.buildRouterStats(checkIn, baggageDrop, securityCheck, passportControl, ticketInspection);
@@ -186,8 +186,8 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 		for (Lentokone l : lentoLista.getLennot()) {
 			if (l.canDepart()) {
 				Trace.out(Trace.Level.INFO,
-						l.getFlightType() + " lento lähtee " + nykyaika() + ". Kapasiteetti: " + l.getPassengerCount()
-								+ ", Kyydissä: " + l.getPassengersWaiting() + ", Jäi kyydistä: "
+						l.getFlightType() + " lento lähtee " + kello.getAika() + ". Kapasiteetti: "
+								+ l.getPassengerCount() + ", Kyydissä: " + l.getPassengersWaiting() + ", Jäi kyydistä: "
 								+ (l.getPassengersInAirport() - l.getPassengersWaiting()));
 				tapahtumalista.lisaa(l.startDeparting());
 			}
@@ -197,8 +197,8 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	public void run() {
 		alustukset();
-		while (simuloidaan()) {
-			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
+		while (this.simuloidaan()) {
+			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + kello.getAika());
 			viive();
 			kello.setAika(nykyaika());
 
@@ -214,7 +214,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 
 	@Override
 	protected void tulokset() {
-		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
+		System.out.println("Simulointi päättyi kello " + kello.getAika());
 		try {
 			Statistics.getInstance().getCheckinValues(checkIn);
 			Statistics.getInstance().getbaggagedropValues(baggageDrop);
@@ -231,7 +231,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 			Trace.out(Level.ERR, "Db stuff failed " + e.toString());
 		}
 
-		controller.visualizeCurrentTime(Kello.getInstance().getAika());
+		controller.visualizeCurrentTime(kello.getAika());
 
 		controller.visualizeFinish();
 	}
@@ -239,7 +239,7 @@ public class OmaMoottori extends Moottori implements IOmaMoottori {
 	@Override
 	protected boolean simuloidaan() {
 		Trace.out(Trace.Level.INFO, "Kello on: " + kello.getAika());
-		return kello.getAika() < getSimulointiaika();
+		return !tapahtumalista.isEmpty() && kello.getAika() < getSimulointiaika();
 	}
 
 	@Override
