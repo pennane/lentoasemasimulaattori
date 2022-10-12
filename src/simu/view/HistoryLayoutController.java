@@ -56,6 +56,8 @@ public class HistoryLayoutController {
 				"Check in average: " + data.getCheckinAverage(),
 				"Check in median: " + data.getCheckinmedian(),
 				"Customer run time average: " + data.getCustomerRunTimeAverage(),
+				/*
+				 * 
 				"Arived customer amount: " + data.getArivedCustomerAmount(),
 				"Serviced customer amount: " + data.getServicedCustomerAmount(),
 				"Passport control customer amount: " + data.getPassportcontrolCustomerAmount(),
@@ -69,6 +71,7 @@ public class HistoryLayoutController {
 				"Security check busy time: " + data.getSecuritycheckBusyTime(),
 				"Passport control busy time: " + data.getPassportcontrolBusyTime(),
 				"Ticket inspection busy time: " + data.getTicketinspectionBusyTime()
+				*/
 		};
 	}
  	//Gets the data from dao and adds listeners to ListView items
