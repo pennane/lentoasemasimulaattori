@@ -34,7 +34,7 @@ public class LentoLista {
 	}
 
 	/**
-	 * <3 stream api and somewhat functional programming
+	 * love the stream api and somewhat functional programming
 	 * 
 	 * this can be read like a book
 	 */
