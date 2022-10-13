@@ -26,6 +26,9 @@ import simu.view.entitys.VisualizableCustomer;
  */
 public class Visualization implements IVisualization {
 
+	private static final int CUSTOMER_HEIGHT = 8;
+	private static final int CUSTOMER_WIDTH = 1;
+
 	private Image airportImage;
 	private Image planeImage;
 	private double airportImageX;
@@ -57,7 +60,7 @@ public class Visualization implements IVisualization {
 		airportImageY = canvas.getHeight() / 2 - airportImage.getHeight();
 		planeImageBaseX = airportImageX + airportImage.getWidth() - planeImage.getWidth();
 		planeImageBaseY = airportImageY + airportImage.getHeight() - planeImage.getHeight();
-		customerBaseY = canvas.getHeight() / 2 - 5;
+		customerBaseY = canvas.getHeight() / 2 - CUSTOMER_HEIGHT;
 
 		clock = new GUIClock(0, 10, 10);
 
@@ -75,7 +78,8 @@ public class Visualization implements IVisualization {
 				}
 				ctx.setFill(Color.BLACK);
 				for (VisualizableCustomer customer : customers) {
-					ctx.fillRect(customer.getX().doubleValue(), customer.getY().doubleValue(), 1, 5);
+					ctx.fillRect(customer.getX().doubleValue(), customer.getY().doubleValue(), CUSTOMER_WIDTH,
+							CUSTOMER_HEIGHT);
 				}
 				drawOverlay();
 			}
