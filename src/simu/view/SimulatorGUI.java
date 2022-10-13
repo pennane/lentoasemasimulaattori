@@ -63,13 +63,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
 			RootLayoutController rootLayoutController = loader.getController();
 			rootLayoutController.initialize(this);
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon.png"));
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon512.png"));
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon256.png"));
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon128.png"));
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon64.png"));
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon32.png"));
-			this.primaryStage.getIcons().add(new Image("file:simu/view/images/icon16.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon512.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon256.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon128.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon64.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon32.png"));
+			this.primaryStage.getIcons().add(new Image("file:resources/icons/icon16.png"));
 			primaryStage.show();
 			rootLayoutController.showSimulationView();
 
